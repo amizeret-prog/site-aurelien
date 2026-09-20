@@ -7,6 +7,7 @@ import Button from '../../components/Button.astro';
 import Faq from '../../components/Faq.astro';
 import { estPublie, formatDate } from '../../lib/publies';
 import { offreParSlug, urlOffre } from '../../data/offres';
+import { ids, SITE } from '../../data/identite';
 
 export async function getStaticPaths() {
   const tous = await getCollection('analyses', estPublie);
@@ -18,8 +19,30 @@ const d = entry.data;
 const { Content, headings } = await render(entry);
 const intertitres = headings.filter((h) => h.depth === 2);
 const offre = d.offre ? offreParSlug(d.offre) : undefined;
+
+// Données structurées : article de fond signé Aurélien Mizeret.
+const url = `${SITE}/analyses/${entry.id}/`;
+const jour = (x: Date) => x.toISOString().slice(0, 10);
+const article = {
+  '@type': 'Article',
+  '@id': `${url}#article`,
+  headline: d.title,
+  description: d.description,
+  abstract: d.chapo,
+  url,
+  mainEntityOfPage: url,
+  inLanguage: 'fr-FR',
+  image: `${SITE}/og/analyses/${entry.id}.png`,
+  author: { '@id': ids.personne },
+  publisher: { '@id': ids.personne },
+  isPartOf: { '@id': ids.site },
+  articleSection: d.theme,
+  datePublished: jour(d.date),
+  dateModified: jour(d.miseAJour ?? d.date),
+  ...(d.sources.length && { citation: d.sources.map((s) => s.url ?? s.label) }),
+};
 ---
-<Base title={d.seoTitle ?? `${d.title} | Aurélien Mizeret`} description={d.description}>
+<Base title={d.seoTitle ?? `${d.title} | Aurélien Mizeret`} description={d.description} ogType="article" schema={[article]}>
 
   <section class="section section--ink tete">
     <div class="container">

@@ -1,9 +1,22 @@
 ---
 // Bloc FAQ : questions dépliables, sans JavaScript.
+// Publie aussi les questions en données structurées (FAQPage). Une seule FAQ balisée par page :
+// si une page en affiche deux, passez schema={false} à la seconde.
+import JsonLd from './JsonLd.astro';
 interface Props {
   items: { question: string; answer: string }[];
+  schema?: boolean;
 }
-const { items } = Astro.props;
+const { items, schema = true } = Astro.props;
+const faqPage = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((i) => ({
+    '@type': 'Question',
+    name: i.question,
+    acceptedAnswer: { '@type': 'Answer', text: i.answer },
+  })),
+};
 ---
 <div class="faq">
   {items.map((i) => (
@@ -13,6 +26,7 @@ const { items } = Astro.props;
     </details>
   ))}
 </div>
+{schema && items.length > 0 && <JsonLd data={faqPage} />}
 
 <style>
   .faq { max-width: 50rem; background: var(--surface); border-radius: var(--radius); }

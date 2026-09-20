@@ -1,0 +1,6 @@
+---
+// Bloc de données structurées (schema.org, format JSON-LD). Invisible pour le visiteur.
+interface Props { data: unknown }
+const json = JSON.stringify(Astro.props.data).replace(/</g, '\\u003c');
+---
+<script type="application/ld+json" set:html={json} />

@@ -3,10 +3,13 @@
 import Base from './Base.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import SectionTitle from '../components/SectionTitle.astro';
-interface Props { title: string; description: string; h1: string; chapo?: string; fil: string; eyebrow?: string }
-const { title, description, h1, chapo, fil, eyebrow } = Astro.props;
+interface Props {
+  title: string; description: string; h1: string; chapo?: string; fil: string; eyebrow?: string;
+  ogType?: 'website' | 'article' | 'profile' | 'book'; schema?: Record<string, unknown>[]; noindex?: boolean;
+}
+const { title, description, h1, chapo, fil, eyebrow, ogType, schema, noindex } = Astro.props;
 ---
-<Base title={title} description={description}>
+<Base title={title} description={description} ogType={ogType} schema={schema} noindex={noindex}>
   <section class="section section--ink">
     <div class="container">
       <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: fil }]} />

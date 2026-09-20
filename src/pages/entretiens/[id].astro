@@ -8,6 +8,7 @@ import Button from '../../components/Button.astro';
 import InterviewCard from '../../components/InterviewCard.astro';
 import { estPublie, estListable, parDateDesc, formatDate } from '../../lib/publies';
 import { offreParSlug, urlOffre } from '../../data/offres';
+import { ids, SITE } from '../../data/identite';
 
 export async function getStaticPaths() {
   const tous = await getCollection('entretiens', estPublie);
@@ -29,9 +30,32 @@ const cases = d.barometre ? [
   ['Portage', d.barometre.portage], ['Budget', d.barometre.budget],
   ['Projet arrêté', d.barometre.projetArrete], ['Emploi', d.barometre.emploi],
 ] : [];
+// Données structurées : un article signé Aurélien Mizeret, dont le sujet est la personne interviewée.
+const url = `${SITE}/entretiens/${entry.id}/`;
+const article = {
+  '@type': 'Article',
+  '@id': `${url}#article`,
+  headline: d.title,
+  description: d.description,
+  url,
+  mainEntityOfPage: url,
+  inLanguage: 'fr-FR',
+  image: `${SITE}/og/entretiens/${entry.id}.png`,
+  author: { '@id': ids.personne },
+  publisher: { '@id': ids.personne },
+  isPartOf: { '@id': ids.site },
+  ...(d.date && { datePublished: d.date.toISOString().slice(0, 10) }),
+  about: {
+    '@type': 'Person',
+    name: d.nom,
+    jobTitle: d.fonction,
+    ...(d.organisation && { worksFor: { '@type': 'Organization', name: d.organisation } }),
+    ...(d.linkedin && { sameAs: [d.linkedin] }),
+  },
+};
 const initiales = d.nom.split(/\s+/).map((n) => n[0]).join('').slice(0, 2).toUpperCase();
 ---
-<Base title={d.seoTitle} description={d.description}>
+<Base title={d.seoTitle} description={d.description} ogType="article" schema={[article]}>
 
   <section class="section section--ink tete">
     <div class="container">

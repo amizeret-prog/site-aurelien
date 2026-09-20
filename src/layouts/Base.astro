@@ -4,14 +4,36 @@ import '@fontsource-variable/quicksand';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { siteWeb, personne, cabinet } from '../data/identite';
+import { imageOg } from '../lib/og';
 
 interface Props {
   title: string;
   description?: string;
   bodyClass?: string;
+  /** Type d'aperçu Open Graph : website (défaut), article, profile, book. */
+  ogType?: 'website' | 'article' | 'profile' | 'book';
+  /** Image d'aperçu imposée (chemin depuis la racine) ; sinon, image générée pour la page. */
+  image?: string;
+  /** Données structurées propres à la page, ajoutées au graphe commun. */
+  schema?: Record<string, unknown>[];
+  /** Page à ne jamais indexer, même après le lancement (remerciement, page de contrôle). */
+  noindex?: boolean;
 }
-const { title, description = '', bodyClass } = Astro.props;
-const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
+const { title, description = '', bodyClass, ogType = 'website', image, schema = [], noindex = false } = Astro.props;
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && !noindex;
+
+// Adresse officielle de la page, toujours sur aurelienmizeret.com.
+const canonique = new URL(Astro.url.pathname, Astro.site).href;
+// Avant le lancement, les aperçus pointent vers l'adresse Netlify pour pouvoir être testés
+// (l'ancien WordPress n'a pas ces images). Au lancement, tout bascule sur aurelienmizeret.com.
+const baseApercu = import.meta.env.PUBLIC_INDEXABLE === 'true' ? Astro.site : (process.env.DEPLOY_PRIME_URL || Astro.site);
+const urlApercu = new URL(Astro.url.pathname, baseApercu).href;
+const imageAbsolue = new URL(image ?? (await imageOg(Astro.url.pathname)), baseApercu).href;
+
+// Graphe commun à toutes les pages : le site, la personne, le cabinet, puis ce que la page ajoute.
+const graphe = { '@context': 'https://schema.org', '@graph': [siteWeb, personne, cabinet, ...schema] };
 ---
 <!doctype html>
 <html lang="fr">
@@ -21,7 +43,25 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
     {!indexable && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonique} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Aurélien Mizeret" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content={urlApercu} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={imageAbsolue} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="author" content="Aurélien Mizeret" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <JsonLd data={graphe} />
     <slot name="head" />
   </head>
   <body class={bodyClass}>

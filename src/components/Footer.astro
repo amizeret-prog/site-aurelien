@@ -1,4 +1,5 @@
 ---
+import { liens } from '../data/identite';
 const annee = new Date().getFullYear();
 ---
 <footer class="site-footer">
@@ -22,8 +23,8 @@ const annee = new Date().getFullYear();
       <ul>
         <li><a href="/contact/">Contact</a></li>
         <li><a href="mailto:hello@aurelienmizeret.com">hello@aurelienmizeret.com</a></li>
-        <li><a href="https://www.linkedin.com/in/aur%C3%A9lien-mizeret/" rel="me">LinkedIn</a></li>
-        <li><a href="#" rel="me">YouTube</a></li>
+        <li><a href={liens.linkedin} rel="me">LinkedIn</a></li>
+        <li><a href={liens.youtube} rel="me">YouTube</a></li>
         <li><a href="/mentions-legales/">Mentions légales</a></li>
         <li><a href="/confidentialite/">Politique de confidentialité</a></li>
       </ul>

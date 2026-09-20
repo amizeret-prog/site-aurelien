@@ -1,7 +1,19 @@
 ---
 // Fil d'Ariane : situe la page, se lit de gauche à droite.
+// Publie aussi le même chemin en données structurées (BreadcrumbList) pour Google.
+import JsonLd from './JsonLd.astro';
 interface Props { items: { label: string; href?: string }[] }
 const { items } = Astro.props;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((i, n) => ({
+    '@type': 'ListItem',
+    position: n + 1,
+    name: i.label,
+    item: new URL(n === items.length - 1 ? Astro.url.pathname : (i.href ?? Astro.url.pathname), Astro.site).href,
+  })),
+};
 ---
 <nav class="crumbs" aria-label="Fil d'Ariane">
   <ol>
@@ -12,6 +24,7 @@ const { items } = Astro.props;
     ))}
   </ol>
 </nav>
+<JsonLd data={schema} />
 
 <style>
   .crumbs { margin-bottom: 2rem; font-size: .9375rem; color: var(--on-ink-soft); }

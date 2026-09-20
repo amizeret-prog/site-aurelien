@@ -2,11 +2,25 @@
 import PageSimple from '../layouts/PageSimple.astro';
 import ProofBand from '../components/ProofBand.astro';
 import FinalCta from '../components/FinalCta.astro';
+import { ids, liens, SITE } from '../data/identite';
+
+// Page de profil : elle désigne Aurélien Mizeret comme sujet principal, pour les moteurs.
+const profil = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE}/a-propos/#page`,
+  url: `${SITE}/a-propos/`,
+  name: 'À propos d’Aurélien Mizeret',
+  inLanguage: 'fr-FR',
+  isPartOf: { '@id': ids.site },
+  mainEntity: { '@id': ids.personne },
+};
 ---
 <PageSimple
   title="Aurélien Mizeret, conseil en IA et décision humaine"
   description="18 ans à comprendre ce qui fait décider, agir et s'engager. J'accompagne DRH et dirigeants pour que l'IA renforce le jugement de leurs équipes."
   fil="À propos"
+  ogType="profile"
+  schema={[profil]}
   h1="Comprendre ce qui fait décider les humains, pour que l'IA les renforce."
   chapo="Je suis Aurélien Mizeret. Depuis dix-huit ans, j'accompagne des dirigeants, des DRH et des équipes là où se joue la performance durable : la façon dont les personnes décident, s'engagent et coopèrent. L'IA ne change pas cette réalité. Elle l'accélère."
 >
@@ -40,6 +54,9 @@ import FinalCta from '../components/FinalCta.astro';
         <li><strong><a href="/entretiens/">Ceux qui décident</a></strong> : une série d'entretiens avec des DRH et des dirigeants sur leur conduite de l'IA.</li>
         <li><strong>Vu et entendu dans</strong> Notélé, Solutions Magazine, Les Lettres Libres.</li>
       </ul>
+
+      <h2>Me retrouver</h2>
+      <p>Je publie mes réflexions sur <a href={liens.linkedin} rel="me">LinkedIn</a> et mes vidéos sur la chaîne YouTube <a href={liens.youtube} rel="me">Le dirigeant augmenté</a>. Le livre a son propre site : <a href={liens.siteLivre} rel="me">cequeliafaitdenous.com</a>.</p>
 
       <h2>Où j'interviens</h2>
       <p>Paris et Île-de-France, Hauts-de-France, Bruxelles et Luxembourg. D'autres déplacements restent possibles selon les missions.</p>

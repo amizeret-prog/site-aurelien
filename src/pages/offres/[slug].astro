@@ -9,6 +9,7 @@ import Faq from '../../components/Faq.astro';
 import FinalCta from '../../components/FinalCta.astro';
 import StickyCta from '../../components/StickyCta.astro';
 import { offres, urlOffre, type Offre } from '../../data/offres';
+import { ids, SITE } from '../../data/identite';
 
 export function getStaticPaths() {
   return offres.map((offre, i) => ({
@@ -23,8 +24,20 @@ const voisines = [
   avant && { o: avant, label: 'Étape précédente' },
   apres && { o: apres, label: 'Étape suivante' },
 ].filter(Boolean) as { o: Offre; label: string }[];
+
+// Données structurées : la prestation, rattachée au cabinet.
+const service = {
+  '@type': 'Service',
+  '@id': `${SITE}${urlOffre(offre.slug)}#service`,
+  name: offre.nom,
+  description: offre.description,
+  url: `${SITE}${urlOffre(offre.slug)}`,
+  provider: { '@id': ids.cabinet },
+  areaServed: ['FR', 'BE', 'LU'],
+  audience: { '@type': 'BusinessAudience', name: 'Directions générales et DRH' },
+};
 ---
-<Base title={offre.seoTitle} description={offre.description} bodyClass="has-sticky">
+<Base title={offre.seoTitle} description={offre.description} bodyClass="has-sticky" schema={[service]}>
 
   <section class="section section--ink hero">
     <div class="container">

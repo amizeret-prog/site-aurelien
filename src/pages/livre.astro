@@ -1,11 +1,14 @@
 ---
 import PageSimple from '../layouts/PageSimple.astro';
 import Button from '../components/Button.astro';
+import { entiteLivre, livre, liens } from '../data/identite';
 ---
 <PageSimple
   title="Ce que l'IA fait de nous, le livre d'Aurélien Mizeret"
   description="Un regard d'éclaireur sur ce que l'IA transforme dans nos décisions, nos liens et notre façon de transmettre. Prologue et premier chapitre offerts."
   fil="Le livre"
+  ogType="book"
+  schema={[entiteLivre]}
   eyebrow="Le livre"
   h1="Ce que l'IA fait de nous"
   chapo="Ce que l'IA transforme dans nos décisions, nos liens et notre façon de transmettre."
@@ -24,15 +27,17 @@ import Button from '../components/Button.astro';
         </ul>
         <dl class="reperes">
           <div><dt>Parution</dt><dd>28 juillet 2026</dd></div>
-          <div><dt>Format</dt><dd>Environ 220 pages</dd></div>
+          <div><dt>Format</dt><dd>Broché, {livre.pages} pages, et ebook Kindle</dd></div>
+          <div><dt>ISBN (broché)</dt><dd>{livre.isbnAffiche}</dd></div>
+          <div><dt>Édition</dt><dd>Autoédition</dd></div>
           <div><dt>Classement</dt><dd>Top 100 Amazon « Individus et société » depuis sa sortie <span class="a-completer">à vérifier au lancement</span></dd></div>
         </dl>
         <div class="actions">
-          <Button href="https://cequeliafaitdenous.com/" variant="secondary">Lire le prologue et le premier chapitre</Button>
+          <Button href={liens.siteLivre} variant="secondary">Lire le prologue et le premier chapitre</Button>
         </div>
         <ul class="achats">
-          <li><a class="link-strong" href="https://www.amazon.fr/dp/B0HBZ4JY2M" rel="noopener">Broché, 18,90 €</a></li>
-          <li><a class="link-strong" href="https://www.amazon.fr/dp/B0HBQHBDFP" rel="noopener">Ebook Kindle, 7,99 €</a></li>
+          <li><a class="link-strong" href={liens.amazonBroche} rel="noopener">Broché, 18,90 €</a></li>
+          <li><a class="link-strong" href={liens.amazonKindle} rel="noopener">Ebook Kindle, 7,99 €</a></li>
         </ul>
       </div>
     </div>
