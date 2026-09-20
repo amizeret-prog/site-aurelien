@@ -5,7 +5,7 @@ const annee = new Date().getFullYear();
   <div class="container cols">
     <div>
       <p class="nom">Aurélien Mizeret</p>
-      <p>La machine fonctionne. C'est la décision qui manque.</p>
+      <p class="signature">La machine fonctionne. C'est la décision qui manque.</p>
     </div>
     <nav aria-label="Liens de pied de page">
       <ul>
@@ -23,12 +23,13 @@ const annee = new Date().getFullYear();
 </footer>
 
 <style>
-  .site-footer { background: var(--ink-deep); padding: 3rem 0 1.5rem; margin-top: 4rem; }
+  .site-footer { background: var(--ink-deep); color: var(--on-ink-soft); padding: 3.5rem 0 1.5rem; }
   .cols { display: grid; gap: 2rem; }
-  .nom { font-family: var(--font-title); font-weight: 800; }
+  .nom { font-family: var(--font-title); font-weight: 800; color: var(--on-ink); margin-bottom: .25rem; }
+  .signature { margin: 0; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
-  a { color: var(--paper); text-decoration: none; }
+  a { color: var(--on-ink); text-decoration: none; }
   a:hover { color: var(--gold); }
-  .copy { font-size: .85rem; opacity: .7; margin-top: 2rem; }
+  .copy { font-size: .9375rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line-ink); }
   @media (min-width: 768px) { .cols { grid-template-columns: 2fr 1fr 1fr; } }
 </style>

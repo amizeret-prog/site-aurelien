@@ -6,13 +6,18 @@ const liens = [
   { href: '/livre/', label: 'Livre' },
   { href: '/a-propos/', label: 'À propos' },
 ];
+const actuel = Astro.url.pathname;
 ---
 <header class="site-header">
   <div class="container bar">
     <a href="/" class="logo">Aurélien Mizeret</a>
 
     <nav class="nav-desktop" aria-label="Navigation principale">
-      <ul>{liens.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      <ul>
+        {liens.map((l) => (
+          <li><a href={l.href} aria-current={actuel.startsWith(l.href) ? 'page' : undefined}>{l.label}</a></li>
+        ))}
+      </ul>
     </nav>
 
     <a class="btn btn-primary cta" href="/contact/">Réserver un échange de 30 min</a>
@@ -30,23 +35,24 @@ const liens = [
 </header>
 
 <style>
-  .site-header { position: relative; border-bottom: 1px solid rgba(199, 171, 90, .25); }
+  .site-header { position: relative; background: var(--ink); border-bottom: 1px solid var(--line-ink); }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 72px; }
-  .logo { font-family: var(--font-title); font-weight: 800; color: var(--paper); text-decoration: none; font-size: 1.1rem; }
+  .logo { font-family: var(--font-title); font-weight: 800; color: var(--on-ink); text-decoration: none; font-size: 1.125rem; letter-spacing: -0.02em; }
   ul { list-style: none; margin: 0; padding: 0; }
-  a:not(.btn) { color: var(--paper); text-decoration: none; }
-  a:not(.btn):hover { color: var(--gold); }
+  a:not(.btn) { color: var(--on-ink); text-decoration: none; }
+  a:not(.btn):hover, a[aria-current='page'] { color: var(--gold); }
 
   .nav-desktop, .cta { display: none; }
 
-  .nav-mobile summary { cursor: pointer; list-style: none; font-family: var(--font-title); font-weight: 700; }
+  .nav-mobile summary { cursor: pointer; list-style: none; font-family: var(--font-title); font-weight: 700; padding: .5rem 0; }
   .nav-mobile summary::-webkit-details-marker { display: none; }
   .nav-mobile ul {
     position: absolute; left: 0; right: 0; top: 72px; z-index: 5;
-    display: grid; gap: 1rem; padding: 1.25rem; background: var(--ink-deep);
+    display: grid; gap: 1.25rem; padding: 1.5rem 1.25rem; background: var(--ink-deep);
+    border-bottom: 1px solid var(--line-ink);
   }
 
-  @media (min-width: 960px) {
+  @media (min-width: 1024px) {
     .nav-mobile { display: none; }
     .nav-desktop, .cta { display: block; }
     .nav-desktop ul { display: flex; gap: 1.75rem; }

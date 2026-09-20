@@ -1,0 +1,25 @@
+---
+// Titre de section : sur-titre facultatif (uniquement s'il situe le lecteur), titre, chapô.
+interface Props {
+  eyebrow?: string;
+  title: string;
+  level?: 'h1' | 'h2';
+}
+const { eyebrow, title, level = 'h2' } = Astro.props;
+const Tag = level;
+const aChapo = Astro.slots.has('default');
+---
+<div class="section-title">
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag>{title}</Tag>
+  {aChapo && <div class="lead"><slot /></div>}
+</div>
+
+<style>
+  .section-title { max-width: 46rem; margin-bottom: 2.5rem; }
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  :global(.section--light) .eyebrow { color: var(--gold-text); }
+  .lead { font-size: 1.1875rem; color: var(--on-ink-soft); }
+  :global(.section--light) .lead { color: var(--text); }
+  .lead :global(p:last-child) { margin-bottom: 0; }
+</style>

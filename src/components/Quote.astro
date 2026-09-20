@@ -1,0 +1,30 @@
+---
+// Bloc citation : sur clair (fond or très clair) ou sur encre.
+interface Props {
+  author: string;
+  role?: string;
+  tone?: 'light' | 'ink';
+}
+const { author, role, tone = 'light' } = Astro.props;
+---
+<figure class:list={['quote', tone]}>
+  <blockquote><slot /></blockquote>
+  <figcaption>
+    <span class="author">{author}</span>
+    {role && <span class="role">{role}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .quote { margin: 0; padding: 2rem 1.75rem; border-top: 6px solid var(--gold); max-width: 50rem; }
+  .light { background: var(--surface-gold); color: var(--text); }
+  .ink { background: var(--ink); color: var(--on-ink); }
+  blockquote { margin: 0 0 1.25rem; font-family: var(--font-title); font-weight: 600; font-size: 1.375rem; line-height: 1.35; letter-spacing: -0.015em; }
+  .light blockquote { color: var(--ink); }
+  blockquote :global(p) { margin: 0; }
+  figcaption { display: flex; flex-direction: column; }
+  .author { font-family: var(--font-title); font-weight: 700; }
+  .light .role { color: var(--text-soft); }
+  .ink .role { color: var(--on-ink-soft); }
+  @media (min-width: 768px) { .quote { padding: 2.5rem 2.5rem; } blockquote { font-size: 1.625rem; } }
+</style>

@@ -1,0 +1,33 @@
+---
+// Bloc FAQ : questions dépliables, sans JavaScript.
+interface Props {
+  items: { question: string; answer: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="faq">
+  {items.map((i) => (
+    <details>
+      <summary>{i.question}</summary>
+      <p>{i.answer}</p>
+    </details>
+  ))}
+</div>
+
+<style>
+  .faq { max-width: 50rem; background: var(--surface); border-radius: var(--radius); }
+  details { border-bottom: 1px solid var(--line); }
+  details:last-child { border-bottom: 0; }
+  summary {
+    list-style: none; cursor: pointer; position: relative;
+    padding: 1.25rem 3rem 1.25rem 1.5rem;
+    font-family: var(--font-title); font-weight: 700; color: var(--ink);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: '+'; position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%);
+    font-size: 1.5rem; font-weight: 600; color: var(--gold-text);
+  }
+  details[open] summary::after { content: '−'; }
+  p { margin: 0; padding: 0 1.5rem 1.5rem; color: var(--text); max-width: var(--measure); }
+</style>

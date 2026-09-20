@@ -1,0 +1,37 @@
+---
+// Bandeau de preuves, sur encre profonde. Noms de clients en texte, jamais en logo.
+interface Props {
+  figures: { value: string; label: string }[];
+  clients?: string[];
+}
+const { figures, clients = [] } = Astro.props;
+---
+<section class="proof" aria-label="Repères">
+  <div class="container">
+    <ul class="figures">
+      {figures.map((f) => (
+        <li>
+          <span class="value">{f.value}</span>
+          <span class="label">{f.label}</span>
+        </li>
+      ))}
+    </ul>
+    {clients.length > 0 && (
+      <p class="clients">
+        <span class="intro">Références :</span>
+        {clients.map((c, i) => <span>{c}{i < clients.length - 1 ? ', ' : ''}</span>)}
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .proof { background: var(--ink-deep); color: var(--on-ink); padding: 3rem 0; }
+  .figures { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.75rem; }
+  .figures li { display: flex; flex-direction: column; gap: .25rem; }
+  .value { font-family: var(--font-title); font-weight: 800; font-size: 2.75rem; line-height: 1; letter-spacing: -0.03em; color: var(--gold); }
+  .label { color: var(--on-ink-soft); }
+  .clients { margin: 2.5rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--line-ink); font-family: var(--font-title); font-weight: 600; color: var(--on-ink); }
+  .intro { font-family: var(--font-text); font-weight: 500; color: var(--on-ink-soft); margin-right: .5rem; }
+  @media (min-width: 768px) { .figures { grid-template-columns: repeat(3, 1fr); } }
+</style>
