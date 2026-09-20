@@ -268,7 +268,6 @@ const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, c
 <style>
   .ecran[hidden] { display: none; }
   .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
-  .intro { max-width: 52rem; margin-left: 0; }
   .intro h1 { max-width: 18ch; }
   .lead { font-size: 1.1875rem; color: var(--on-ink-soft); max-width: 46rem; }
   .puces-axes { list-style: none; padding: 0; margin: 2rem 0 2.5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
@@ -298,8 +297,9 @@ const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, c
   .options :global(input), .radio input, .consentement input { accent-color: var(--ink); width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex-shrink: 0; }
   .nav-questions { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
 
-  form { display: grid; gap: 1.1rem; margin-top: 1.5rem; }
-  form > label { display: grid; gap: .35rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
+  form[data-formulaire] { display: grid; gap: 1.1rem; margin-top: 1.5rem; }
+  form[hidden] { display: none; }
+  form[data-formulaire] > label { display: grid; gap: .35rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
   input[type='text'], input[type='email'], select {
     font: inherit; font-weight: 500; color: var(--ink); background: var(--surface);
     border: 1px solid var(--control-border); border-radius: 4px; min-height: 48px; padding: 0 .9rem;
