@@ -2,6 +2,6 @@
 
 // Lien Cal.com de l'echange de 30 min, sous la forme "identifiant/evenement"
 // (c'est la fin de l'adresse https://cal.com/identifiant/evenement).
-export const calLink = 'identifiant/30min';
+export const calLink = 'aurelien-mizeret/30min';
 
 export const calConfigure = !calLink.startsWith('identifiant/');
