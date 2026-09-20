@@ -1,0 +1,167 @@
+---
+// Gabarit d'un entretien « Ceux qui décident ».
+import { getCollection, render } from 'astro:content';
+import { Picture } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Button from '../../components/Button.astro';
+import InterviewCard from '../../components/InterviewCard.astro';
+import { estPublie, estListable, parDateDesc, formatDate } from '../../lib/publies';
+import { offreParSlug, urlOffre } from '../../data/offres';
+
+export async function getStaticPaths() {
+  const tous = await getCollection('entretiens', estPublie);
+  return tous.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content, headings } = await render(entry);
+const questions = headings.filter((h) => h.depth === 2);
+const offre = d.offre ? offreParSlug(d.offre) : undefined;
+const autres = (await getCollection('entretiens', estListable))
+  .filter((e) => e.id !== entry.id).sort(parDateDesc).slice(0, 2);
+const reperes = [d.secteur, d.pays, d.effectif].filter(Boolean).join(', ');
+const meta = [d.lecture && `${d.lecture} min de lecture`, d.date && `Publié le ${formatDate(d.date)}`].filter(Boolean).join(', ');
+const cases = d.barometre ? [
+  ['Maturité', d.barometre.maturite], ['Usage quotidien', d.barometre.usage],
+  ['Frein principal', d.barometre.frein], ["Cadre d'usage", d.barometre.cadre],
+  ['Portage', d.barometre.portage], ['Budget', d.barometre.budget],
+  ['Projet arrêté', d.barometre.projetArrete], ['Emploi', d.barometre.emploi],
+] : [];
+const initiales = d.nom.split(/\s+/).map((n) => n[0]).join('').slice(0, 2).toUpperCase();
+---
+<Base title={d.seoTitle} description={d.description}>
+
+  <section class="section section--ink tete">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Ceux qui décident', href: '/entretiens/' }, { label: d.nom }]} />
+      {d.draft && <p class="brouillon">Brouillon : visible en préproduction uniquement.</p>}
+      <p class="eyebrow">Ceux qui décident, entretien</p>
+      <h1>« {d.title} »</h1>
+      {meta && <p class="meta">{meta}</p>}
+
+      <div class="portrait-bloc">
+        <div class="portrait">
+          {d.portrait
+            ? <Picture src={d.portrait} formats={['avif', 'webp']} alt={`Portrait de ${d.nom}`} widths={[96, 192]} sizes="96px" />
+            : <span aria-hidden="true">{initiales}</span>}
+        </div>
+        <div>
+          <p class="nom">{d.nom}</p>
+          <p class="fonction">{[d.fonction, d.organisation].filter(Boolean).join(', ')}</p>
+          {reperes && <p class="reperes">{reperes}</p>}
+          {d.linkedin && <a href={d.linkedin} rel="noopener">Profil LinkedIn</a>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {cases.length > 0 && (
+    <section class="barometre" aria-labelledby="titre-barometre">
+      <div class="container">
+        <h2 id="titre-barometre">Le baromètre</h2>
+        <dl>
+          {cases.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--light">
+    <div class="container corps">
+      {questions.length > 1 && (
+        <nav class="sommaire" aria-label="Sommaire">
+          <p>Sommaire</p>
+          <ol>
+            {questions.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+            {d.enseignements && <li><a href="#enseignements">Quatre enseignements</a></li>}
+          </ol>
+        </nav>
+      )}
+      <article class="prose texte">
+        <Content />
+      </article>
+
+      {d.enseignements && (
+        <aside id="enseignements" class="enseignements">
+          <h2>Quatre enseignements transposables</h2>
+          <ol>{d.enseignements.map((e) => <li>{e}</li>)}</ol>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container pont">
+      {offre && <p class="pont-texte">{d.pont ?? offre.carte.resume} <a href={urlOffre(offre.slug)}>{offre.carte.cta}</a></p>}
+      <div class="actions">
+        <Button href="/diagnostic/">Faire le diagnostic</Button>
+        <Button href="/contact/#rdv" variant="secondary">Réserver un échange de 30 min</Button>
+      </div>
+    </div>
+  </section>
+
+  {autres.length > 0 && (
+    <section class="section section--light">
+      <div class="container">
+        <h2>Autres entretiens</h2>
+        <div class="grid grid-2">
+          {autres.map((e) => (
+            <InterviewCard name={e.data.nom} role={e.data.fonction} organisation={e.data.organisation} excerpt={e.data.extrait} image={e.data.portrait} href={`/entretiens/${e.id}/`} />
+          ))}
+        </div>
+        <p class="rejoindre">Vous dirigez ou accompagnez une transition IA ? <a href="/contact/?sujet=entretien">Proposer un entretien</a></p>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .brouillon { display: inline-block; background: var(--gold); color: var(--ink); font-weight: 700; font-size: .875rem; padding: .25rem .75rem; border-radius: 4px; }
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  .tete h1 { max-width: 22ch; font-size: 2.125rem; }
+  @media (min-width: 768px) { .tete h1 { font-size: 3.25rem; } }
+  .meta { color: var(--on-ink-soft); font-size: .9375rem; }
+  .portrait-bloc { display: flex; gap: 1.25rem; align-items: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--line-ink); }
+  .portrait { width: 96px; height: 96px; flex-shrink: 0; border-radius: 50%; overflow: hidden; background: var(--ink-deep); border: 2px solid var(--gold); display: grid; place-items: center; font-family: var(--font-title); font-weight: 800; font-size: 1.75rem; color: var(--gold); }
+  .portrait :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .portrait-bloc p { margin: 0; }
+  .nom { font-family: var(--font-title); font-weight: 800; font-size: 1.25rem; }
+  .fonction { color: var(--on-ink); }
+  .reperes { color: var(--on-ink-soft); font-size: .9375rem; }
+  .portrait-bloc a { font-size: .9375rem; }
+
+  .barometre { background: var(--ink-deep); color: var(--on-ink); padding: 3rem 0; }
+  .barometre h2 { font-size: 1.25rem; color: var(--gold); margin-bottom: 1.5rem; }
+  dl { margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line-ink); border: 1px solid var(--line-ink); }
+  @media (min-width: 900px) { dl { grid-template-columns: repeat(4, 1fr); } }
+  dl div { background: var(--ink-deep); padding: 1rem 1.1rem; }
+  dt { font-size: .875rem; color: var(--on-ink-soft); }
+  dd { margin: .25rem 0 0; font-family: var(--font-title); font-weight: 700; font-size: 1.0625rem; line-height: 1.25; }
+
+  .corps { display: grid; gap: 2.5rem; }
+  @media (min-width: 1024px) {
+    .corps { grid-template-columns: 16rem minmax(0, 1fr); column-gap: 4rem; }
+    .sommaire { grid-row: span 2; position: sticky; top: 2rem; align-self: start; }
+    .texte, .enseignements { grid-column: 2; }
+  }
+  .sommaire p { font-family: var(--font-title); font-weight: 700; color: var(--ink); margin-bottom: .75rem; }
+  .sommaire ol { margin: 0; padding-left: 1.1rem; display: grid; gap: .6rem; font-size: .9375rem; }
+  .sommaire a { color: var(--text); text-decoration-thickness: 1px; }
+  .texte :global(h2) { font-size: 1.5rem; }
+  @media (min-width: 768px) { .texte :global(h2) { font-size: 1.875rem; } }
+  .texte :global(blockquote) {
+    margin: 2.5rem 0; padding: 1.75rem 0; border-top: 3px solid var(--gold); border-bottom: 1px solid var(--line);
+    font-family: var(--font-title); font-weight: 600; font-size: 1.375rem; line-height: 1.35; color: var(--ink); letter-spacing: -0.015em;
+  }
+  .texte :global(blockquote p) { margin: 0; }
+  .enseignements { background: var(--surface-gold); border-top: 6px solid var(--gold); padding: 2rem; border-radius: 0 0 var(--radius) var(--radius); max-width: var(--measure); }
+  .enseignements h2 { font-size: 1.5rem; }
+  .enseignements ol { margin: 0; padding-left: 1.25rem; display: grid; gap: .75rem; }
+  .enseignements li::marker { font-family: var(--font-title); font-weight: 800; color: var(--gold-text); }
+
+  .pont-texte { max-width: 46rem; font-size: 1.1875rem; }
+  .pont .actions { margin-top: 1.5rem; }
+  .rejoindre { margin: 2.5rem 0 0; }
+</style>

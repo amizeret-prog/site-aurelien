@@ -1,0 +1,20 @@
+---
+// Barre fixe mobile des pages offres : l'action reste à portée de pouce.
+---
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="/contact/#rdv">Réserver un échange de 30 min</a>
+</div>
+
+<style>
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 15;
+    padding: .75rem 1.25rem calc(.75rem + env(safe-area-inset-bottom));
+    background: var(--ink-deep); border-top: 1px solid var(--line-ink);
+  }
+  .sticky-cta .btn { display: block; }
+  :global(body.has-sticky) { padding-bottom: 5rem; }
+  @media (min-width: 1024px) {
+    .sticky-cta { display: none; }
+    :global(body.has-sticky) { padding-bottom: 0; }
+  }
+</style>

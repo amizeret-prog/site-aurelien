@@ -1,0 +1,19 @@
+---
+// Gabarit des pages simples : en-tête sur encre, texte sur fond clair.
+import Base from './Base.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+interface Props { title: string; description: string; h1: string; chapo?: string; fil: string; eyebrow?: string }
+const { title, description, h1, chapo, fil, eyebrow } = Astro.props;
+---
+<Base title={title} description={description}>
+  <section class="section section--ink">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: fil }]} />
+      <SectionTitle eyebrow={eyebrow} title={h1} level="h1">
+        {chapo && <p>{chapo}</p>}
+      </SectionTitle>
+    </div>
+  </section>
+  <slot />
+</Base>

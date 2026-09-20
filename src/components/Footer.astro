@@ -6,18 +6,28 @@ const annee = new Date().getFullYear();
     <div>
       <p class="nom">Aurélien Mizeret</p>
       <p class="signature">La machine fonctionne. C'est la décision qui manque.</p>
+      <p class="zones">Paris et Île-de-France, Hauts-de-France, Bruxelles, Luxembourg.</p>
     </div>
-    <nav aria-label="Liens de pied de page">
+    <nav aria-label="Rubriques">
+      <ul>
+        <li><a href="/offres/">Offres</a></li>
+        <li><a href="/diagnostic/">Diagnostic</a></li>
+        <li><a href="/entretiens/">Ceux qui décident</a></li>
+        <li><a href="/analyses/">Analyses</a></li>
+        <li><a href="/livre/">Le livre</a></li>
+        <li><a href="/a-propos/">À propos</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Contact et informations légales">
       <ul>
         <li><a href="/contact/">Contact</a></li>
+        <li><a href="mailto:hello@aurelienmizeret.com">hello@aurelienmizeret.com</a></li>
+        <li><a href="https://www.linkedin.com/in/aur%C3%A9lien-mizeret/" rel="me">LinkedIn</a></li>
+        <li><a href="#" rel="me">YouTube</a></li>
         <li><a href="/mentions-legales/">Mentions légales</a></li>
         <li><a href="/confidentialite/">Politique de confidentialité</a></li>
       </ul>
     </nav>
-    <ul>
-      <li><a href="https://www.linkedin.com/in/aur%C3%A9lien-mizeret/" rel="me">LinkedIn</a></li>
-      <li><a href="#" rel="me">YouTube</a></li>
-    </ul>
   </div>
   <p class="container copy">© {annee} Aurélien Mizeret</p>
 </footer>
@@ -26,7 +36,8 @@ const annee = new Date().getFullYear();
   .site-footer { background: var(--ink-deep); color: var(--on-ink-soft); padding: 3.5rem 0 1.5rem; }
   .cols { display: grid; gap: 2rem; }
   .nom { font-family: var(--font-title); font-weight: 800; color: var(--on-ink); margin-bottom: .25rem; }
-  .signature { margin: 0; }
+  .signature { margin: 0 0 1rem; }
+  .zones { font-size: .9375rem; margin: 0; }
   ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
   a { color: var(--on-ink); text-decoration: none; }
   a:hover { color: var(--gold); }

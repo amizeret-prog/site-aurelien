@@ -3,20 +3,21 @@
 interface Props {
   title: string;
   price: string;
-  audience: string;
+  audience?: string;
   href: string;
   featured?: boolean;
   badge?: string;
+  cta?: string;
 }
-const { title, price, audience, href, featured = false, badge } = Astro.props;
+const { title, price, audience, href, featured = false, badge, cta = "Voir le détail de l'offre" } = Astro.props;
 ---
 <article class:list={['offer', { featured }]}>
   {badge && <p class="badge">{badge}</p>}
   <h3>{title}</h3>
   <p class="price">{price}</p>
   <div class="desc"><slot /></div>
-  <p class="audience"><strong>Pour qui :</strong> {audience}</p>
-  <a class="more" href={href}>Voir le détail de l'offre</a>
+  {audience && <p class="audience"><strong>Pour qui :</strong> {audience}</p>}
+  <a class="more" href={href}>{cta}</a>
 </article>
 
 <style>
@@ -24,7 +25,7 @@ const { title, price, audience, href, featured = false, badge } = Astro.props;
     display: flex; flex-direction: column; gap: .75rem;
     background: var(--surface); color: var(--text);
     border-top: 6px solid var(--gold); border-radius: 0 0 var(--radius) var(--radius);
-    padding: 1.75rem;
+    padding: 1.75rem; height: 100%;
   }
   .featured { background: var(--surface-gold); }
   .badge { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin: 0; }

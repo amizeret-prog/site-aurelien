@@ -24,6 +24,7 @@ const { author, role, tone = 'light' } = Astro.props;
   blockquote :global(p) { margin: 0; }
   figcaption { display: flex; flex-direction: column; }
   .author { font-family: var(--font-title); font-weight: 700; }
+  .ink .author { color: var(--gold); }
   .light .role { color: var(--text-soft); }
   .ink .role { color: var(--on-ink-soft); }
   @media (min-width: 768px) { .quote { padding: 2.5rem 2.5rem; } blockquote { font-size: 1.625rem; } }

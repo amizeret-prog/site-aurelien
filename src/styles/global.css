@@ -27,7 +27,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 1.5rem; }
 
 body {
   margin: 0;
@@ -72,8 +72,11 @@ a {
 .section--ink { background: var(--ink); color: var(--on-ink); }
 .section--deep { background: var(--ink-deep); color: var(--on-ink); }
 .section--light { background: var(--bg); color: var(--text); }
-.section--light h1, .section--light h2, .section--light h3 { color: var(--ink); }
-.section--light :focus-visible { outline-color: var(--ink); }
+.section--white { background: var(--surface); color: var(--text); }
+.section--light h1, .section--light h2, .section--light h3,
+.section--white h1, .section--white h2, .section--white h3 { color: var(--ink); }
+.section--light :focus-visible, .section--white :focus-visible { outline-color: var(--ink); }
+.section--tight { padding-top: 0; }
 @media (min-width: 768px) { .section { padding: 6rem 0; } }
 
 /* Boutons : un principal, un secondaire */
@@ -88,14 +91,43 @@ a {
   text-decoration: none;
   border: 2px solid transparent;
   cursor: pointer;
+  text-align: center;
 }
 .btn-primary { background: var(--gold); color: var(--ink); }
 .btn-primary:hover { background: var(--gold-hover); }
 .btn-secondary { border-color: var(--gold); color: var(--gold); background: transparent; }
 .btn-secondary:hover { background: var(--ink-hover); }
 /* Sur fond clair, jamais de texte or : le secondaire passe à l'encre */
-.section--light .btn-secondary { border-color: var(--ink); color: var(--ink); }
-.section--light .btn-secondary:hover { background: var(--surface); }
+.section--light .btn-secondary, .section--white .btn-secondary { border-color: var(--ink); color: var(--ink); }
+.section--light .btn-secondary:hover, .section--white .btn-secondary:hover { background: var(--surface); }
+
+/* Utilitaires de mise en page partagés par les gabarits */
+.actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+.grid { display: grid; gap: 1.5rem; }
+@media (min-width: 900px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+.card { background: var(--surface); color: var(--text); padding: 1.75rem; border-radius: var(--radius); }
+.card h3 { color: var(--ink); font-size: 1.25rem; margin-bottom: .5rem; }
+.card p:last-child { margin-bottom: 0; }
+.link-strong { font-family: var(--font-title); font-weight: 700; }
+.muted { color: var(--text-soft); }
+.section--ink .muted, .section--deep .muted { color: var(--on-ink-soft); }
+
+/* Texte long (pages simples, entretiens, analyses) */
+.prose { max-width: var(--measure); }
+.prose h2 { font-size: 1.625rem; margin: 2.5rem 0 .75rem; }
+.prose h3 { font-size: 1.25rem; margin: 2rem 0 .5rem; }
+@media (min-width: 768px) { .prose h2 { font-size: 2rem; } }
+.prose ul, .prose ol { padding-left: 1.25rem; margin: 0 0 1.25em; }
+.prose li { margin-bottom: .4em; }
+.prose li::marker { color: var(--gold-text); }
+.prose strong { color: var(--ink); }
+.prose > :first-child { margin-top: 0; }
+
+/* Mention à compléter avant la mise en ligne, visible en préproduction */
+.a-completer { background: var(--surface-gold); outline: 1px dashed var(--gold-text); padding: 0 .25em; }
 
 .skip { position: absolute; left: -9999px; }
 .skip:focus {
@@ -104,5 +136,5 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }

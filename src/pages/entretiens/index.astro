@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import InterviewCard from '../../components/InterviewCard.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { estListable, parDateDesc } from '../../lib/publies';
+
+const entretiens = (await getCollection('entretiens', estListable)).sort(parDateDesc);
+---
+<Base title="Ceux qui décident : des DRH et des dirigeants racontent comment ils conduisent l'IA | Aurélien Mizeret" description="Santé, énergie, industrie pharmaceutique, services numériques : des responsables partagent leurs choix, leurs réussites et leurs enseignements sur l'IA en entreprise.">
+  <section class="section section--ink">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Ceux qui décident' }]} />
+      <SectionTitle eyebrow="Ceux qui décident" title="Des DRH et des dirigeants racontent comment ils conduisent l'IA." level="h1">
+        <p>Santé, énergie, industrie pharmaceutique, services numériques : des responsables partagent leurs choix, leurs réussites et leurs enseignements. Une matière concrète pour éclairer vos propres décisions.</p>
+      </SectionTitle>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <div class="grid grid-3">
+        {entretiens.map((e) => (
+          <InterviewCard name={e.data.nom} role={e.data.fonction} organisation={e.data.organisation} excerpt={e.data.extrait} image={e.data.portrait} href={`/entretiens/${e.id}/`} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container rejoindre">
+      <h2>Vous dirigez ou accompagnez une transition IA ?</h2>
+      <p>Partagez votre expérience dans Ceux qui décident. Vingt minutes de questions, une relecture intégrale avant publication, et votre parole valorisée auprès de vos pairs.</p>
+      <a class="link-strong" href="/contact/?sujet=entretien">Proposer un entretien</a>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>
+
+<style>
+  .rejoindre { max-width: 46rem; }
+  .rejoindre h2 { font-size: 1.875rem; }
+  .rejoindre a { color: var(--ink); }
+</style>

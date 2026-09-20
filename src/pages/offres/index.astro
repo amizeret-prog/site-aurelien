@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import Button from '../../components/Button.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { offres, urlOffre } from '../../data/offres';
+---
+<Base title="Offres : décision, humain et IA en entreprise | Aurélien Mizeret" description="Journée Décision IA, Cadrage, Audit, Programme de gouvernance humaine, Executive Confidant : un parcours adapté à chaque étape de votre transition IA.">
+  <section class="section section--ink">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Offres' }]} />
+      <SectionTitle eyebrow="Accompagnements" title="Un parcours adapté à chaque étape de votre transition." level="h1">
+        <p>Cinq accompagnements, du premier alignement de votre direction jusqu'au déploiement dans la durée. Chacun peut se suivre seul ; ensemble, ils forment un parcours cohérent.</p>
+      </SectionTitle>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <div class="grid grid-3 escalier">
+        {offres.map((o, i) => (
+          <div class:list={[{ premier: i === 0 }]}>
+            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
+              <p>{o.carte.resume}</p>
+            </OfferCard>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container">
+      <SectionTitle eyebrow="Diagnostic gratuit" title="Vous hésitez sur la première étape ?">
+        <p>En cinq minutes, le diagnostic situe votre organisation sur cinq axes et vous indique l'accompagnement le plus utile pour commencer.</p>
+      </SectionTitle>
+      <Button href="/diagnostic/">Faire le diagnostic</Button>
+    </div>
+  </section>
+
+  <FinalCta withDiagnostic={false} />
+</Base>
+
+<style>
+  @media (min-width: 900px) { .escalier .premier { grid-column: span 2; } }
+</style>

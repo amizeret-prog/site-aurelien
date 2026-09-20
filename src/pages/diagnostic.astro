@@ -1,0 +1,316 @@
+---
+// Gabarit du diagnostic : quatre écrans (entrée, questions, coordonnées, résultat) sur une seule page.
+import Base from '../layouts/Base.astro';
+import { axes, questions } from '../data/diagnostic';
+import { offres } from '../data/offres';
+const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, cta: o.carte.cta }]));
+---
+<Base title="Diagnostic : où en est la décision dans votre organisation ? | Aurélien Mizeret" description="En cinq minutes, mesurez comment l'IA fait évoluer la façon dont votre organisation décide, coopère et apprend. Lecture personnalisée de vos forces et de vos leviers prioritaires.">
+  <div id="diag" data-offres={JSON.stringify(nomsOffres)}>
+
+    <section id="ecran-intro" class="section section--ink ecran">
+      <div class="container intro">
+        <p class="eyebrow">Diagnostic gratuit, 16 questions, 5 minutes</p>
+        <h1 tabindex="-1">Où en est la décision dans votre organisation ?</h1>
+        <p class="lead">Mesurez comment l'IA fait évoluer la façon dont votre organisation décide, coopère et apprend. Vous recevez une lecture personnalisée de vos forces et de vos leviers prioritaires.</p>
+        <ul class="puces-axes" aria-label="Les cinq axes mesurés">
+          {axes.map((a) => <li>{a.nom}</li>)}
+        </ul>
+        <button type="button" class="btn btn-primary" data-action="commencer">Commencer le diagnostic</button>
+        <p class="note">Réponses confidentielles. Vos coordonnées sont demandées à la fin, juste avant votre résultat.</p>
+        <noscript><p class="note">Le diagnostic nécessite JavaScript. Vous pouvez aussi <a href="/contact/#rdv">réserver un échange de 30 min</a>.</p></noscript>
+      </div>
+    </section>
+
+    <section id="ecran-questions" class="section section--light ecran" hidden>
+      <div class="container etroit">
+        <div class="progression">
+          <p><span data-axe></span><span data-compteur aria-live="polite"></span></p>
+          <div class="barre" aria-hidden="true"><div data-remplissage></div></div>
+        </div>
+        <fieldset>
+          <legend><h2 tabindex="-1" data-question></h2></legend>
+          <div class="options" data-options></div>
+        </fieldset>
+        <div class="nav-questions">
+          <button type="button" class="btn btn-secondary" data-action="retour">Retour</button>
+          <button type="button" class="btn btn-primary" data-action="suivant" disabled>Question suivante</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecran-coordonnees" class="section section--light ecran" hidden>
+      <div class="container etroit">
+        <div class="barre pleine" aria-hidden="true"><div></div></div>
+        <h2 tabindex="-1">Votre lecture personnalisée est prête.</h2>
+        <p>Indiquez vos coordonnées pour l'afficher. Une dernière question, non notée, nous aide à préparer un éventuel échange.</p>
+        <form data-formulaire novalidate>
+          <label>Prénom et nom<input name="nom" type="text" autocomplete="name" required /></label>
+          <label>E-mail professionnel<input name="email" type="email" autocomplete="email" required /></label>
+          <label>Fonction<input name="fonction" type="text" autocomplete="organization-title" required /></label>
+          <label>Taille de l'organisation
+            <select name="taille" required>
+              <option value="">Choisir</option>
+              <option>Moins de 250 collaborateurs</option>
+              <option>250 à 1 000 collaborateurs</option>
+              <option>1 000 à 5 000 collaborateurs</option>
+              <option>Plus de 5 000 collaborateurs</option>
+            </select>
+          </label>
+          <fieldset class="six-mois">
+            <legend>Un choix de solution IA est-il prévu dans les six mois ?</legend>
+            <label class="radio"><input type="radio" name="choix6mois" value="oui" /> Oui</label>
+            <label class="radio"><input type="radio" name="choix6mois" value="non" /> Non</label>
+            <label class="radio"><input type="radio" name="choix6mois" value="nsp" /> Je ne sais pas</label>
+          </fieldset>
+          <label class="consentement"><input type="checkbox" name="consentement" required /> <span>J'accepte que mes réponses servent à établir ma lecture personnalisée. <a href="/confidentialite/">Politique de confidentialité</a></span></label>
+          <p class="erreur" data-erreur role="alert" hidden></p>
+          <div class="nav-questions">
+            <button type="button" class="btn btn-secondary" data-action="retour-questions">Retour</button>
+            <button type="submit" class="btn btn-primary">Voir mon résultat</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="ecran-resultat" class="ecran" hidden>
+      <div class="section section--ink">
+        <div class="container resultat-tete">
+          <div>
+            <p class="eyebrow">Votre lecture</p>
+            <h2 tabindex="-1" data-profil></h2>
+            <p class="lead" data-profil-texte></p>
+            <p class="score" data-score></p>
+          </div>
+          <svg class="radar" viewBox="-190 -140 380 280" role="img" aria-label="Radar de vos résultats sur les cinq axes" data-radar></svg>
+        </div>
+      </div>
+      <div class="section section--light">
+        <div class="container">
+          <ul class="axes-resultat" data-barres></ul>
+          <div class="grid grid-2 lectures">
+            <div class="card"><p class="label-carte">Votre force</p><h3 data-force-nom></h3><p data-force></p></div>
+            <div class="card"><p class="label-carte">Votre levier prioritaire</p><h3 data-levier-nom></h3><p data-levier></p></div>
+          </div>
+          <div class="recommandation">
+            <p class="label-carte">Étape recommandée</p>
+            <h3 data-offre-nom></h3>
+            <p data-offre-pourquoi></p>
+            <a class="link-strong" data-offre-lien href="/offres/"></a>
+          </div>
+          <div class="actions">
+            <a class="btn btn-primary" href="/contact/#rdv">Réserver un échange de 30 min</a>
+          </div>
+          <p class="livre">Pour aller plus loin : <em>Ce que l'IA fait de nous</em>. <a href="/livre/">Lire les premières pages</a></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import { axes, questions, profils, pourquoiOffre, type AxeId } from '../data/diagnostic';
+
+  const racine = document.getElementById('diag')!;
+  const offres = JSON.parse(racine.dataset.offres!) as Record<string, { nom: string; cta: string }>;
+  const ecrans = ['intro', 'questions', 'coordonnees', 'resultat'].map((id) => document.getElementById(`ecran-${id}`)!);
+  const $ = <T extends Element>(sel: string, el: ParentNode = racine) => el.querySelector(sel) as T;
+  const reponses: (number | undefined)[] = new Array(questions.length).fill(undefined);
+  let index = 0;
+
+  function montrer(n: number) {
+    ecrans.forEach((e, i) => (e.hidden = i !== n));
+    window.scrollTo({ top: 0 });
+    (ecrans[n].querySelector('[tabindex="-1"]') as HTMLElement | null)?.focus({ preventScroll: true });
+  }
+
+  function afficherQuestion() {
+    const q = questions[index];
+    const axe = axes.find((a) => a.id === q.axe)!;
+    $('[data-axe]').textContent = `Axe ${axes.indexOf(axe) + 1}, ${axe.nom}`;
+    $('[data-compteur]').textContent = `Question ${index + 1} sur ${questions.length}`;
+    $<HTMLElement>('[data-remplissage]').style.width = `${(index / questions.length) * 100}%`;
+    $('[data-question]').textContent = q.texte;
+    const options = $('[data-options]');
+    options.innerHTML = '';
+    q.reponses.forEach((texte, i) => {
+      const label = document.createElement('label');
+      label.className = 'option';
+      const input = document.createElement('input');
+      input.type = 'radio'; input.name = `q${index}`; input.value = String(i + 1);
+      input.checked = reponses[index] === i + 1;
+      input.addEventListener('change', () => { reponses[index] = i + 1; majSuivant(); });
+      const span = document.createElement('span'); span.textContent = texte;
+      label.append(input, span);
+      options.append(label);
+    });
+    majSuivant();
+    ($('[data-question]') as HTMLElement).focus({ preventScroll: true });
+  }
+
+  function majSuivant() {
+    const bouton = $<HTMLButtonElement>('[data-action="suivant"]');
+    bouton.disabled = reponses[index] === undefined;
+    bouton.textContent = index === questions.length - 1 ? 'Terminer' : 'Question suivante';
+  }
+
+  function calculer() {
+    const total = reponses.reduce<number>((s, r) => s + (r ?? 1), 0);
+    const parAxe = axes.map((a) => {
+      const notes = questions.map((q, i) => (q.axe === a.id ? reponses[i] ?? 1 : null)).filter((n): n is number => n !== null);
+      const pct = Math.round(((notes.reduce((s, n) => s + n, 0) - notes.length) / (3 * notes.length)) * 100);
+      return { ...a, pct };
+    });
+    const profil = profils.find((p) => total >= p.min && total <= p.max)!;
+    const tries = [...parAxe].sort((a, b) => b.pct - a.pct);
+    const force = tries[0];
+    const levier = tries[tries.length - 1];
+    const deploiement = (reponses[9] ?? 1) >= 2; // question 10 : les usages dépassent le stade marginal
+
+    // Règles de recommandation proposées à l'étape 2.4, par ordre de priorité.
+    let offre: string;
+    if (reponses[2] === 2 || reponses[2] === 3) offre = 'cadrage-decision-ia';
+    else if (total >= 52) offre = 'executive-confidant';
+    else if (parAxe.filter((a) => a.pct < 50).length >= 3) offre = 'audit-transition-ia';
+    else if ((['gouvernance', 'competences'] as AxeId[]).includes(levier.id) && deploiement) offre = 'programme-gouvernance-humaine';
+    else offre = 'journee-decision-ia';
+
+    return { total, parAxe, profil, force, levier, offre };
+  }
+
+  function radar(valeurs: number[]) {
+    const n = valeurs.length, R = 95;
+    const pt = (i: number, r: number) => {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / n;
+      return [Math.cos(a) * r, Math.sin(a) * r].map((v) => v.toFixed(1)).join(',');
+    };
+    const anneau = (f: number) => `<polygon points="${valeurs.map((_, i) => pt(i, R * f)).join(' ')}" class="anneau" />`;
+    const rayons = valeurs.map((_, i) => `<line x1="0" y1="0" x2="${pt(i, R).split(',')[0]}" y2="${pt(i, R).split(',')[1]}" class="rayon" />`).join('');
+    const forme = `<polygon points="${valeurs.map((v, i) => pt(i, R * Math.max(v, 4) / 100)).join(' ')}" class="forme" />`;
+    const labels = axes.map((a, i) => {
+      const [x, y] = pt(i, R + 22).split(',').map(Number);
+      const ancre = Math.abs(x) < 5 ? 'middle' : x > 0 ? 'start' : 'end';
+      return `<text x="${x}" y="${y}" text-anchor="${ancre}" dominant-baseline="middle">${(([m]) => m.toUpperCase())(a.nom.replace(/^(La |Les |L')/, ''))}${a.nom.replace(/^(La |Les |L')/, '').slice(1)}</text>`;
+    }).join('');
+    return [0.25, 0.5, 0.75, 1].map(anneau).join('') + rayons + forme + labels;
+  }
+
+  function afficherResultat() {
+    const r = calculer();
+    $('[data-profil]').textContent = r.profil.nom;
+    $('[data-profil-texte]').textContent = r.profil.texte;
+    $('[data-score]').textContent = `Score global : ${r.total} sur 64`;
+    $('[data-radar]').innerHTML = radar(r.parAxe.map((a) => a.pct));
+    $('[data-barres]').innerHTML = r.parAxe.map((a) =>
+      `<li><span class="nom-axe">${a.nom}</span><span class="piste"><span style="width:${Math.max(a.pct, 2)}%"></span></span><span class="pct">${a.pct} %</span></li>`).join('');
+    $('[data-force-nom]').textContent = r.force.nom;
+    $('[data-force]').textContent = r.force.force;
+    $('[data-levier-nom]').textContent = r.levier.nom;
+    $('[data-levier]').textContent = r.levier.levier;
+    $('[data-offre-nom]').textContent = offres[r.offre].nom;
+    $('[data-offre-pourquoi]').textContent = pourquoiOffre[r.offre];
+    const lien = $<HTMLAnchorElement>('[data-offre-lien]');
+    lien.href = `/offres/${r.offre}/`;
+    lien.textContent = offres[r.offre].cta;
+    return r;
+  }
+
+  racine.addEventListener('click', (e) => {
+    const action = (e.target as HTMLElement).closest<HTMLElement>('[data-action]')?.dataset.action;
+    if (action === 'commencer') { index = 0; montrer(1); afficherQuestion(); }
+    if (action === 'suivant') {
+      if (index < questions.length - 1) { index++; afficherQuestion(); }
+      else montrer(2);
+    }
+    if (action === 'retour') {
+      if (index > 0) { index--; afficherQuestion(); } else montrer(0);
+    }
+    if (action === 'retour-questions') { montrer(1); afficherQuestion(); }
+  });
+
+  $<HTMLFormElement>('[data-formulaire]').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    const erreur = $<HTMLElement>('[data-erreur]');
+    if (!form.checkValidity()) {
+      erreur.textContent = 'Complétez les champs demandés : nom, e-mail professionnel valide, fonction, taille de l\u2019organisation, et cochez la case d\u2019accord.';
+      erreur.hidden = false;
+      (form.querySelector(':invalid') as HTMLElement | null)?.focus();
+      return;
+    }
+    erreur.hidden = true;
+    const coordonnees = Object.fromEntries(new FormData(form).entries());
+    const resultat = afficherResultat();
+    montrer(3);
+    // Envoi des réponses et mesure d'audience : branchés aux étapes 4.5 et 5.2.
+    document.dispatchEvent(new CustomEvent('diagnostic:termine', { detail: { reponses, coordonnees, resultat } }));
+  });
+</script>
+
+<style>
+  .ecran[hidden] { display: none; }
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  .intro { max-width: 52rem; margin-left: 0; }
+  .intro h1 { max-width: 18ch; }
+  .lead { font-size: 1.1875rem; color: var(--on-ink-soft); max-width: 46rem; }
+  .puces-axes { list-style: none; padding: 0; margin: 2rem 0 2.5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+  .puces-axes li { border: 1px solid var(--line-ink); border-radius: 999px; padding: .45rem 1rem; font-family: var(--font-title); font-weight: 600; font-size: .9375rem; }
+  .note { margin: 1.25rem 0 0; font-size: .9375rem; color: var(--on-ink-soft); }
+  button.btn { font-size: 1rem; }
+  button.btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  .etroit { max-width: 46rem; }
+  .progression p { display: flex; justify-content: space-between; gap: 1rem; font-size: .9375rem; color: var(--text-soft); margin-bottom: .5rem; }
+  .progression [data-axe] { font-weight: 700; color: var(--gold-text); }
+  .barre { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 2.5rem; }
+  .barre div, .barre [data-remplissage] { height: 100%; background: var(--ink); transition: width .25s ease; }
+  .barre.pleine div { width: 100%; background: var(--gold); }
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  legend { padding: 0; }
+  legend h2 { font-size: 1.5rem; line-height: 1.25; margin-bottom: 1.5rem; }
+  @media (min-width: 768px) { legend h2 { font-size: 1.875rem; } }
+  .options { display: grid; gap: .75rem; }
+  .options :global(.option) {
+    display: flex; gap: .9rem; align-items: flex-start; cursor: pointer;
+    background: var(--surface); border: 2px solid var(--line); border-radius: var(--radius);
+    padding: 1rem 1.25rem; color: var(--text);
+  }
+  .options :global(.option:hover) { border-color: var(--control-border); }
+  .options :global(.option:has(input:checked)) { border-color: var(--ink); box-shadow: inset 4px 0 0 var(--gold); }
+  .options :global(input), .radio input, .consentement input { accent-color: var(--ink); width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex-shrink: 0; }
+  .nav-questions { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+
+  form { display: grid; gap: 1.1rem; margin-top: 1.5rem; }
+  form > label { display: grid; gap: .35rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
+  input[type='text'], input[type='email'], select {
+    font: inherit; font-weight: 500; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--control-border); border-radius: 4px; min-height: 48px; padding: 0 .9rem;
+  }
+  .six-mois legend { font-weight: 700; font-size: .9375rem; color: var(--ink); margin-bottom: .5rem; }
+  .radio { display: inline-flex; gap: .5rem; align-items: center; margin-right: 1.25rem; }
+  .radio input { margin-top: 0; }
+  .consentement { display: flex !important; gap: .75rem; align-items: flex-start; font-weight: 500 !important; color: var(--text) !important; }
+  .erreur { margin: 0; padding: .75rem 1rem; background: var(--surface-gold); border-left: 4px solid var(--gold-text); color: var(--ink); }
+
+  .resultat-tete { display: grid; gap: 2rem; align-items: center; }
+  @media (min-width: 900px) { .resultat-tete { grid-template-columns: 1fr 380px; } }
+  .score { font-family: var(--font-title); font-weight: 700; color: var(--gold); margin: 0; }
+  .radar { width: 100%; max-width: 380px; justify-self: center; overflow: visible; }
+  .radar :global(.anneau) { fill: none; stroke: var(--line-ink); stroke-width: 1; }
+  .radar :global(.rayon) { stroke: var(--line-ink); stroke-width: 1; }
+  .radar :global(.forme) { fill: rgba(199, 171, 90, .28); stroke: var(--gold); stroke-width: 2.5; stroke-linejoin: round; }
+  .radar :global(text) { fill: var(--on-ink-soft); font-family: var(--font-title); font-weight: 600; font-size: 12px; }
+
+  .axes-resultat { list-style: none; margin: 0 0 3rem; padding: 0; display: grid; gap: 1rem; max-width: 46rem; }
+  .axes-resultat :global(li) { display: grid; grid-template-columns: 9.5rem 1fr 3.5rem; gap: 1rem; align-items: center; }
+  .axes-resultat :global(.nom-axe) { font-family: var(--font-title); font-weight: 700; color: var(--ink); font-size: .9375rem; }
+  .axes-resultat :global(.piste) { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; }
+  .axes-resultat :global(.piste span) { display: block; height: 100%; background: var(--ink); }
+  .axes-resultat :global(.pct) { text-align: right; font-family: var(--font-title); font-weight: 700; color: var(--ink); }
+  .label-carte { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin-bottom: .35rem; }
+  .lectures .card { border-top: 3px solid var(--gold); }
+  .recommandation { margin-top: 1.5rem; background: var(--surface-gold); border-top: 6px solid var(--gold); padding: 1.75rem; border-radius: 0 0 var(--radius) var(--radius); }
+  .recommandation h3 { color: var(--ink); }
+  .recommandation a { color: var(--ink); }
+  .livre { margin: 2.5rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+</style>

@@ -1,0 +1,27 @@
+---
+// Appel final commun : un titre, une phrase, les deux seules actions du site.
+import Button from './Button.astro';
+interface Props { title?: string; text?: string; withDiagnostic?: boolean }
+const {
+  title = 'Parlons de votre prochaine décision.',
+  text = 'Un premier échange de 30 minutes pour comprendre votre contexte et identifier ensemble la meilleure première étape. Confidentiel et sans engagement.',
+  withDiagnostic = true,
+} = Astro.props;
+---
+<section class="section section--ink final">
+  <div class="container">
+    <h2>{title}</h2>
+    <p class="text">{text}</p>
+    <div class="actions">
+      <Button href="/contact/#rdv">Réserver un échange de 30 min</Button>
+      {withDiagnostic && <Button href="/diagnostic/" variant="secondary">Faire le diagnostic</Button>}
+    </div>
+    <p class="zones">Paris et Île-de-France, Hauts-de-France, Bruxelles, Luxembourg. Déplacements possibles selon les missions.</p>
+  </div>
+</section>
+
+<style>
+  .final h2 { max-width: 18ch; }
+  .text { max-width: 46rem; font-size: 1.1875rem; color: var(--on-ink-soft); }
+  .zones { margin: 2rem 0 0; font-size: .9375rem; color: var(--on-ink-soft); }
+</style>

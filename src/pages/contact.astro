@@ -1,0 +1,91 @@
+---
+import PageSimple from '../layouts/PageSimple.astro';
+const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Transition IA', 'Programme de gouvernance humaine', 'Executive Confidant', 'Conférence ou formation', 'Participer à Ceux qui décident', 'Presse', 'Autre'];
+---
+<PageSimple
+  title="Contact | Aurélien Mizeret"
+  description="Réservez un échange de 30 minutes, confidentiel et sans engagement, pour identifier la meilleure première étape de votre transition IA."
+  fil="Contact"
+  h1="Parlons de votre prochaine décision."
+  chapo="30 minutes pour comprendre votre contexte et identifier la meilleure première étape. Confidentiel et sans engagement."
+>
+  <section class="section section--light">
+    <div class="container contact">
+      <div id="rdv" class="bloc rdv">
+        <h2>Réserver un échange de 30 min</h2>
+        <p>Choisissez directement un créneau dans mon agenda.</p>
+        <div class="agenda">
+          <p>L'agenda de réservation s'affichera ici (Cal.com, étape 4.5).</p>
+        </div>
+      </div>
+
+      <div class="bloc">
+        <h2>M'écrire</h2>
+        <form name="contact" method="POST" action="/contact/merci/" data-netlify="true" netlify-honeypot="adresse">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="piege"><label>Ne pas remplir <input name="adresse" tabindex="-1" autocomplete="off" /></label></p>
+          <label>Prénom et nom<input name="nom" type="text" autocomplete="name" required /></label>
+          <label>E-mail professionnel<input name="email" type="email" autocomplete="email" required /></label>
+          <div class="deux">
+            <label>Organisation<input name="organisation" type="text" autocomplete="organization" /></label>
+            <label>Fonction<input name="fonction" type="text" autocomplete="organization-title" /></label>
+          </div>
+          <label>Sujet
+            <select name="sujet" id="sujet" required>
+              <option value="">Choisir un sujet</option>
+              {sujets.map((s) => <option>{s}</option>)}
+            </select>
+          </label>
+          <label>Message<textarea name="message" rows="6" required></textarea></label>
+          <label class="consentement"><input type="checkbox" name="consentement" required /> <span>J'accepte que ces informations servent à répondre à ma demande. <a href="/confidentialite/">Politique de confidentialité</a></span></label>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
+          <p class="delai">Réponse sous 48 h ouvrées.</p>
+        </form>
+      </div>
+
+      <div class="bloc direct">
+        <h2>Coordonnées directes</h2>
+        <ul>
+          <li><a href="mailto:hello@aurelienmizeret.com">hello@aurelienmizeret.com</a></li>
+          <li><a href="tel:+33619958971">+33 6 19 95 89 71</a></li>
+          <li><a href="https://www.linkedin.com/in/aur%C3%A9lien-mizeret/" rel="me">LinkedIn</a></li>
+        </ul>
+        <p>Paris et Île-de-France, Hauts-de-France, Bruxelles, Luxembourg.</p>
+      </div>
+    </div>
+  </section>
+</PageSimple>
+
+<script>
+  // Présélectionne le sujet depuis un lien du type /contact/?sujet=entretien
+  const param = new URLSearchParams(location.search).get('sujet');
+  const correspondances: Record<string, string> = { entretien: 'Participer à Ceux qui décident' };
+  const select = document.getElementById('sujet') as HTMLSelectElement | null;
+  if (param && select && correspondances[param]) select.value = correspondances[param];
+</script>
+
+<style>
+  .contact { display: grid; gap: 2rem; }
+  @media (min-width: 1024px) { .contact { grid-template-columns: 1fr 1fr; } .rdv { grid-column: 1 / -1; } }
+  .bloc { background: var(--surface); padding: 2rem; border-radius: var(--radius); }
+  .bloc h2 { font-size: 1.5rem; }
+  .rdv { background: var(--ink); color: var(--on-ink); }
+  .rdv h2 { color: var(--on-ink); }
+  .agenda { border: 1px dashed var(--line-ink); border-radius: var(--radius); padding: 2.5rem 1.5rem; text-align: center; color: var(--on-ink-soft); }
+  .agenda p { margin: 0; }
+  form { display: grid; gap: 1.1rem; }
+  form label { display: grid; gap: .35rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
+  .deux { display: grid; gap: 1.1rem; }
+  @media (min-width: 640px) { .deux { grid-template-columns: 1fr 1fr; } }
+  input[type='text'], input[type='email'], select, textarea {
+    font: inherit; font-weight: 500; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--control-border); border-radius: 4px; min-height: 48px; padding: .6rem .9rem;
+  }
+  .consentement { display: flex !important; gap: .75rem; align-items: flex-start; font-weight: 500 !important; color: var(--text) !important; }
+  .consentement input { accent-color: var(--ink); width: 1.15rem; height: 1.15rem; margin-top: .2rem; flex-shrink: 0; }
+  button.btn { justify-self: start; font-size: 1rem; }
+  .delai { margin: 0; font-size: .9375rem; color: var(--text-soft); }
+  .piege { position: absolute; left: -9999px; }
+  .direct ul { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .5rem; }
+  .direct a { color: var(--ink); font-family: var(--font-title); font-weight: 700; }
+</style>

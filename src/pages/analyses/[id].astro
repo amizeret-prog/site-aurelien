@@ -1,0 +1,150 @@
+---
+// Gabarit d'un article pilier : pensé pour être lu, cité et repris par Google et les assistants IA.
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Button from '../../components/Button.astro';
+import Faq from '../../components/Faq.astro';
+import { estPublie, formatDate } from '../../lib/publies';
+import { offreParSlug, urlOffre } from '../../data/offres';
+
+export async function getStaticPaths() {
+  const tous = await getCollection('analyses', estPublie);
+  return tous.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content, headings } = await render(entry);
+const intertitres = headings.filter((h) => h.depth === 2);
+const offre = d.offre ? offreParSlug(d.offre) : undefined;
+---
+<Base title={d.seoTitle ?? `${d.title} | Aurélien Mizeret`} description={d.description}>
+
+  <section class="section section--ink tete">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Analyses', href: '/analyses/' }, { label: d.theme }]} />
+      {d.draft && <p class="brouillon">Brouillon : visible en préproduction uniquement.</p>}
+      <p class="eyebrow">{d.theme}</p>
+      <h1>{d.title}</h1>
+      <p class="chapo">{d.chapo}</p>
+      <div class="auteur">
+        <span class="mono" aria-hidden="true">AM</span>
+        <p><a href="/a-propos/">Aurélien Mizeret</a><br /><span>
+          {formatDate(d.date)}{d.miseAJour && `, mis à jour le ${formatDate(d.miseAJour)}`}{d.lecture && `, ${d.lecture} min de lecture`}
+        </span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container corps">
+      <aside class="essentiel" aria-labelledby="titre-essentiel">
+        <h2 id="titre-essentiel">L'essentiel</h2>
+        <ul>{d.essentiel.map((p) => <li>{p}</li>)}</ul>
+      </aside>
+
+      {intertitres.length > 1 && (
+        <nav class="sommaire" aria-label="Sommaire">
+          <p>Sommaire</p>
+          <ol>
+            {intertitres.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+            {d.faq.length > 0 && <li><a href="#questions">Questions fréquentes</a></li>}
+          </ol>
+        </nav>
+      )}
+
+      <article class="prose texte"><Content /></article>
+
+      {offre && (
+        <aside class="pont">
+          <p class="pont-label">Pour passer à l'action</p>
+          <h2>{offre.nom}</h2>
+          <p>{d.pont ?? offre.carte.resume}</p>
+          <a class="link-strong" href={urlOffre(offre.slug)}>{offre.carte.cta}</a>
+        </aside>
+      )}
+
+      {d.faq.length > 0 && (
+        <div id="questions" class="faq-bloc">
+          <h2>Questions fréquentes</h2>
+          <Faq items={d.faq} />
+        </div>
+      )}
+
+      {d.sources.length > 0 && (
+        <div class="sources">
+          <h2>Sources</h2>
+          <ol>
+            {d.sources.map((s) => <li>{s.url ? <a href={s.url} rel="noopener">{s.label}</a> : s.label}</li>)}
+          </ol>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--deep">
+    <div class="container fin">
+      <div class="livre" aria-hidden="true"><span>Ce que l'IA fait de nous</span></div>
+      <div>
+        <p>Aurélien Mizeret, auteur de <em>Ce que l'IA fait de nous</em>. <a href="/livre/">Découvrir le livre</a></p>
+        <div class="actions">
+          <Button href="/diagnostic/">Faire le diagnostic</Button>
+          <Button href="/contact/#rdv" variant="secondary">Réserver un échange de 30 min</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .brouillon { display: inline-block; background: var(--gold); color: var(--ink); font-weight: 700; font-size: .875rem; padding: .25rem .75rem; border-radius: 4px; }
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  .tete h1 { max-width: 24ch; font-size: 2.125rem; }
+  @media (min-width: 768px) { .tete h1 { font-size: 3.25rem; } }
+  .chapo { max-width: 46rem; font-size: 1.25rem; color: var(--on-ink); }
+  .auteur { display: flex; gap: 1rem; align-items: center; margin-top: 2rem; }
+  .auteur p { margin: 0; font-size: .9375rem; }
+  .auteur a { font-family: var(--font-title); font-weight: 700; }
+  .auteur span:not(.mono) { color: var(--on-ink-soft); }
+  .mono { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--gold); display: grid; place-items: center; font-family: var(--font-title); font-weight: 800; color: var(--gold); flex-shrink: 0; }
+
+  .corps { display: grid; gap: 2.5rem; }
+  .corps > * { max-width: var(--measure); }
+  @media (min-width: 1024px) {
+    .corps { grid-template-columns: 16rem minmax(0, 1fr); column-gap: 4rem; }
+    .corps > :not(.sommaire) { grid-column: 2; }
+    .sommaire { grid-column: 1; grid-row: 2 / span 5; position: sticky; top: 2rem; align-self: start; }
+  }
+  .essentiel { background: var(--ink); color: var(--on-ink); padding: 1.75rem 2rem; border-radius: var(--radius); }
+  .essentiel h2 { color: var(--gold); font-size: 1.25rem; }
+  .essentiel ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .5rem; }
+  .essentiel li::marker { color: var(--gold); }
+  .sommaire p { font-family: var(--font-title); font-weight: 700; color: var(--ink); margin-bottom: .75rem; }
+  .sommaire ol { margin: 0; padding-left: 1.1rem; display: grid; gap: .6rem; font-size: .9375rem; }
+  .sommaire a { color: var(--text); text-decoration-thickness: 1px; }
+
+  .texte :global(h2) { font-size: 1.5rem; }
+  @media (min-width: 768px) { .texte :global(h2) { font-size: 1.875rem; } }
+  .texte :global(aside) { margin: 2rem 0; padding: 1.5rem 1.75rem; border-radius: var(--radius); }
+  .texte :global(aside p:last-child) { margin: 0; }
+  .texte :global(.definition) { background: var(--surface); border-left: 4px solid var(--gold); }
+  .texte :global(.chiffre) { background: var(--ink); color: var(--on-ink-soft); }
+  .texte :global(.bloc-label) { font-weight: 700; font-size: .875rem; color: var(--gold-text); margin-bottom: .25rem; }
+  .texte :global(.bloc-terme) { font-family: var(--font-title); font-weight: 700; font-size: 1.25rem; color: var(--ink); margin-bottom: .5rem; }
+  .texte :global(.bloc-valeur) { font-family: var(--font-title); font-weight: 800; font-size: 3rem; line-height: 1; color: var(--gold); margin-bottom: .75rem; }
+  .texte :global(blockquote) { margin: 2.5rem 0; padding: 1.5rem 0; border-top: 3px solid var(--gold); border-bottom: 1px solid var(--line); }
+  .texte :global(blockquote p:first-child) { font-family: var(--font-title); font-weight: 600; font-size: 1.3125rem; line-height: 1.35; color: var(--ink); }
+  .texte :global(blockquote p:last-child) { margin: 0; font-size: .9375rem; }
+
+  .pont { background: var(--surface-gold); border-top: 6px solid var(--gold); padding: 2rem; border-radius: 0 0 var(--radius) var(--radius); }
+  .pont-label { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin-bottom: .5rem; }
+  .pont h2 { font-size: 1.5rem; }
+  .pont a { color: var(--ink); }
+  .faq-bloc h2, .sources h2 { font-size: 1.5rem; }
+  .sources ol { margin: 0; padding-left: 1.25rem; display: grid; gap: .5rem; font-size: .9375rem; }
+
+  .fin { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
+  .livre { width: 110px; height: 160px; flex-shrink: 0; background: var(--ink); border: 1px solid var(--gold); display: grid; place-items: center; text-align: center; padding: .75rem; font-family: var(--font-title); font-weight: 800; font-size: .875rem; line-height: 1.15; color: var(--on-ink); box-shadow: 8px 8px 0 var(--gold); }
+  .fin p { margin: 0; max-width: 40rem; }
+</style>

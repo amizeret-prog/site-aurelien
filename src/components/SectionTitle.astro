@@ -18,8 +18,8 @@ const aChapo = Astro.slots.has('default');
 <style>
   .section-title { max-width: 46rem; margin-bottom: 2.5rem; }
   .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
-  :global(.section--light) .eyebrow { color: var(--gold-text); }
+  :global(.section--light) .eyebrow, :global(.section--white) .eyebrow { color: var(--gold-text); }
   .lead { font-size: 1.1875rem; color: var(--on-ink-soft); }
-  :global(.section--light) .lead { color: var(--text); }
+  :global(.section--light) .lead, :global(.section--white) .lead { color: var(--text); }
   .lead :global(p:last-child) { margin-bottom: 0; }
 </style>

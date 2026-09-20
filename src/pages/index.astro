@@ -1,13 +1,278 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import OfferCard from '../components/OfferCard.astro';
+import InterviewCard from '../components/InterviewCard.astro';
+import Quote from '../components/Quote.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { offres, urlOffre } from '../data/offres';
+import { temoignages } from '../data/temoignages';
+import { estListable, parDateDesc } from '../lib/publies';
+
+const entretiens = (await getCollection('entretiens', estListable)).sort(parDateDesc).slice(0, 3);
+const constat = [
+  { titre: 'Le jugement en mouvement', texte: "Vos équipes s'appuient chaque jour davantage sur l'IA. Tout l'enjeu est de préserver leur discernement : savoir ce que l'on délègue, ce que l'on vérifie et ce que l'on assume." },
+  { titre: 'Des émotions à accompagner', texte: "Derrière la question « vais-je être remplacé ? » se jouent l'utilité, l'identité professionnelle et la sécurité de chacun. Une organisation qui les entend gagne l'adhésion de ses équipes." },
+  { titre: 'Des directions qui tranchent', texte: 'Les projets IA avancent quand la direction partage une vision, des critères et des règles de décision claires. Chaque décision a alors un responsable, et chaque équipe un cap.' },
+];
+const repartition = [
+  { pct: 10, label: 'Algorithmes' },
+  { pct: 20, label: 'Technologie et données' },
+  { pct: 70, label: 'Personnes, processus, gouvernance' },
+];
 ---
-<Base title="Aurélien Mizeret" description="Site en construction.">
-  <section class="section section--ink">
+<Base title="Aurélien Mizeret | Décision, humain et IA en entreprise" description="J'accompagne les DRH et les directions générales pour que l'IA renforce le jugement, l'engagement et la cohésion de leurs équipes. Diagnostic, cadrage, audit et programmes sur mesure.">
+
+  <!-- 1. Ouverture -->
+  <section class="section section--ink hero">
+    <div class="container hero-grille">
+      <div>
+        <p class="eyebrow">Décision · Humain · IA</p>
+        <h1>Remettez la décision humaine au cœur de vos projets IA.</h1>
+        <p class="lead">J'accompagne les DRH et les directions générales pour que l'IA renforce le jugement, l'engagement et la cohésion de leurs équipes. Vos projets gagnent en adhésion, vos décisions en clarté, votre organisation en solidité.</p>
+        <div class="actions">
+          <Button href="/diagnostic/">Faire le diagnostic</Button>
+          <Button href="/contact/#rdv" variant="secondary">Réserver un échange de 30 min</Button>
+        </div>
+      </div>
+      <div class="portrait" role="img" aria-label="Portrait d'Aurélien Mizeret (photo à venir)">
+        <span>AM</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Bandeau de confiance -->
+  <section class="confiance" aria-label="Références">
+    <div class="container confiance-grille">
+      <p><span class="intro">Ils m'ont fait confiance</span><span class="noms">Capgemini, Engie, EDF, France Télévisions, IPSEN</span></p>
+      <p><span class="intro">Vu et entendu dans</span><span class="noms">Notélé, Solutions Magazine, Les Lettres Libres</span></p>
+      <p><span class="intro">Auteur de</span><span class="noms"><a href="/livre/"><em>Ce que l'IA fait de nous</em></a></span></p>
+    </div>
+  </section>
+
+  <!-- 3. Le constat -->
+  <section class="section section--light">
     <div class="container">
-      <h1>Chantier en cours</h1>
-      <p>Le socle technique et les composants sont en place.</p>
+      <SectionTitle eyebrow="Le constat" title="L'IA transforme d'abord la façon dont vos équipes décident.">
+        <p>Les outils progressent vite. La façon dont vos équipes jugent, arbitrent, coopèrent et transmettent évolue avec eux, souvent plus profondément qu'on ne le mesure. C'est là que se joue la réussite de vos projets.</p>
+      </SectionTitle>
+      <div class="grid grid-3">
+        {constat.map((c) => (
+          <div class="card constat"><h3>{c.titre}</h3><p>{c.texte}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. L'approche -->
+  <section class="section section--white">
+    <div class="container">
+      <SectionTitle eyebrow="Mon approche" title="Là où se crée 70 % de la valeur de l'IA." />
+      <div class="grid grid-2 approche-texte">
+        <p>Selon la règle 10/20/70 du BCG, la valeur de l'IA repose à 10 % sur les algorithmes, à 20 % sur la technologie et les données, et à 70 % sur les personnes, les processus et la gouvernance. J'interviens sur ces 70 %, en complément de vos équipes techniques et de vos intégrateurs.</p>
+        <p>Mon entrée est humaine d'abord : comment vos équipes perçoivent la transition, comment chacun décide, ce qui mobilise ou retient l'engagement. J'y applique ce que la psychologie de la décision sait des biais, des émotions et des dynamiques collectives. Sur cette lecture, je construis avec vous un cadre qui tient sur le terrain.</p>
+      </div>
+      <figure class="repartition">
+        <div class="barres">
+          {repartition.map((r) => (
+            <div class:list={['seg', { fort: r.pct === 70 }]} style={`flex: ${r.pct} 1 0`}>
+              <span class="pct">{r.pct} %</span>
+              <span class="lib">{r.label}</span>
+            </div>
+          ))}
+        </div>
+        <figcaption>Répartition de la valeur de l'IA selon la règle 10/20/70 du BCG.</figcaption>
+      </figure>
+      <div class="signature">
+        <Quote author="Aurélien Mizeret" tone="ink"><p>« La machine fonctionne. La décision, elle, reste humaine. »</p></Quote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Les offres -->
+  <section class="section section--light">
+    <div class="container">
+      <SectionTitle eyebrow="Accompagnements" title="Un parcours adapté à chaque étape de votre transition." />
+      <div class="grid grid-3 escalier">
+        {offres.map((o, i) => (
+          <div class:list={[{ premier: i === 0 }]}>
+            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
+              <p>{o.carte.resume}</p>
+            </OfferCard>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Le diagnostic -->
+  <section class="section section--ink">
+    <div class="container diag">
+      <SectionTitle eyebrow="Diagnostic gratuit" title="Où en est la décision dans votre organisation ?">
+        <p>En quelques minutes, mesurez comment l'IA fait évoluer la façon dont votre organisation décide, coopère et apprend. Vous recevez une lecture personnalisée de vos forces et de vos leviers prioritaires.</p>
+      </SectionTitle>
       <Button href="/diagnostic/">Faire le diagnostic</Button>
     </div>
   </section>
+
+  <!-- 7. Un cas réel -->
+  <section class="section section--light">
+    <div class="container cas">
+      <div>
+        <SectionTitle eyebrow="Cas client" title="Un choix de plateforme éclairé par dix critères posés en amont.">
+          <p>Pour un organisme de formation multisite, la direction a construit sa grille avant la première démonstration. Résultat : 14 fournisseurs identifiés, 8 consultés, 2 finalistes, 29 % d'écart de prix mis en lumière et un classement qui s'est affiné après les soutenances. La direction a retenu la solution la mieux adaptée à ses usages réels, avec une décision documentée à chaque étape.</p>
+        </SectionTitle>
+        <a class="link-strong lien-encre" href={urlOffre('cadrage-decision-ia')}>Découvrir le Cadrage de Décision IA</a>
+      </div>
+      <dl class="chiffres">
+        <div><dt>fournisseurs identifiés</dt><dd>14</dd></div>
+        <div><dt>critères pondérés</dt><dd>10</dd></div>
+        <div><dt>d'écart de prix</dt><dd>29 %</dd></div>
+        <div><dt>finalistes</dt><dd>2</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 8. Qui je suis -->
+  <section class="section section--white">
+    <div class="container qui">
+      <div class="photo-situation" role="img" aria-label="Aurélien Mizeret en animation (photo à venir)"></div>
+      <div>
+        <SectionTitle eyebrow="Aurélien Mizeret" title="Dix-huit ans à comprendre ce qui fait décider, agir et s'engager.">
+          <p>J'ai dirigé des équipes, accompagné des DRH et des dirigeants en France, en Belgique, au Luxembourg et à l'international, et fondé l'AfterWork RH, réseau de la communauté RH. Formé aux sciences cognitives, à la psychologie des organisations et aux mécanismes de décision, je relie aujourd'hui ces disciplines aux enjeux de l'IA en entreprise. J'interviens en conseil auprès des directions et en formation, notamment avec ORSYS.</p>
+        </SectionTitle>
+        <dl class="reperes">
+          <div><dd>18 ans</dd><dt>d'expérience</dt></div>
+          <div><dd>80</dd><dt>personnes encadrées</dt></div>
+          <div><dd>6 pays</dd><dt>d'intervention</dt></div>
+        </dl>
+        <a class="link-strong lien-encre" href="/a-propos/">Découvrir mon parcours</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Ceux qui décident -->
+  {entretiens.length > 0 && (
+    <section class="section section--light">
+      <div class="container">
+        <SectionTitle eyebrow="Ceux qui décident" title="Des DRH et des dirigeants racontent comment ils conduisent l'IA.">
+          <p>Santé, énergie, industrie pharmaceutique, services numériques : des responsables partagent leurs choix, leurs réussites et leurs enseignements. Une matière concrète pour éclairer vos propres décisions.</p>
+        </SectionTitle>
+        <div class="grid grid-3">
+          {entretiens.map((e) => (
+            <InterviewCard name={e.data.nom} role={e.data.fonction} organisation={e.data.organisation} excerpt={e.data.extrait} image={e.data.portrait} href={`/entretiens/${e.id}/`} />
+          ))}
+        </div>
+        <p class="plus"><a class="link-strong lien-encre" href="/entretiens/">Lire les entretiens</a></p>
+      </div>
+    </section>
+  )}
+
+  <!-- 10. Le livre -->
+  <section class="section section--deep">
+    <div class="container livre">
+      <div class="couverture" role="img" aria-label="Couverture du livre Ce que l'IA fait de nous (image à venir)">
+        <span>Ce que l'IA fait de nous</span><small>Aurélien Mizeret</small>
+      </div>
+      <div>
+        <p class="eyebrow">Le livre</p>
+        <h2><em>Ce que l'IA fait de nous</em></h2>
+        <p class="lead">Un regard d'éclaireur sur ce que l'IA transforme dans nos décisions, nos liens et notre façon de transmettre. Paru le 28 juillet 2026, classé dans le top 100 Amazon « Individus et société » depuis sa sortie.</p>
+        <div class="actions">
+          <Button href="https://cequeliafaitdenous.com/" variant="secondary">Lire les premières pages</Button>
+          <a class="link-strong commander" href="/livre/">Commander le livre</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. Témoignages : s'affiche dès qu'un verbatim ORSYS est saisi -->
+  {temoignages.length > 0 && (
+    <section class="section section--light">
+      <div class="container">
+        <SectionTitle title="Ce qu'en disent les participants" />
+        <div class="grid grid-3">
+          {temoignages.map((t) => <Quote author={t.signature}><p>« {t.texte} »</p></Quote>)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 12. Appel final -->
+  <FinalCta />
 </Base>
+
+<style>
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  .lead { font-size: 1.1875rem; color: var(--on-ink-soft); max-width: 40rem; }
+
+  .hero { padding-top: 4rem; }
+  .hero-grille { display: grid; gap: 3rem; align-items: center; }
+  .hero h1 { max-width: 14ch; }
+  @media (min-width: 768px) { .hero h1 { font-size: 4.25rem; } }
+  @media (min-width: 1024px) { .hero-grille { grid-template-columns: 1fr 380px; gap: 4rem; } }
+  .portrait {
+    aspect-ratio: 4 / 5; width: 100%; max-width: 380px; justify-self: center;
+    background: linear-gradient(160deg, var(--ink-hover), var(--ink-deep));
+    border-radius: var(--radius); box-shadow: 14px 14px 0 var(--gold);
+    display: grid; place-items: center;
+  }
+  .portrait span { font-family: var(--font-title); font-weight: 800; font-size: 5rem; letter-spacing: -0.04em; color: var(--line-ink); }
+
+  .confiance { background: var(--ink-deep); color: var(--on-ink); padding: 2rem 0; border-top: 1px solid var(--line-ink); }
+  .confiance-grille { display: grid; gap: 1.25rem; }
+  @media (min-width: 900px) { .confiance-grille { grid-template-columns: 2fr 1.6fr 1.2fr; gap: 2rem; } }
+  .confiance p { margin: 0; display: flex; flex-direction: column; gap: .25rem; }
+  .confiance .intro { font-size: .875rem; color: var(--on-ink-soft); }
+  .confiance .noms { font-family: var(--font-title); font-weight: 600; }
+
+  .constat { border-top: 3px solid var(--gold); }
+
+  .approche-texte p { margin: 0; }
+  .repartition { margin: 3rem 0 0; }
+  .barres { display: flex; flex-direction: column; gap: 4px; border-radius: 8px; overflow: hidden; }
+  @media (min-width: 768px) { .barres { flex-direction: row; } }
+  .seg { background: var(--bg); color: var(--ink); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-height: 8.5rem; }
+  .seg:nth-child(2) { background: var(--line); }
+  .seg.fort { background: var(--gold); }
+  .seg .pct { font-family: var(--font-title); font-weight: 800; font-size: 2rem; line-height: 1; letter-spacing: -0.03em; }
+  .seg.fort .pct { font-size: 3.5rem; }
+  .seg .lib { font-weight: 700; font-size: .9375rem; line-height: 1.35; }
+  @media (max-width: 767px) { .seg { min-height: 0; flex-direction: row; align-items: baseline; } .seg.fort .pct { font-size: 2.5rem; } }
+  .repartition figcaption { margin-top: .75rem; font-size: .875rem; color: var(--text-soft); }
+  .signature { margin-top: 3rem; }
+
+  @media (min-width: 900px) { .escalier .premier { grid-column: span 2; } }
+
+  .diag :global(.section-title) { margin-bottom: 2rem; }
+
+  .cas { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .cas { grid-template-columns: 3fr 2fr; } }
+  .chiffres { margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .chiffres div { background: var(--surface); padding: 1.5rem; display: flex; flex-direction: column-reverse; gap: .25rem; }
+  .chiffres dd { margin: 0; font-family: var(--font-title); font-weight: 800; font-size: 2.75rem; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+  .chiffres dt { font-size: .9375rem; color: var(--text-soft); }
+  .lien-encre { color: var(--ink); }
+
+  .qui { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .qui { grid-template-columns: 2fr 3fr; } }
+  .photo-situation { aspect-ratio: 4 / 3; border-radius: var(--radius); background: linear-gradient(135deg, var(--bg), var(--line)); border-left: 6px solid var(--gold); }
+  .reperes { margin: 0 0 2rem; display: flex; flex-wrap: wrap; gap: 2rem; }
+  .reperes div { display: flex; flex-direction: column; }
+  .reperes dd { margin: 0; font-family: var(--font-title); font-weight: 800; font-size: 2.25rem; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+  .reperes dt { font-size: .9375rem; color: var(--text-soft); }
+  .plus { margin: 2rem 0 0; }
+
+  .livre { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .livre { grid-template-columns: 260px 1fr; gap: 4rem; } }
+  .couverture {
+    width: 220px; aspect-ratio: 2 / 3; justify-self: center; background: var(--ink); border: 1px solid var(--gold);
+    box-shadow: 12px 12px 0 var(--gold); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .couverture span { font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.02em; color: var(--on-ink); }
+  .couverture small { color: var(--gold); font-weight: 700; }
+  .livre h2 em { font-style: normal; }
+  .commander { align-self: center; color: var(--on-ink); }
+</style>

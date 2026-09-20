@@ -2,7 +2,7 @@
 const liens = [
   { href: '/diagnostic/', label: 'Diagnostic' },
   { href: '/offres/', label: 'Offres' },
-  { href: '/ceux-qui-decident/', label: 'Ceux qui décident' },
+  { href: '/entretiens/', label: 'Ceux qui décident' },
   { href: '/livre/', label: 'Livre' },
   { href: '/a-propos/', label: 'À propos' },
 ];
@@ -20,14 +20,14 @@ const actuel = Astro.url.pathname;
       </ul>
     </nav>
 
-    <a class="btn btn-primary cta" href="/contact/">Réserver un échange de 30 min</a>
+    <a class="btn btn-primary cta" href="/contact/#rdv">Réserver un échange de 30 min</a>
 
     <details class="nav-mobile">
       <summary>Menu</summary>
       <nav aria-label="Navigation mobile">
         <ul>
           {liens.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
-          <li><a class="btn btn-primary" href="/contact/">Réserver un échange de 30 min</a></li>
+          <li><a class="btn btn-primary" href="/contact/#rdv">Réserver un échange de 30 min</a></li>
         </ul>
       </nav>
     </details>
@@ -47,7 +47,7 @@ const actuel = Astro.url.pathname;
   .nav-mobile summary { cursor: pointer; list-style: none; font-family: var(--font-title); font-weight: 700; padding: .5rem 0; }
   .nav-mobile summary::-webkit-details-marker { display: none; }
   .nav-mobile ul {
-    position: absolute; left: 0; right: 0; top: 72px; z-index: 5;
+    position: absolute; left: 0; right: 0; top: 72px; z-index: 20;
     display: grid; gap: 1.25rem; padding: 1.5rem 1.25rem; background: var(--ink-deep);
     border-bottom: 1px solid var(--line-ink);
   }

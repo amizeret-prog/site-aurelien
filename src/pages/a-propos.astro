@@ -1,0 +1,50 @@
+---
+import PageSimple from '../layouts/PageSimple.astro';
+import ProofBand from '../components/ProofBand.astro';
+import FinalCta from '../components/FinalCta.astro';
+---
+<PageSimple
+  title="Aurélien Mizeret, conseil en IA et décision humaine"
+  description="18 ans à comprendre ce qui fait décider, agir et s'engager. J'accompagne DRH et dirigeants pour que l'IA renforce le jugement de leurs équipes."
+  fil="À propos"
+  h1="Comprendre ce qui fait décider les humains, pour que l'IA les renforce."
+  chapo="Je suis Aurélien Mizeret. Depuis dix-huit ans, j'accompagne des dirigeants, des DRH et des équipes là où se joue la performance durable : la façon dont les personnes décident, s'engagent et coopèrent. L'IA ne change pas cette réalité. Elle l'accélère."
+>
+  <ProofBand
+    figures={[
+      { value: '18 ans', label: "d'expérience" },
+      { value: '80', label: 'personnes encadrées' },
+      { value: '6 pays', label: "d'intervention" },
+    ]}
+    clients={['Capgemini', 'Engie', 'EDF', 'France Télévisions', 'IPSEN']}
+  />
+
+  <section class="section section--light">
+    <div class="container prose">
+      <h2>Un parcours construit sur le terrain</h2>
+      <p>J'ai lancé mon premier organisme de formation à 24 ans. J'ai ensuite dirigé des équipes et piloté des déploiements d'accompagnement auprès de DRH et de dirigeants, jusqu'à 80 personnes dans six pays. J'ai fondé l'AfterWork RH, réseau d'échange de la communauté RH, que j'ai présidé.</p>
+      <p>En parallèle, je me suis formé aux disciplines qui éclairent le comportement humain : sciences cognitives, psychologie des organisations, biais comportementaux, mécanismes de décision sous pression. Ces savoirs servent des situations concrètes, face à des dirigeants en prise directe avec leurs enjeux.</p>
+
+      <h2>Ce que l'IA a révélé</h2>
+      <p>À partir de 2023, j'ai vu les organisations déployer l'IA avec des arguments solides : productivité, compétitivité, maîtrise des coûts. Les outils fonctionnaient. La différence se jouait ailleurs, dans la manière dont chacun décidait avec eux, ce qu'il déléguait, ce qu'il assumait, ce qu'il ressentait.</p>
+      <p>La règle 10/20/70 du BCG le résume : 10 % de la valeur de l'IA vient des algorithmes, 20 % de la technologie et des données, 70 % des personnes, des processus et de l'organisation. J'interviens sur ces 70 %, en complément de vos équipes techniques et juridiques.</p>
+
+      <h2>Ma façon de travailler</h2>
+      <p>J'entre par l'humain : comment vos équipes perçoivent la transition, ce qui mobilise leur engagement, où se prennent réellement les décisions. Le cadre se construit ensuite, à partir de cette lecture, pour qu'il tienne sur le terrain.</p>
+      <p>Je travaille en pair avec les dirigeants. Mon indépendance vis-à-vis des éditeurs me permet de vous dire ce que je vois, avec franchise et bienveillance.</p>
+
+      <h2>Ce qui fonde ma légitimité</h2>
+      <ul>
+        <li><strong>Formateur référencé ORSYS</strong> sur des programmes de niveau master.</li>
+        <li><strong>Auteur de <a href="/livre/"><em>Ce que l'IA fait de nous</em></a></strong>, paru en juillet 2026.</li>
+        <li><strong><a href="/entretiens/">Ceux qui décident</a></strong> : une série d'entretiens avec des DRH et des dirigeants sur leur conduite de l'IA.</li>
+        <li><strong>Vu et entendu dans</strong> Notélé, Solutions Magazine, Les Lettres Libres.</li>
+      </ul>
+
+      <h2>Où j'interviens</h2>
+      <p>Paris et Île-de-France, Hauts-de-France, Bruxelles et Luxembourg. D'autres déplacements restent possibles selon les missions.</p>
+    </div>
+  </section>
+
+  <FinalCta />
+</PageSimple>

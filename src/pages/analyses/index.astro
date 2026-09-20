@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import { estPublie, parDateDesc, formatDate } from '../../lib/publies';
+
+const articles = (await getCollection('analyses', estPublie)).sort(parDateDesc);
+---
+<Base title="Analyses : décision, humain et IA en entreprise | Aurélien Mizeret" description="Des analyses de fond sur ce que l'IA transforme dans la décision, la responsabilité, l'engagement et les compétences en entreprise.">
+  <section class="section section--ink">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Analyses' }]} />
+      <SectionTitle eyebrow="Analyses" title="Ce que l'IA transforme dans la façon de décider." level="h1">
+        <p>Des analyses de fond, sourcées, pour éclairer les choix des DRH et des directions générales.</p>
+      </SectionTitle>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <ul class="liste">
+        {articles.map((a) => (
+          <li>
+            <p class="theme">{a.data.theme}</p>
+            <h2><a href={`/analyses/${a.id}/`}>{a.data.title}</a></h2>
+            <p>{a.data.chapo}</p>
+            <p class="muted">{formatDate(a.data.date)}{a.data.lecture && `, ${a.data.lecture} min de lecture`}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <FinalCta />
+</Base>
+
+<style>
+  .liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; max-width: 52rem; }
+  .liste li { background: var(--surface); padding: 1.75rem; border-radius: var(--radius); border-left: 4px solid var(--gold); }
+  .liste h2 { font-size: 1.5rem; }
+  .liste h2 a { color: var(--ink); text-decoration: none; }
+  .liste h2 a:hover { text-decoration: underline; text-decoration-color: var(--gold); }
+  .theme { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin-bottom: .5rem; }
+  .liste p:last-child { margin: 0; font-size: .9375rem; }
+</style>

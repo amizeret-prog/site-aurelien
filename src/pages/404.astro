@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+const pistes = [
+  { href: '/offres/', titre: 'Les offres', texte: 'Cinq accompagnements, de la première décision au déploiement.' },
+  { href: '/entretiens/', titre: 'Ceux qui décident', texte: 'Des DRH et des dirigeants racontent comment ils conduisent l\u2019IA.' },
+  { href: '/livre/', titre: 'Le livre', texte: 'Ce que l\u2019IA fait de nous, paru le 28 juillet 2026.' },
+];
+---
+<Base title="Page introuvable | Aurélien Mizeret" description="Cette page a changé d'adresse ou n'existe plus.">
+  <section class="section section--ink introuvable">
+    <div class="container">
+      <p class="code" aria-hidden="true">404</p>
+      <h1>Cette page a changé d'adresse, ou n'existe plus.</h1>
+      <p class="lead">Le site a fait peau neuve : certaines adresses ont bougé. Reprenez par l'accueil, ou par l'un des chemins ci-dessous.</p>
+      <div class="actions">
+        <Button href="/">Retour à l'accueil</Button>
+        <Button href="/diagnostic/" variant="secondary">Faire le diagnostic</Button>
+      </div>
+    </div>
+  </section>
+  <section class="section section--light">
+    <div class="container">
+      <div class="grid grid-3">
+        {pistes.map((p) => (
+          <a class="card piste" href={p.href}><h2>{p.titre}</h2><p>{p.texte}</p></a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .introuvable h1 { max-width: 18ch; }
+  .code { font-family: var(--font-title); font-weight: 800; font-size: 7rem; line-height: .9; letter-spacing: -0.05em; color: var(--gold); margin-bottom: 1.5rem; }
+  @media (min-width: 768px) { .code { font-size: 11rem; } }
+  .lead { font-size: 1.1875rem; color: var(--on-ink-soft); max-width: 40rem; }
+  .piste { text-decoration: none; border-top: 3px solid var(--gold); }
+  .piste h2 { font-size: 1.375rem; color: var(--ink); margin-bottom: .5rem; }
+  .piste:hover h2 { text-decoration: underline; text-decoration-color: var(--gold); }
+  .piste p { margin: 0; }
+</style>

@@ -1,0 +1,262 @@
+---
+// Gabarit d'une page offre. Chaque bloc ne s'affiche que si l'offre le renseigne.
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Button from '../../components/Button.astro';
+import SectionTitle from '../../components/SectionTitle.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import Faq from '../../components/Faq.astro';
+import FinalCta from '../../components/FinalCta.astro';
+import StickyCta from '../../components/StickyCta.astro';
+import { offres, urlOffre, type Offre } from '../../data/offres';
+
+export function getStaticPaths() {
+  return offres.map((offre, i) => ({
+    params: { slug: offre.slug },
+    props: { offre, avant: offres[i - 1], apres: offres[i + 1] },
+  }));
+}
+
+interface Props { offre: Offre; avant?: Offre; apres?: Offre }
+const { offre, avant, apres } = Astro.props;
+const voisines = [
+  avant && { o: avant, label: 'Étape précédente' },
+  apres && { o: apres, label: 'Étape suivante' },
+].filter(Boolean) as { o: Offre; label: string }[];
+---
+<Base title={offre.seoTitle} description={offre.description} bodyClass="has-sticky">
+
+  <section class="section section--ink hero">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Offres', href: '/offres/' }, { label: offre.nom }]} />
+      <SectionTitle eyebrow={offre.surTitre} title={offre.titre} level="h1">
+        <p>{offre.chapo}</p>
+      </SectionTitle>
+      <ul class="faits" aria-label="En bref">
+        {offre.faits.map((f) => <li>{f}</li>)}
+      </ul>
+      <div class="actions">
+        <Button href="/contact/#rdv">Réserver un échange de 30 min</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <SectionTitle title={offre.pourQui.titre} />
+      <ul class="signaux">
+        {offre.pourQui.items.map((i) => (
+          <li>{i.fort && <strong>{i.fort} </strong>}{i.texte}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {offre.vecu && (
+    <section class="section section--deep">
+      <div class="container">
+        <SectionTitle title={offre.vecu.titre} />
+        <ul class="vecu">
+          {offre.vecu.citations.map((c) => <li>« {c} »</li>)}
+        </ul>
+        <p class="chute">{offre.vecu.chute}</p>
+      </div>
+    </section>
+  )}
+
+  {offre.apports && (
+    <section class="section section--light">
+      <div class="container">
+        <SectionTitle title={offre.apports.titre} />
+        <div class:list={['grid', offre.apports.blocs.length % 3 === 0 ? 'grid-3' : 'grid-2']}>
+          {offre.apports.blocs.map((b) => (
+            <div class="apport">
+              <h3>{b.titre}</h3>
+              <p>{b.texte}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {offre.fond && (
+    <section class="section section--white">
+      <div class="container">
+        <SectionTitle title={offre.fond.titre}>
+          {offre.fond.intro && <p>{offre.fond.intro}</p>}
+        </SectionTitle>
+        <div class:list={['grid', offre.fond.blocs.length % 3 === 0 ? 'grid-3' : 'grid-2']}>
+          {offre.fond.blocs.map((b) => (
+            <div class="fond">
+              <h3>{b.titre}</h3>
+              {b.texte && <p>{b.texte}</p>}
+              {b.puces && <ul>{b.puces.map((p) => <li>{p}</li>)}</ul>}
+            </div>
+          ))}
+        </div>
+        {offre.fond.outro && <p class="outro">{offre.fond.outro}</p>}
+      </div>
+    </section>
+  )}
+
+  {offre.deroule.etapes.length > 0 && (
+    <section class="section section--light">
+      <div class="container">
+        <SectionTitle title={offre.deroule.titre} />
+        <ol class="etapes">
+          {offre.deroule.etapes.map((e) => (
+            <li>
+              <h3>{e.titre}</h3>
+              {e.texte && <p>{e.texte}</p>}
+              {e.puces && <ul>{e.puces.map((p) => <li>{p}</li>)}</ul>}
+            </li>
+          ))}
+        </ol>
+        {offre.deroule.format && <p class="format"><strong>Format :</strong> {offre.deroule.format}</p>}
+      </div>
+    </section>
+  )}
+
+  {offre.livrables && (
+    <section class="section section--white">
+      <div class="container">
+        <SectionTitle title={offre.livrables.titre} />
+        <div class:list={['grid', offre.livrables.groupes.length === 3 && 'grid-3']}>
+          {offre.livrables.groupes.map((g) => (
+            <div class="livrable">
+              {g.titre && <h3>{g.titre}</h3>}
+              <ul>{g.items.map((it) => <li>{it}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {offre.cas && (
+    <section class="section section--deep">
+      <div class="container">
+        <SectionTitle title={offre.cas.titre}>
+          {offre.cas.intro && <p>{offre.cas.intro}</p>}
+        </SectionTitle>
+        {offre.cas.chiffres && (
+          <ul class="chiffres">
+            {offre.cas.chiffres.map((c) => (
+              <li><span class="valeur">{c.valeur}</span><span class="label">{c.label}</span></li>
+            ))}
+          </ul>
+        )}
+        <p class="cas-texte">{offre.cas.texte}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--light">
+    <div class="container duo">
+      {offre.role && (
+        <div>
+          <h2>{offre.role.titre}</h2>
+          <p class="role">{offre.role.texte}</p>
+        </div>
+      )}
+      <div class="tarif">
+        <p class="tarif-label">Investissement</p>
+        <p class="montant">{offre.tarif.montant}</p>
+        <p>{offre.tarif.detail}</p>
+        <p class="tva">TVA non applicable. <span class="a-completer">Mention exacte à faire valider.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light section--tight">
+    <div class="container">
+      <SectionTitle title="Questions fréquentes" />
+      <Faq items={offre.faq} />
+    </div>
+  </section>
+
+  <FinalCta withDiagnostic={false} />
+
+  {voisines.length > 0 && (
+    <section class="section section--light">
+      <div class="container">
+        <SectionTitle title="Dans le même parcours" />
+        <div class="grid grid-2">
+          {voisines.map(({ o, label }) => (
+            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} badge={label} cta={o.carte.cta}>
+              <p>{o.carte.resume}</p>
+            </OfferCard>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <StickyCta />
+</Base>
+
+<style>
+  .hero :global(.section-title) { max-width: 52rem; }
+  .faits { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .faits li {
+    font-family: var(--font-title); font-weight: 700; font-size: .9375rem;
+    padding: .5rem .9rem; border: 1px solid var(--line-ink); border-radius: 4px; color: var(--on-ink);
+  }
+  .faits li:nth-child(2) { border-color: var(--gold); color: var(--gold); }
+
+  .signaux { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; max-width: 52rem; }
+  .signaux li { background: var(--surface); padding: 1.25rem 1.5rem; border-left: 4px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; }
+  .signaux strong { color: var(--ink); font-family: var(--font-title); font-weight: 700; }
+
+  .vecu { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  .vecu li { font-family: var(--font-title); font-weight: 600; font-size: 1.25rem; line-height: 1.35; color: var(--on-ink); max-width: 40ch; }
+  @media (min-width: 900px) { .vecu { grid-template-columns: repeat(2, 1fr); gap: 2rem 3rem; } .vecu li { font-size: 1.5rem; } }
+  .chute { margin: 3rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--line-ink); font-family: var(--font-title); font-weight: 800; font-size: 1.375rem; color: var(--gold); }
+
+  .apport h3 { font-size: 1.25rem; color: var(--ink); }
+  .apport { border-top: 3px solid var(--gold); padding-top: 1.25rem; }
+  .apport p { margin: 0; }
+
+  .fond { background: var(--bg); padding: 1.75rem; border-radius: var(--radius); }
+  .fond h3 { font-size: 1.25rem; }
+  .fond p:last-child { margin: 0; }
+  .fond ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .5rem; }
+  .fond li::marker { color: var(--gold-text); }
+  .outro { margin: 2rem 0 0; max-width: var(--measure); }
+
+  .etapes { list-style: none; counter-reset: etape; margin: 0; padding: 0; display: grid; gap: 2rem; max-width: 52rem; }
+  .etapes > li { counter-increment: etape; position: relative; padding-left: 4rem; }
+  .etapes > li::before {
+    content: counter(etape); position: absolute; left: 0; top: -.2rem;
+    width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border-radius: 50%;
+    background: var(--ink); color: var(--gold); font-family: var(--font-title); font-weight: 800; font-size: 1.125rem;
+  }
+  .etapes h3 { font-size: 1.25rem; margin-bottom: .35rem; }
+  .etapes p { margin: 0; }
+  .etapes ul { margin: .25rem 0 0; padding-left: 1.1rem; }
+  .format { margin: 2.5rem 0 0; }
+  .format strong { color: var(--ink); }
+
+  .livrable { background: var(--surface-gold); padding: 1.75rem; border-radius: var(--radius); border-top: 6px solid var(--gold); }
+  .livrable h3 { font-size: 1.25rem; }
+  .livrable ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .6rem; }
+  .livrable li::marker { color: var(--gold-text); }
+
+  .chiffres { list-style: none; margin: 0 0 2rem; padding: 0; display: grid; gap: 1.5rem; }
+  @media (min-width: 900px) { .chiffres { grid-template-columns: repeat(4, 1fr); } }
+  .chiffres li { display: flex; flex-direction: column; gap: .35rem; border-top: 1px solid var(--line-ink); padding-top: 1rem; }
+  .valeur { font-family: var(--font-title); font-weight: 800; font-size: 2.25rem; line-height: 1; letter-spacing: -0.03em; color: var(--gold); }
+  .label { color: var(--on-ink-soft); font-size: .9375rem; }
+  .cas-texte { max-width: var(--measure); font-size: 1.125rem; margin: 0; }
+
+  .duo { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 900px) { .duo { grid-template-columns: 3fr 2fr; } }
+  .duo h2 { font-size: 1.875rem; }
+  .role { max-width: var(--measure); }
+  .tarif { background: var(--ink); color: var(--on-ink); padding: 2rem; border-radius: var(--radius); grid-column: -2 / -1; }
+  .tarif-label { margin: 0; color: var(--gold); font-weight: 700; font-size: .9375rem; }
+  .montant { font-family: var(--font-title); font-weight: 800; font-size: 2.5rem; line-height: 1.05; letter-spacing: -0.03em; margin: .5rem 0 1rem; }
+  .tva { font-size: .875rem; color: var(--on-ink-soft); margin: 0; }
+  .tva .a-completer { color: var(--ink); }
+</style>

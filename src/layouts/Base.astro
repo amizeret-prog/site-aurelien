@@ -8,8 +8,9 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title: string;
   description?: string;
+  bodyClass?: string;
 }
-const { title, description = '' } = Astro.props;
+const { title, description = '', bodyClass } = Astro.props;
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
 ---
 <!doctype html>
@@ -21,8 +22,9 @@ const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <slot name="head" />
   </head>
-  <body>
+  <body class={bodyClass}>
     <a class="skip" href="#contenu">Aller au contenu</a>
     <Header />
     <main id="contenu"><slot /></main>
