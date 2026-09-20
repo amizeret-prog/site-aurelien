@@ -74,8 +74,8 @@ const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, c
     </section>
 
     <!-- Formulaire caché : permet à Netlify de détecter le formulaire « diagnostic » au déploiement. -->
-    <form name="diagnostic" data-netlify="true" netlify-honeypot="adresse" hidden>
-      <input name="adresse" /><input name="nom" /><input name="email" /><input name="fonction" /><input name="taille" />
+    <form name="diagnostic" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" /><input name="nom" /><input name="email" /><input name="fonction" /><input name="taille" />
       <input name="choix6mois" /><input name="profil" /><input name="score" /><input name="axes" /><input name="offre" /><input name="reponses" />
     </form>
 

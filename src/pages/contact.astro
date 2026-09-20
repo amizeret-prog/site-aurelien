@@ -30,9 +30,9 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
 
       <div class="bloc">
         <h2>M'écrire</h2>
-        <form name="contact" method="POST" action="/contact/merci/" data-netlify="true" netlify-honeypot="adresse">
+        <form name="contact" method="POST" action="/contact/merci/" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="contact" />
-          <p class="piege"><label>Ne pas remplir <input name="adresse" tabindex="-1" autocomplete="off" /></label></p>
+          <p class="piege"><label>Ne pas remplir <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
           <label>Prénom et nom<input name="nom" type="text" autocomplete="name" required /></label>
           <label>E-mail professionnel<input name="email" type="email" autocomplete="email" required /></label>
           <div class="deux">
