@@ -1,18 +1,10 @@
 ---
-const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true';
+import Base from '../layouts/Base.astro';
 ---
-
-<html lang="fr">
-	<head>
-		<meta charset="utf-8" />
-		{!indexable && <meta name="robots" content="noindex, nofollow" />}
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Aurélien Mizeret" description="Site en construction.">
+  <section class="container" style="padding: 4rem 1.25rem;">
+    <h1>Chantier en cours</h1>
+    <p>Le socle technique est en place.</p>
+    <a class="btn btn-primary" href="/diagnostic/">Faire le diagnostic</a>
+  </section>
+</Base>

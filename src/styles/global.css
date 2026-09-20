@@ -1,0 +1,42 @@
+:root {
+  --ink: #2F2933;
+  --ink-deep: #221D26;
+  --gold: #C7AB5A;
+  --paper: #F5F2EC;
+  --font-title: 'Epilogue Variable', system-ui, sans-serif;
+  --font-text: 'Quicksand Variable', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-text);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+h1, h2, h3 { font-family: var(--font-title); font-weight: 700; line-height: 1.15; }
+a { color: var(--gold); }
+img { max-width: 100%; height: auto; display: block; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1.25rem; }
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-title);
+  font-weight: 700;
+  padding: .8rem 1.4rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.btn-primary { background: var(--gold); color: var(--ink); }
+.btn-secondary { border: 1.5px solid var(--gold); color: var(--gold); }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus {
+  left: 1rem; top: 1rem; z-index: 10;
+  background: var(--gold); color: var(--ink); padding: .5rem 1rem;
+}

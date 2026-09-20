@@ -1,0 +1,34 @@
+---
+const annee = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="container cols">
+    <div>
+      <p class="nom">Aurélien Mizeret</p>
+      <p>La machine fonctionne. C'est la décision qui manque.</p>
+    </div>
+    <nav aria-label="Liens de pied de page">
+      <ul>
+        <li><a href="/contact/">Contact</a></li>
+        <li><a href="/mentions-legales/">Mentions légales</a></li>
+        <li><a href="/confidentialite/">Politique de confidentialité</a></li>
+      </ul>
+    </nav>
+    <ul>
+      <li><a href="https://www.linkedin.com/in/aur%C3%A9lien-mizeret/" rel="me">LinkedIn</a></li>
+      <li><a href="#" rel="me">YouTube</a></li>
+    </ul>
+  </div>
+  <p class="container copy">© {annee} Aurélien Mizeret</p>
+</footer>
+
+<style>
+  .site-footer { background: var(--ink-deep); padding: 3rem 0 1.5rem; margin-top: 4rem; }
+  .cols { display: grid; gap: 2rem; }
+  .nom { font-family: var(--font-title); font-weight: 800; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+  a { color: var(--paper); text-decoration: none; }
+  a:hover { color: var(--gold); }
+  .copy { font-size: .85rem; opacity: .7; margin-top: 2rem; }
+  @media (min-width: 768px) { .cols { grid-template-columns: 2fr 1fr 1fr; } }
+</style>
