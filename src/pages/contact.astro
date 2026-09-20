@@ -1,5 +1,6 @@
 ---
 import PageSimple from '../layouts/PageSimple.astro';
+import { calLink, calConfigure } from '../data/config';
 const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Transition IA', 'Programme de gouvernance humaine', 'Executive Confidant', 'Conférence ou formation', 'Participer à Ceux qui décident', 'Presse', 'Autre'];
 ---
 <PageSimple
@@ -11,12 +12,20 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
 >
   <section class="section section--light">
     <div class="container contact">
-      <div id="rdv" class="bloc rdv">
+      <div id="rdv" class="bloc rdv" data-cal={calConfigure ? calLink : ''}>
         <h2>Réserver un échange de 30 min</h2>
-        <p>Choisissez directement un créneau dans mon agenda.</p>
-        <div class="agenda">
-          <p>L'agenda de réservation s'affichera ici (Cal.com, étape 4.5).</p>
-        </div>
+        <p>Choisissez directement un créneau dans mon agenda. L'échange se tient en visioconférence ; vous recevez la confirmation par e-mail.</p>
+        {calConfigure ? (
+          <>
+            <div class="agenda" data-agenda>
+              <button type="button" class="btn btn-primary" data-afficher-agenda>Afficher l'agenda</button>
+              <p class="agenda-note">L'agenda est fourni par Cal.com et ne se charge qu'à votre demande.</p>
+            </div>
+            <p class="secours"><a href={`https://cal.com/${calLink}`} rel="noopener" target="_blank">Ouvrir l'agenda dans un nouvel onglet</a></p>
+          </>
+        ) : (
+          <div class="agenda"><p class="agenda-note">Lien Cal.com à renseigner dans src/data/config.ts.</p></div>
+        )}
       </div>
 
       <div class="bloc">
@@ -57,6 +66,42 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
 </PageSimple>
 
 <script>
+  // Agenda Cal.com : chargé au clic, ou d'emblée si l'on arrive par un bouton « Réserver » (#rdv).
+  const blocRdv = document.getElementById('rdv');
+  const lienCal = blocRdv?.dataset.cal;
+  function chargerAgenda() {
+    const zone = document.querySelector<HTMLElement>('[data-agenda]');
+    if (!lienCal || !zone || zone.dataset.charge) return;
+    zone.dataset.charge = '1';
+    zone.innerHTML = '<div id="cal-inline" class="cal-inline"></div>';
+    const w = window as any;
+    (function (C: any, A: string, L: string) {
+      const p = (a: any, ar: any) => a.q.push(ar);
+      const d = C.document;
+      C.Cal = C.Cal || function (...args: any[]) {
+        const cal = C.Cal;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement('script')).src = A;
+          cal.loaded = true;
+        }
+        if (args[0] === L) {
+          const api: any = function (...a: any[]) { p(api, a); };
+          const namespace = args[1];
+          api.q = api.q || [];
+          if (typeof namespace === 'string') { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], args); p(cal, ['initNamespace', namespace]); }
+          else p(cal, args);
+          return;
+        }
+        p(cal, args);
+      };
+    })(w, 'https://app.cal.com/embed/embed.js', 'init');
+    w.Cal('init', { origin: 'https://cal.com' });
+    w.Cal('inline', { elementOrSelector: '#cal-inline', calLink: lienCal, layout: 'month_view' });
+  }
+  document.querySelector('[data-afficher-agenda]')?.addEventListener('click', chargerAgenda);
+  if (location.hash === '#rdv') chargerAgenda();
+
   // Présélectionne le sujet depuis un lien du type /contact/?sujet=entretien
   const param = new URLSearchParams(location.search).get('sujet');
   const correspondances: Record<string, string> = { entretien: 'Participer à Ceux qui décident' };
@@ -72,7 +117,11 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
   .rdv { background: var(--ink); color: var(--on-ink); }
   .rdv h2 { color: var(--on-ink); }
   .agenda { border: 1px dashed var(--line-ink); border-radius: var(--radius); padding: 2.5rem 1.5rem; text-align: center; color: var(--on-ink-soft); }
-  .agenda p { margin: 0; }
+  .agenda { display: grid; justify-items: center; gap: 1rem; }
+  .agenda-note { margin: 0; font-size: .9375rem; }
+  .agenda:has(.cal-inline) { border: 0; padding: 0; display: block; }
+  :global(.cal-inline) { width: 100%; min-height: 640px; overflow: auto; background: var(--surface); border-radius: var(--radius); }
+  .secours { margin: 1rem 0 0; font-size: .9375rem; }
   form { display: grid; gap: 1.1rem; }
   form label { display: grid; gap: .35rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
   .deux { display: grid; gap: 1.1rem; }

@@ -73,6 +73,12 @@ const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, c
       </div>
     </section>
 
+    <!-- Formulaire caché : permet à Netlify de détecter le formulaire « diagnostic » au déploiement. -->
+    <form name="diagnostic" data-netlify="true" netlify-honeypot="adresse" hidden>
+      <input name="adresse" /><input name="nom" /><input name="email" /><input name="fonction" /><input name="taille" />
+      <input name="choix6mois" /><input name="profil" /><input name="score" /><input name="axes" /><input name="offre" /><input name="reponses" />
+    </form>
+
     <section id="ecran-resultat" class="ecran" hidden>
       <div class="section section--ink">
         <div class="container resultat-tete">
@@ -242,7 +248,19 @@ const nomsOffres = Object.fromEntries(offres.map((o) => [o.slug, { nom: o.nom, c
     const coordonnees = Object.fromEntries(new FormData(form).entries());
     const resultat = afficherResultat();
     montrer(3);
-    // Envoi des réponses et mesure d'audience : branchés aux étapes 4.5 et 5.2.
+    // Envoi à Netlify Forms : chaque diagnostic terminé arrive dans l'onglet Forms et par e-mail.
+    const envoi = new URLSearchParams({
+      'form-name': 'diagnostic',
+      nom: String(coordonnees.nom ?? ''), email: String(coordonnees.email ?? ''),
+      fonction: String(coordonnees.fonction ?? ''), taille: String(coordonnees.taille ?? ''),
+      choix6mois: String(coordonnees.choix6mois ?? 'non renseigné'),
+      profil: resultat.profil.nom, score: `${resultat.total}/64`,
+      axes: resultat.parAxe.map((a) => `${a.nom} ${a.pct} %`).join(' ; '),
+      offre: offres[resultat.offre].nom,
+      reponses: reponses.map((r, i) => `Q${i + 1}=${r}`).join(' '),
+    });
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: envoi.toString() })
+      .catch(() => { /* hors ligne ou en local : le résultat reste affiché */ });
     document.dispatchEvent(new CustomEvent('diagnostic:termine', { detail: { reponses, coordonnees, resultat } }));
   });
 </script>
