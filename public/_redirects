@@ -1,0 +1,32 @@
+# Redirections de l'ancien site WordPress (etape 5.3)
+# Source : plan-redirection-aurelienmizeret.xlsx + decision du 21/09/2026 (test des schemas)
+
+# Pages et offres renommees ou fusionnees
+/blog-2/    /ressources-ia/    301
+/formation/    https://test.aurelienmizeret.com/    301
+/ressources/    /ressources-ia/    301
+/lingenierie-humaine-au-service-de-votre-collectif/    /ingenierie-de-gouvernance/    301
+/executive-sparring-le-miroir-strategique-du-dirigeant/    /executive-confidant/    301
+/test-des-schemas-young/    https://test.aurelienmizeret.com/test-schemas-young/    301
+/barometre-observatoire-ia-impact-terrain/    /observatoire-ia/    301
+/ia-comex-diagnostic/    /cadrage-de-decision-ia/    301
+/ia-et-management/    /diagnostic/    301
+/author/aurelien-mizeret/    /a-propos/    301
+/author/admin7217/    /a-propos/    301
+/audit-de-transition-ia/    /diagnostic-de-robustesse-ia/    301
+
+# Archives WordPress
+/blog-2/*    /ressources-ia/    301
+/category/*    /ressources-ia/    301
+/tag/*    /ressources-ia/    301
+
+# Sitemaps Yoast
+/sitemap_index.xml    /sitemap.xml    301
+/page-sitemap.xml    /sitemap.xml    301
+/post-sitemap.xml    /sitemap.xml    301
+
+# Points d'entree WordPress sans equivalent
+/feed/*    /404.html    410
+/wp-admin/*    /404.html    410
+/wp-login.php    /404.html    410
+/xmlrpc.php    /404.html    410
