@@ -6,6 +6,7 @@ chapo: "La réponse courte, en deux phrases, placée en tête : c'est elle que G
 date: 2026-09-20
 lecture: 9
 theme: "Décision"
+illustration: "../../assets/analyses/choisir-outil-ia-14-editeurs.jpg"
 essentiel:
   - "Premier point clé, en une phrase."
   - "Deuxième point clé, en une phrase."

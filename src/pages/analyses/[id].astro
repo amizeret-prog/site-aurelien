@@ -1,6 +1,9 @@
 ---
 // Gabarit d'un article pilier : pensé pour être lu, cité et repris par Google et les assistants IA.
 import { getCollection, render } from 'astro:content';
+import { Picture } from 'astro:assets';
+import portrait from '../../assets/portrait/aurelien-mizeret.jpg';
+import couverture from '../../assets/livre/couverture.jpg';
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Button from '../../components/Button.astro';
@@ -52,13 +55,21 @@ const article = {
       <h1>{d.title}</h1>
       <p class="chapo">{d.chapo}</p>
       <div class="auteur">
-        <span class="mono" aria-hidden="true">AM</span>
+        <Picture class="mono" src={portrait} formats={['avif', 'webp']} alt="" widths={[48, 96]} sizes="48px" />
         <p><a href="/a-propos/">Aurélien Mizeret</a><br /><span>
           {formatDate(d.date)}{d.miseAJour && `, mis à jour le ${formatDate(d.miseAJour)}`}{d.lecture && `, ${d.lecture} min de lecture`}
         </span></p>
       </div>
     </div>
   </section>
+
+  {d.illustration && (
+    <div class="illustration">
+      <div class="container">
+        <Picture src={d.illustration} formats={['avif', 'webp']} alt="" widths={[640, 960, 1280, 1600]} sizes="(min-width: 1200px) 1100px, 100vw" loading="eager" />
+      </div>
+    </div>
+  )}
 
   <section class="section section--light">
     <div class="container corps">
@@ -108,7 +119,7 @@ const article = {
 
   <section class="section section--deep">
     <div class="container fin">
-      <div class="livre" aria-hidden="true"><span>Ce que l'IA fait de nous</span></div>
+      <a class="livre" href="/livre/" aria-hidden="true" tabindex="-1"><Picture src={couverture} formats={['avif', 'webp']} alt="" widths={[110, 220]} sizes="110px" /></a>
       <div>
         <p>Aurélien Mizeret, auteur de <em>Ce que l'IA fait de nous</em>. <a href="/livre/">Découvrir le livre</a></p>
         <div class="actions">
@@ -129,8 +140,11 @@ const article = {
   .auteur { display: flex; gap: 1rem; align-items: center; margin-top: 2rem; }
   .auteur p { margin: 0; font-size: .9375rem; }
   .auteur a { font-family: var(--font-title); font-weight: 700; }
-  .auteur span:not(.mono) { color: var(--on-ink-soft); }
-  .mono { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--gold); display: grid; place-items: center; font-family: var(--font-title); font-weight: 800; color: var(--gold); flex-shrink: 0; }
+  .auteur span { color: var(--on-ink-soft); }
+  .auteur :global(.mono) { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; flex-shrink: 0; }
+
+  .illustration { background: linear-gradient(to bottom, var(--ink) 50%, var(--bg) 50%); }
+  .illustration :global(img) { display: block; width: 100%; max-width: 1100px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--radius); }
 
   .corps { display: grid; gap: 2.5rem; }
   .corps > * { max-width: var(--measure); }
@@ -168,6 +182,7 @@ const article = {
   .sources ol { margin: 0; padding-left: 1.25rem; display: grid; gap: .5rem; font-size: .9375rem; }
 
   .fin { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-  .livre { width: 110px; height: 160px; flex-shrink: 0; background: var(--ink); border: 1px solid var(--gold); display: grid; place-items: center; text-align: center; padding: .75rem; font-family: var(--font-title); font-weight: 800; font-size: .875rem; line-height: 1.15; color: var(--on-ink); box-shadow: 8px 8px 0 var(--gold); }
+  .livre { display: block; width: 110px; flex-shrink: 0; border: 1px solid var(--gold); box-shadow: 8px 8px 0 var(--gold); }
+  .livre :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 2 / 3; object-fit: cover; }
   .fin p { margin: 0; max-width: 40rem; }
 </style>

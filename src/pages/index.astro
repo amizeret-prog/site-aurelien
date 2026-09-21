@@ -1,5 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait/aurelien-mizeret.jpg';
+import couverture from '../assets/livre/couverture.jpg';
 import Base from '../layouts/Base.astro';
 import Button from '../components/Button.astro';
 import SectionTitle from '../components/SectionTitle.astro';
@@ -37,8 +40,8 @@ const repartition = [
           <Button href="/contact/#rdv" variant="secondary">Réserver un échange de 30 min</Button>
         </div>
       </div>
-      <div class="portrait" role="img" aria-label="Portrait d'Aurélien Mizeret (photo à venir)">
-        <span>AM</span>
+      <div class="portrait">
+        <Picture src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[320, 400]} sizes="(min-width: 1024px) 380px, 90vw" loading="eager" fetchpriority="high" />
       </div>
     </div>
   </section>
@@ -173,9 +176,9 @@ const repartition = [
   <!-- 10. Le livre -->
   <section class="section section--deep">
     <div class="container livre">
-      <div class="couverture" role="img" aria-label="Couverture du livre Ce que l'IA fait de nous (image à venir)">
-        <span>Ce que l'IA fait de nous</span><small>Aurélien Mizeret</small>
-      </div>
+      <a class="couverture" href="/livre/">
+        <Picture src={couverture} formats={['avif', 'webp']} alt="Couverture du livre Ce que l'IA fait de nous" widths={[220, 440]} sizes="220px" />
+      </a>
       <div>
         <p class="eyebrow">Le livre</p>
         <h2><em>Ce que l'IA fait de nous</em></h2>
@@ -219,7 +222,8 @@ const repartition = [
     border-radius: var(--radius); box-shadow: 14px 14px 0 var(--gold);
     display: grid; place-items: center;
   }
-  .portrait span { font-family: var(--font-title); font-weight: 800; font-size: 5rem; letter-spacing: -0.04em; color: var(--line-ink); }
+  .portrait { overflow: hidden; }
+  .portrait :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 
   .confiance { background: var(--ink-deep); color: var(--on-ink); padding: 2rem 0; border-top: 1px solid var(--line-ink); }
   .confiance-grille { display: grid; gap: 1.25rem; }
@@ -271,8 +275,8 @@ const repartition = [
     width: 220px; aspect-ratio: 2 / 3; justify-self: center; background: var(--ink); border: 1px solid var(--gold);
     box-shadow: 12px 12px 0 var(--gold); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
   }
-  .couverture span { font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.02em; color: var(--on-ink); }
-  .couverture small { color: var(--gold); font-weight: 700; }
+  .couverture { display: block; padding: 0; overflow: hidden; }
+  .couverture :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
   .livre h2 em { font-style: normal; }
   .commander { align-self: center; color: var(--on-ink); }
 </style>

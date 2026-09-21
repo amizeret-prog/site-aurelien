@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SectionTitle from '../../components/SectionTitle.astro';
@@ -22,11 +23,14 @@ const articles = (await getCollection('analyses', estPublie)).sort(parDateDesc);
     <div class="container">
       <ul class="liste">
         {articles.map((a) => (
-          <li>
+          <li class:list={[{ 'avec-visuel': a.data.illustration }]}>
+            {a.data.illustration && <Picture class="vignette" src={a.data.illustration} formats={['avif', 'webp']} alt="" widths={[320, 640]} sizes="(min-width: 768px) 280px, 100vw" />}
+            <div>
             <p class="theme">{a.data.theme}</p>
             <h2><a href={`/analyses/${a.id}/`}>{a.data.title}</a></h2>
             <p>{a.data.chapo}</p>
             <p class="muted">{formatDate(a.data.date)}{a.data.lecture && `, ${a.data.lecture} min de lecture`}</p>
+            </div>
           </li>
         ))}
       </ul>
@@ -44,4 +48,9 @@ const articles = (await getCollection('analyses', estPublie)).sort(parDateDesc);
   .liste h2 a:hover { text-decoration: underline; text-decoration-color: var(--gold); }
   .theme { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin-bottom: .5rem; }
   .liste p:last-child { margin: 0; font-size: .9375rem; }
+  .liste :global(.vignette) { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: calc(var(--radius) / 2); margin-bottom: 1.25rem; }
+  @media (min-width: 768px) {
+    .liste .avec-visuel { display: grid; grid-template-columns: 280px 1fr; gap: 1.75rem; align-items: start; }
+    .liste :global(.vignette) { margin-bottom: 0; }
+  }
 </style>

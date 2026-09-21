@@ -1,5 +1,7 @@
 ---
 import PageSimple from '../layouts/PageSimple.astro';
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait/aurelien-mizeret.jpg';
 import { calLink, calConfigure } from '../data/config';
 const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Transition IA', 'Programme de gouvernance humaine', 'Executive Confidant', 'Conférence ou formation', 'Participer à Ceux qui décident', 'Presse', 'Autre'];
 ---
@@ -53,6 +55,7 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
       </div>
 
       <div class="bloc direct">
+        <Picture class="portrait" src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[96, 192]} sizes="96px" />
         <h2>Coordonnées directes</h2>
         <ul>
           <li><a href="mailto:hello@aurelienmizeret.com">hello@aurelienmizeret.com</a></li>
@@ -135,6 +138,7 @@ const sujets = ['Journée Décision IA', 'Cadrage de Décision IA', 'Audit de Tr
   button.btn { justify-self: start; font-size: 1rem; }
   .delai { margin: 0; font-size: .9375rem; color: var(--text-soft); }
   .piege { position: absolute; left: -9999px; }
+  .direct :global(.portrait) { display: block; width: 96px; height: 96px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; margin-bottom: 1.25rem; }
   .direct ul { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .5rem; }
   .direct a { color: var(--ink); font-family: var(--font-title); font-weight: 700; }
 </style>

@@ -1,5 +1,8 @@
 ---
 import PageSimple from '../layouts/PageSimple.astro';
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait/aurelien-mizeret.jpg';
+import couverture from '../assets/livre/couverture.jpg';
 import Button from '../components/Button.astro';
 import { entiteLivre, livre, liens } from '../data/identite';
 ---
@@ -15,8 +18,8 @@ import { entiteLivre, livre, liens } from '../data/identite';
 >
   <section class="section section--light">
     <div class="container livre">
-      <div class="couverture" role="img" aria-label="Couverture du livre (image à venir)">
-        <span>Ce que l'IA fait de nous</span><small>Aurélien Mizeret</small>
+      <div class="couverture">
+        <Picture src={couverture} formats={['avif', 'webp']} alt="Couverture du livre Ce que l'IA fait de nous" widths={[220, 440]} sizes="220px" loading="eager" />
       </div>
       <div class="prose">
         <p>L'IA n'est ni bonne ni mauvaise : tout dépend de ce que nous en faisons. Ce livre pose les questions que l'on oublie de se poser. Qui décide à notre place ? Que devient notre esprit critique ? Comment transmettre ce qui fait de nous des humains ? Il rassemble des études, des scènes du quotidien et un regard de terrain, pour aider chacun à rester debout, à côté de la machine.</p>
@@ -39,6 +42,10 @@ import { entiteLivre, livre, liens } from '../data/identite';
           <li><a class="link-strong" href={liens.amazonBroche} rel="noopener">Broché, 18,90 €</a></li>
           <li><a class="link-strong" href={liens.amazonKindle} rel="noopener">Ebook Kindle, 7,99 €</a></li>
         </ul>
+        <div class="auteur">
+          <Picture src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[96, 192]} sizes="96px" />
+          <p><strong>L'auteur</strong><br /><a href="/a-propos/">Aurélien Mizeret</a>, conseil en décision humaine et IA auprès des DRH et des directions générales.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -59,8 +66,11 @@ import { entiteLivre, livre, liens } from '../data/identite';
     width: 220px; aspect-ratio: 2 / 3; justify-self: center; background: var(--ink); border: 1px solid var(--gold);
     box-shadow: 12px 12px 0 var(--gold); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
   }
-  .couverture span { font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; line-height: 1.05; color: var(--on-ink); }
-  .couverture small { color: var(--gold); font-weight: 700; }
+  .couverture { padding: 0; overflow: hidden; }
+  .couverture :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .auteur { display: flex; gap: 1.25rem; align-items: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .auteur :global(img) { width: 96px; height: 96px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; flex-shrink: 0; }
+  .auteur p { margin: 0; }
   .sommaire { columns: 2; column-gap: 2rem; }
   .reperes { margin: 2rem 0 0; display: grid; gap: 1rem; }
   .reperes dt { font-size: .875rem; color: var(--text-soft); }

@@ -34,7 +34,7 @@ const entretiens = defineCollection({
 
 const analyses = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/analyses' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),                 // la question recherchée
     seoTitle: z.string().optional(),
     description: z.string(),
@@ -43,6 +43,7 @@ const analyses = defineCollection({
     miseAJour: z.coerce.date().optional(),
     lecture: z.number().optional(),
     theme: z.string().default('Décision'),
+    illustration: image().optional(),  // visuel 16:9, dans src/assets/analyses/
     essentiel: z.array(z.string()).length(3),
     faq: z.array(z.object({ question: z.string(), answer: z.string() })).default([]),
     sources: z.array(z.object({ label: z.string(), url: z.string().url().optional() })).default([]),

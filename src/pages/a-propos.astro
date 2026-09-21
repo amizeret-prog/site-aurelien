@@ -1,5 +1,7 @@
 ---
 import PageSimple from '../layouts/PageSimple.astro';
+import { Picture } from 'astro:assets';
+import portrait from '../assets/portrait/aurelien-mizeret.jpg';
 import ProofBand from '../components/ProofBand.astro';
 import FinalCta from '../components/FinalCta.astro';
 import { ids, liens, SITE } from '../data/identite';
@@ -34,7 +36,11 @@ const profil = {
   />
 
   <section class="section section--light">
-    <div class="container prose">
+    <div class="container apropos">
+      <figure class="portrait">
+        <Picture src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[300, 400]} sizes="(min-width: 900px) 300px, 80vw" loading="eager" />
+      </figure>
+      <div class="prose">
       <h2>Un parcours construit sur le terrain</h2>
       <p>J'ai lancé mon premier organisme de formation à 24 ans. J'ai ensuite dirigé des équipes et piloté des déploiements d'accompagnement auprès de DRH et de dirigeants, jusqu'à 80 personnes dans six pays. J'ai fondé l'AfterWork RH, réseau d'échange de la communauté RH, que j'ai présidé.</p>
       <p>En parallèle, je me suis formé aux disciplines qui éclairent le comportement humain : sciences cognitives, psychologie des organisations, biais comportementaux, mécanismes de décision sous pression. Ces savoirs servent des situations concrètes, face à des dirigeants en prise directe avec leurs enjeux.</p>
@@ -60,8 +66,17 @@ const profil = {
 
       <h2>Où j'interviens</h2>
       <p>Paris et Île-de-France, Hauts-de-France, Bruxelles et Luxembourg. D'autres déplacements restent possibles selon les missions.</p>
+      </div>
     </div>
   </section>
 
   <FinalCta />
 </PageSimple>
+
+<style>
+  .apropos { display: grid; gap: 2.5rem; align-items: start; }
+  @media (min-width: 900px) { .apropos { grid-template-columns: 300px minmax(0, 1fr); gap: 4rem; } .portrait { position: sticky; top: 2rem; } }
+  .portrait { margin: 0; max-width: 300px; border-radius: var(--radius); overflow: hidden; box-shadow: 10px 10px 0 var(--gold); }
+  .portrait :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+  .apropos .prose > :first-child { margin-top: 0; }
+</style>

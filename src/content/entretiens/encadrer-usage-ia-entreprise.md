@@ -7,6 +7,7 @@ fonction: "Vice-présidente"
 secteur: "Services-conseils"
 pays: "Canada"
 effectif: "Moins de 250 personnes"
+portrait: "../../assets/entretiens/encadrer-usage-ia-entreprise.jpg"
 date: 2026-08-22
 lecture: 7
 extrait: "Le cadre d’usage n’a pas manqué de rigueur, il a manqué de vitesse."
