@@ -11,7 +11,7 @@ export interface Offre {
   titre: string;
   chapo: string;
   faits: string[];
-  carte: { prix: string; resume: string; cta: string; badge?: string };
+  carte: { prix: string; duree?: string; resume: string; cta: string; badge?: string };
   pourQui: { titre: string; items: { fort?: string; texte: string }[] };
   vecu?: { titre: string; citations: string[]; chute: string };
   apports?: { titre: string; blocs: Bloc[] };
@@ -33,8 +33,8 @@ export const offres: Offre[] = [
     surTitre: "Offre d'entrée, direction générale et Codir",
     titre: 'Avant de choisir une IA, décidez comment vous décidez.',
     chapo: "Vos directeurs parlent tous d'IA. Chacun y met une attente, une crainte et un critère différents. En une journée, je fais émerger ce qui les sépare, puis je construis avec eux une grille commune et des règles de décision que chacun accepte de porter.",
-    faits: ['1 journée sur site', '2 500 €', 'Livrable sous 72 h'],
-    carte: { prix: '2 500 €', resume: "Alignez votre direction sur une vision, des critères et des règles de décision communes, en une journée.", cta: 'Découvrir la journée', badge: 'Pour commencer' },
+    faits: ['1 journée sur site', '2 500 € HT', 'Livrable sous 72 h'],
+    carte: { prix: '2 500 € HT', duree: '1 jour d\u2019intervention', resume: "Alignez votre direction sur une vision, des critères et des règles de décision communes, en une journée.", cta: 'Découvrir la journée', badge: 'Pour commencer' },
     pourQui: {
       titre: 'Cette journée est faite pour vous si',
       items: [
@@ -79,7 +79,7 @@ export const offres: Offre[] = [
       titre: 'Le périmètre de la journée',
       texte: "La journée aligne votre direction sur la vision et sur la façon de décider. Le choix d'un fournisseur s'appuie ensuite sur cette grille, dans le cadre du Cadrage de Décision IA. Chaque minute sert une décision réelle.",
     },
-    tarif: { montant: '2 500 €', detail: 'Forfait tout compris : préparation, journée sur place, livrable sous 72 heures et point de suivi à 30 jours. Frais de déplacement en sus hors Paris, Nord, Bruxelles et Luxembourg.' },
+    tarif: { montant: '2 500 € HT', detail: 'Forfait tout compris : préparation, journée sur place, livrable sous 72 heures et point de suivi à 30 jours. Frais de déplacement en sus hors Paris, Nord, Bruxelles et Luxembourg.' },
     faq: [
       { question: 'Combien de directeurs peuvent participer ?', answer: "Jusqu'à six en entretien individuel sur une journée. Au-delà, nous prévoyons une demi-journée d'entretiens supplémentaire." },
       { question: 'La direction générale doit-elle être présente ?', answer: "Oui, au minimum pour la séance de l'après-midi. Sa présence donne à la grille validée toute sa portée." },
@@ -96,8 +96,8 @@ export const offres: Offre[] = [
     surTitre: "Offre phare, choix d'une solution IA",
     titre: 'Choisissez votre IA sur vos critères, et décidez avec assurance.',
     chapo: 'Le Cadrage de Décision IA installe vos critères au centre du choix, du premier contact avec le marché jusqu\u2019à la signature. Vos décideurs s\u2019accordent sur ce qui compte, les fournisseurs répondent à la même question, les finalistes sont évalués sur la même grille. Vous obtenez une décision claire, partagée et documentée, que votre Comex, vos équipes et vos financeurs comprennent immédiatement.',
-    faits: ['3 jours', '3 600 €', 'Livrable : note de décision'],
-    carte: { prix: '3 600 €', resume: 'Choisissez votre solution IA sur vos propres critères, avec une décision documentée et défendable.', cta: 'Découvrir le cadrage' },
+    faits: ['3 jours', '3 600 € HT', 'Livrable : note de décision'],
+    carte: { prix: '3 600 € HT', duree: '3 jours d\u2019intervention', resume: 'Choisissez votre solution IA sur vos propres critères, avec une décision documentée et défendable.', cta: 'Découvrir le cadrage' },
     pourQui: {
       titre: 'Cette offre est faite pour vous si',
       items: [
@@ -154,7 +154,7 @@ export const offres: Offre[] = [
       texte: 'La direction a choisi la solution la mieux adaptée à ses usages réels, sur des critères qu\u2019elle avait elle-même posés, et dispose d\u2019une décision documentée pour chaque étape.',
     },
     role: { titre: 'Mon rôle', texte: 'Un regard indépendant, au service de votre seule décision : je travaille pour vous, sans lien commercial avec les éditeurs. L\u2019intégration technique est ensuite conduite par le fournisseur retenu ou par votre intégrateur, sur une base claire et partagée.' },
-    tarif: { montant: '3 600 €', detail: 'Pour trois jours d\u2019intervention.' },
+    tarif: { montant: '3 600 € HT', detail: 'Pour trois jours d\u2019intervention.' },
     faq: [
       { question: 'Faut-il avoir suivi la Journée Décision IA avant ?', answer: 'Elle accélère le premier temps du cadrage. Le cadrage peut aussi démarrer directement : l\u2019alignement des décideurs est alors intégré aux trois jours.' },
       { question: 'Qui rédige le cahier des charges ?', answer: 'Je construis la question posée aux fournisseurs et la grille de lecture de leurs réponses. Votre direction des systèmes d\u2019information apporte les exigences techniques détaillées, qui s\u2019intègrent naturellement à la grille.' },
@@ -171,8 +171,8 @@ export const offres: Offre[] = [
     surTitre: 'Offre cœur, direction générale, Comex et DRH',
     titre: 'Voyez clairement ce que l\u2019IA transforme chez vous, et agissez là où tout se joue.',
     chapo: 'L\u2019IA change la façon dont vos équipes décident, travaillent ensemble, apprennent et s\u2019engagent, bien au-delà des outils eux-mêmes. L\u2019Audit de Transition IA vous donne une lecture complète de ces transformations, du Comex jusqu\u2019au terrain. Vous repartez avec une cartographie précise de vos forces et de vos leviers, et une feuille de route priorisée pour conduire votre transition avec lucidité.',
-    faits: ['4 à 6 semaines', '8 000 à 12 000 €', 'Livrable : feuille de route à 12 mois'],
-    carte: { prix: 'de 8 000 à 12 000 €', resume: 'Voyez clairement ce que l\u2019IA transforme dans votre organisation, et où agir en priorité.', cta: 'Découvrir l\u2019audit' },
+    faits: ['4 à 6 semaines', '8 000 à 12 000 € HT', 'Livrable : feuille de route à 12 mois'],
+    carte: { prix: 'de 8 000 à 12 000 € HT', resume: 'Voyez clairement ce que l\u2019IA transforme dans votre organisation, et où agir en priorité.', cta: 'Découvrir l\u2019audit' },
     pourQui: {
       titre: 'Cette offre est faite pour vous si',
       items: [
@@ -218,7 +218,7 @@ export const offres: Offre[] = [
       titre: 'Ce que révèlent les dirigeants que j\u2019interroge',
       texte: 'Les entretiens que je mène auprès de DRH et de dirigeants font ressortir des constats récurrents : des gains individuels réels qui peinent à devenir des gains d\u2019organisation, des cadres d\u2019usage rédigés mais encore peu connus des équipes, une adhésion qui se construit par les preuves concrètes davantage que par les présentations. L\u2019audit transforme ces constats généraux en lecture précise de votre propre organisation.',
     },
-    tarif: { montant: 'De 8 000 à 12 000 €', detail: 'Selon la taille de l\u2019organisation, le nombre de sites et le périmètre retenu. Le montant exact est fixé après un premier échange.' },
+    tarif: { montant: 'De 8 000 à 12 000 € HT', detail: 'Selon la taille de l\u2019organisation, le nombre de sites et le périmètre retenu. Le montant exact est fixé après un premier échange.' },
     faq: [
       { question: 'Combien de temps dure l\u2019audit ?', answer: 'En général quatre à six semaines, de la première réunion à la restitution. Le calendrier s\u2019adapte à la disponibilité de vos équipes.' },
       { question: 'Qui est interrogé ?', answer: 'La direction générale, les directeurs concernés, un panel de managers et de collaborateurs représentatif de vos métiers. Le questionnaire organisationnel permet ensuite d\u2019élargir l\u2019écoute à l\u2019ensemble des équipes.' },
@@ -236,7 +236,7 @@ export const offres: Offre[] = [
     titre: 'Faites de l\u2019IA un projet que vos équipes s\u2019approprient et que votre organisation pilote avec clarté.',
     chapo: 'Un outil se déploie en quelques semaines. Une organisation qui décide, travaille et apprend avec l\u2019IA se construit dans la durée. Le Programme de gouvernance humaine installe les instances, les pratiques managériales et les réflexes collectifs qui rendent votre transition solide : chacun sait comment utiliser l\u2019IA, où s\u2019exerce le jugement humain et comment les décisions se prennent. Votre organisation gagne en autonomie, en cohésion et en confiance.',
     faits: ['3 à 9 mois', 'Sur devis', 'Programme sur mesure'],
-    carte: { prix: 'Sur devis', resume: 'Installez les instances, les pratiques managériales et les réflexes qui ancrent l\u2019IA dans la durée.', cta: 'Découvrir le programme' },
+    carte: { prix: 'Sur devis', duree: 'Sur 3 à 9 mois', resume: 'Installez les instances, les pratiques managériales et les réflexes qui ancrent l\u2019IA dans la durée.', cta: 'Découvrir le programme' },
     pourQui: {
       titre: 'Cette offre est faite pour vous si',
       items: [
@@ -299,7 +299,7 @@ export const offres: Offre[] = [
     titre: 'Un pair à vos côtés, au moment précis où la décision vous appartient.',
     chapo: 'Certaines décisions se prennent seul, et gagnent pourtant à être pensées à deux. L\u2019Executive Confidant offre au dirigeant un espace confidentiel pour éprouver son raisonnement, lire les dynamiques humaines en jeu et trancher avec clarté. Un interlocuteur qui connaît votre organisation, comprend les enjeux humains, technologiques et réglementaires de l\u2019IA, et vous parle avec franchise, d\u2019égal à égal.',
     faits: ['À la demande', 'Sur devis confidentiel', 'Réponse sous 24 h'],
-    carte: { prix: 'Sur devis', resume: 'Un pair stratégique pour le dirigeant, dans le prolongement d\u2019une mission.', cta: 'Découvrir l\u2019accompagnement' },
+    carte: { prix: 'Sur devis', duree: 'À la demande', resume: 'Un pair stratégique pour le dirigeant, dans le prolongement d\u2019une mission.', cta: 'Découvrir l\u2019accompagnement' },
     pourQui: {
       titre: 'Cet accompagnement est fait pour vous si',
       items: [

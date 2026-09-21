@@ -22,7 +22,7 @@ import { offres, urlOffre } from '../../data/offres';
       <div class="grid grid-3 escalier">
         {offres.map((o, i) => (
           <div class:list={[{ premier: i === 0 }]}>
-            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
+            <OfferCard title={o.nom} price={o.carte.prix} duration={o.carte.duree} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
               <p>{o.carte.resume}</p>
             </OfferCard>
           </div>

@@ -101,7 +101,7 @@ const repartition = [
       <div class="grid grid-3 escalier">
         {offres.map((o, i) => (
           <div class:list={[{ premier: i === 0 }]}>
-            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
+            <OfferCard title={o.nom} price={o.carte.prix} duration={o.carte.duree} href={urlOffre(o.slug)} featured={i === 0} badge={o.carte.badge} cta={o.carte.cta}>
               <p>{o.carte.resume}</p>
             </OfferCard>
           </div>
@@ -141,7 +141,9 @@ const repartition = [
   <!-- 8. Qui je suis -->
   <section class="section section--white">
     <div class="container qui">
-      <div class="photo-situation" role="img" aria-label="Aurélien Mizeret en animation (photo à venir)"></div>
+      <div class="photo-qui">
+        <Picture src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[320, 400]} sizes="(min-width: 900px) 400px, 90vw" />
+      </div>
       <div>
         <SectionTitle eyebrow="Aurélien Mizeret" title="Dix-huit ans à comprendre ce qui fait décider, agir et s'engager.">
           <p>J'ai dirigé des équipes, accompagné des DRH et des dirigeants en France, en Belgique, au Luxembourg et à l'international, et fondé l'AfterWork RH, réseau de la communauté RH. Formé aux sciences cognitives, à la psychologie des organisations et aux mécanismes de décision, je relie aujourd'hui ces disciplines aux enjeux de l'IA en entreprise. J'interviens en conseil auprès des directions et en formation, notamment avec ORSYS.</p>
@@ -262,7 +264,8 @@ const repartition = [
 
   .qui { display: grid; gap: 3rem; align-items: center; }
   @media (min-width: 900px) { .qui { grid-template-columns: 2fr 3fr; } }
-  .photo-situation { aspect-ratio: 4 / 3; border-radius: var(--radius); background: linear-gradient(135deg, var(--bg), var(--line)); border-left: 6px solid var(--gold); }
+  .photo-qui { max-width: 400px; width: 100%; justify-self: center; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--radius); border-left: 6px solid var(--gold); }
+  .photo-qui :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
   .reperes { margin: 0 0 2rem; display: flex; flex-wrap: wrap; gap: 2rem; }
   .reperes div { display: flex; flex-direction: column; }
   .reperes dd { margin: 0; font-family: var(--font-title); font-weight: 800; font-size: 2.25rem; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }

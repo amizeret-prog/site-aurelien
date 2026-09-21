@@ -177,7 +177,7 @@ const service = {
         <p class="tarif-label">Investissement</p>
         <p class="montant">{offre.tarif.montant}</p>
         <p>{offre.tarif.detail}</p>
-        <p class="tva">TVA non applicable. <span class="a-completer">Mention exacte à faire valider.</span></p>
+        <p class="tva">Montant hors taxes. Aucune TVA n'est facturée : régime particulier de franchise des petites entreprises (article 56bis du Code de la TVA belge).</p>
       </div>
     </div>
   </section>
@@ -197,7 +197,7 @@ const service = {
         <SectionTitle title="Dans le même parcours" />
         <div class="grid grid-2">
           {voisines.map(({ o, label }) => (
-            <OfferCard title={o.nom} price={o.carte.prix} href={urlOffre(o.slug)} badge={label} cta={o.carte.cta}>
+            <OfferCard title={o.nom} price={o.carte.prix} duration={o.carte.duree} href={urlOffre(o.slug)} badge={label} cta={o.carte.cta}>
               <p>{o.carte.resume}</p>
             </OfferCard>
           ))}
@@ -271,5 +271,4 @@ const service = {
   .tarif-label { margin: 0; color: var(--gold); font-weight: 700; font-size: .9375rem; }
   .montant { font-family: var(--font-title); font-weight: 800; font-size: 2.5rem; line-height: 1.05; letter-spacing: -0.03em; margin: .5rem 0 1rem; }
   .tva { font-size: .875rem; color: var(--on-ink-soft); margin: 0; }
-  .tva .a-completer { color: var(--ink); }
 </style>

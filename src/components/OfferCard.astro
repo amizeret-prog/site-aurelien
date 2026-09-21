@@ -3,18 +3,20 @@
 interface Props {
   title: string;
   price: string;
+  duration?: string;
   audience?: string;
   href: string;
   featured?: boolean;
   badge?: string;
   cta?: string;
 }
-const { title, price, audience, href, featured = false, badge, cta = "Voir le détail de l'offre" } = Astro.props;
+const { title, price, duration, audience, href, featured = false, badge, cta = "Voir le détail de l'offre" } = Astro.props;
 ---
 <article class:list={['offer', { featured }]}>
   {badge && <p class="badge">{badge}</p>}
   <h3>{title}</h3>
   <p class="price">{price}</p>
+  {duration && <p class="duree">{duration}</p>}
   <div class="desc"><slot /></div>
   {audience && <p class="audience"><strong>Pour qui :</strong> {audience}</p>}
   <a class="more" href={href}>{cta}</a>
@@ -31,6 +33,7 @@ const { title, price, audience, href, featured = false, badge, cta = "Voir le d�
   .badge { font-weight: 700; font-size: .9375rem; color: var(--gold-text); margin: 0; }
   h3 { color: var(--ink); margin: 0; }
   .price { font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+  .duree { font-weight: 700; font-size: .9375rem; color: var(--text-soft); margin: -.25rem 0 0; }
   .desc :global(p) { margin: 0; }
   .audience { font-size: .9375rem; color: var(--text-soft); margin: 0; }
   .audience strong { color: var(--text); }
