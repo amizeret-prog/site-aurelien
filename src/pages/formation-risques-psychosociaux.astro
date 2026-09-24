@@ -1,0 +1,273 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import FinalCta from '../components/FinalCta.astro';
+
+const faits = [
+  { dt: 'Durée', dd: '2 jours, 14 heures' },
+  { dt: 'Format', dd: 'Intra-entreprise, présentiel ou à distance' },
+  { dt: 'Groupe', dd: '6 à 12 participants' },
+  { dt: 'Public', dd: 'Dirigeants, managers, DRH et RH' },
+  { dt: 'Tarif', dd: 'Sur devis' },
+];
+
+const objectifs = [
+  "Cartographier les facteurs de risque d'une équipe à partir de modèles reconnus, sans tomber dans le ressenti ou le procès d'intention.",
+  "Situer vos obligations et celles de votre organisation dans le cadre légal français ou belge, et savoir qui fait quoi.",
+  "Mener une conversation avec un collaborateur en difficulté, puis l'orienter vers les bons interlocuteurs sans vous substituer à eux.",
+  "Construire un plan de prévention priorisé, avec des indicateurs que vous suivrez vraiment.",
+];
+
+const jours = [
+  {
+    titre: 'Jour 1', sous: 'Comprendre et repérer',
+    episodes: [
+      { n: 1, titre: 'Le signal faible', points: [
+        "Ce que recouvre vraiment le terme « risques psychosociaux », et ce qu'il ne recouvre pas.",
+        "Les six familles de facteurs de risque du rapport Gollac : intensité et temps de travail, exigences émotionnelles, autonomie, rapports sociaux, conflits de valeurs, insécurité de la situation de travail.",
+        "Deux modèles pour lire une situation : demande, latitude et soutien (Karasek) ; efforts et récompenses (Siegrist).",
+      ], chez: 'Chez Clara :', texte: "cartographie de l'équipe avec la grille des six familles. Où sont les zones rouges, et lesquelles personne ne voit ?" },
+      { n: 2, titre: "Ce que dit la loi, ce qu'elle attend de vous", points: [
+        "France : obligation de sécurité de l'employeur, principes généraux de prévention, document unique d'évaluation des risques, harcèlement moral, accords nationaux interprofessionnels sur le stress et la violence au travail.",
+        "Belgique : loi sur le bien-être au travail, volet psychosocial, rôle du conseiller en prévention aspects psychosociaux et de la personne de confiance.",
+        "La responsabilité du manager en pratique : ce qu'on lui reproche le plus souvent, c'est de ne pas avoir agi.",
+      ], chez: 'Chez Clara :', texte: "un collaborateur signale une situation tendue par mail. Qu'est-ce qui déclenche une obligation, et pour qui ?" },
+      { n: 3, titre: 'Stress, épuisement, désengagement', points: [
+        "Stress aigu et stress chronique : quand l'adaptation devient usure.",
+        "Le burn-out selon l'OMS et ses trois dimensions : épuisement, distance cynique, perte d'efficacité.",
+        "Bore-out et brown-out : quand le problème n'est pas le trop, mais le vide ou l'absurde.",
+        "Lire les indicateurs collectifs : absentéisme, turnover, conflits, qualité, climat.",
+      ], chez: 'Chez Clara :', texte: "lecture croisée de ses tableaux de bord RH et de trois portraits de collaborateurs." },
+      { n: 4, titre: 'Le manager, amortisseur ou amplificateur', points: [
+        "Le soutien managérial, premier facteur de protection mesuré par la recherche.",
+        "Ce qui se rejoue chez le manager sous pression : exigences élevées, sacrifice de soi, besoin d'approbation. Une lecture inspirée des schémas de Young, appliquée à la posture managériale.",
+        "Sécurité psychologique : ce qui permet de dire « ça ne va pas » avant l'arrêt maladie.",
+      ], chez: 'Chez Clara, puis chez vous :', texte: "autodiagnostic de vos pratiques et de vos réflexes sous tension." },
+    ],
+  },
+  {
+    titre: 'Jour 2', sous: 'Agir et prévenir',
+    episodes: [
+      { n: 5, titre: 'Quand ça dérape', points: [
+        "Distinguer tension, conflit, incivilité, violence et harcèlement, pour ne pas tout qualifier de la même façon.",
+        "Réagir face à une situation signalée : écouter, protéger, tracer, orienter.",
+        "Conduire l'entretien avec un collaborateur en souffrance : ce qu'on dit, ce qu'on évite, où s'arrête votre rôle.",
+      ], chez: 'Chez Clara :', texte: "mises en situation sur des cas apportés par les participants." },
+      { n: 6, titre: 'Les transformations comme facteur de risque', points: [
+        "Réorganisations, travail hybride, arrivée de l'IA : intensification, perte de repères, insécurité sur l'avenir du métier.",
+        "Accompagner un changement sans fabriquer de souffrance : information, participation, rythme.",
+      ], chez: 'Chez Clara :', texte: "repenser l'annonce et le déploiement de l'outil d'IA pour qu'il cesse d'être une menace silencieuse." },
+      { n: 7, titre: "Du diagnostic au plan d'action", points: [
+        "Les trois niveaux de prévention : agir sur l'organisation, outiller les personnes, prendre en charge les situations.",
+        "Les acteurs à mobiliser : direction, RH, représentants du personnel, médecine du travail ou service de prévention.",
+        "Choisir quatre à six indicateurs utiles et un rythme de suivi réaliste.",
+      ], chez: 'Chez vous :', texte: "chaque participant repart avec le plan de prévention de son équipe, priorisé et daté." },
+    ],
+  },
+];
+
+const faq = [
+  { q: 'Faut-il être RH pour suivre cette formation ?', r: "Non. Elle s'adresse d'abord à celles et ceux qui encadrent des personnes au quotidien. Les RH y trouvent un langage commun avec les managers." },
+  { q: 'Le manager ne risque-t-il pas de jouer au psy ?', r: "C'est précisément ce que la formation évite. Le manager apprend à repérer, écouter et orienter. Le diagnostic et la prise en charge restent aux professionnels de santé et de prévention." },
+  { q: "Peut-on l'adapter à une situation déjà dégradée ?", r: "Oui, à condition d'en parler en amont. Une équipe déjà en crise appelle parfois un autre dispositif qu'une formation : l'échange préalable sert aussi à le déterminer." },
+];
+
+const sources = [
+  "Gollac M. (dir.), Mesurer les facteurs psychosociaux de risque au travail pour les maîtriser, rapport du Collège d'expertise sur le suivi des risques psychosociaux au travail, 2011.",
+  "Karasek R., « Job demands, job decision latitude, and mental strain », Administrative Science Quarterly, 24(2), 1979.",
+  "Siegrist J., « Adverse health effects of high-effort/low-reward conditions », Journal of Occupational Health Psychology, 1(1), 1996.",
+  "Maslach C. et Jackson S., « The measurement of experienced burnout », Journal of Occupational Behaviour, 2(2), 1981.",
+  "Organisation mondiale de la santé, CIM-11, code QD85 « Burn-out », 2019.",
+  "Edmondson A., « Psychological safety and learning behavior in work teams », Administrative Science Quarterly, 44(2), 1999.",
+  "Young J., Klosko J. et Weishaar M., Schema Therapy: A Practitioner's Guide, Guilford Press, 2003.",
+  "France : Code du travail, art. L4121-1, L4121-2, R4121-1 et L1152-1 et suivants ; ANI du 2 juillet 2008 sur le stress au travail ; ANI du 26 mars 2010 sur le harcèlement et la violence au travail.",
+  "Belgique : loi du 4 août 1996 relative au bien-être des travailleurs ; lois du 28 février 2014 sur la prévention des risques psychosociaux ; Code du bien-être au travail, livre I, titre 3.",
+  "INRS, dossier « Risques psychosociaux », inrs.fr.",
+];
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: 'Risques psychosociaux : voir avant que ça casse',
+  url: 'https://aurelienmizeret.com/formation-risques-psychosociaux/',
+  description: "Formation intra-entreprise de 2 jours pour dirigeants, managers et RH : repérer les facteurs de risques psychosociaux, agir face à la souffrance au travail et construire un plan de prévention.",
+  inLanguage: 'fr',
+  timeRequired: 'PT14H',
+  provider: { '@type': 'Person', name: 'Aurélien Mizeret', url: 'https://aurelienmizeret.com', email: 'hello@aurelienmizeret.com' },
+  audience: { '@type': 'Audience', audienceType: 'Dirigeants, managers, DRH et responsables RH' },
+  hasCourseInstance: { '@type': 'CourseInstance', courseMode: ['onsite', 'online'], courseWorkload: 'PT14H' },
+};
+---
+<Base title="Formation risques psychosociaux pour managers et RH | Aurélien Mizeret" description="Formation intra-entreprise de 2 jours pour dirigeants, managers et RH : repérer les signaux faibles, agir face à la souffrance au travail et construire un plan de prévention des RPS qui tient dans la durée.">
+
+  <section class="section section--ink hero">
+    <div class="container hero-grille">
+      <div>
+        <p class="eyebrow">Formation en entreprise · Risques psychosociaux</p>
+        <h1>Voir avant que ça casse.</h1>
+        <p class="lead">Deux jours pour apprendre à lire ce qui use une équipe, tenir sa place quand quelqu'un va mal, et bâtir un plan de prévention qui survit au premier trimestre.</p>
+        <div class="actions">
+          <Button href="/contact/#rdv">Réserver un échange de 30 min</Button>
+          <Button href="#programme" variant="secondary">Voir le programme</Button>
+        </div>
+      </div>
+      <aside class="faits" aria-label="Informations clés">
+        <dl>
+          {faits.map((f) => (<div><dt>{f.dt}</dt><dd>{f.dd}</dd></div>))}
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container promesse">
+      <SectionTitle eyebrow="Pourquoi cette formation" title="Le burn-out ne tombe jamais du ciel.">
+        <p>Il s'installe par couches : une charge qui déborde, une autonomie qui rétrécit, une reconnaissance qui ne vient plus, un conflit que personne ne nomme. Chaque couche était visible. Personne n'avait appris à la regarder.</p>
+        <p>Cette formation ne fait pas de vous un psychologue. <strong>Elle fait de vous quelqu'un qui repère tôt, agit juste et sait passer le relais.</strong> Elle travaille aussi un angle que les programmes classiques laissent de côté : ce que le manager apporte lui-même dans l'équation, avec ses propres schémas de fonctionnement.</p>
+      </SectionTitle>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container">
+      <SectionTitle eyebrow="Ce que vous saurez faire" title="Quatre capacités, pas quatre chapitres." />
+      <div class="grid grid-2">
+        {objectifs.map((o) => (<div class="card objectif"><p>{o}</p></div>))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container fil">
+      <SectionTitle eyebrow="Le fil rouge" title="Une équipe, deux jours, sept épisodes.">
+        <p>Plutôt qu'une succession de notions, la formation suit une équipe fictive du premier signal faible jusqu'au plan d'action. Chaque épisode fait avancer son histoire et votre boîte à outils. Au dernier épisode, vous transposez tout sur votre propre terrain.</p>
+      </SectionTitle>
+      <blockquote class="cas-clara">
+        <p>Clara dirige un service de quatorze personnes. Une réorganisation vient d'être annoncée, un outil d'IA arrive dans les process, deux arrêts maladie tombent le même mois. Rien n'est « grave ». Pourtant, quelque chose se défait.</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section section--light" id="programme">
+    <div class="container">
+      <SectionTitle eyebrow="Programme" title="Le déroulé." />
+      {jours.map((j) => (
+        <div class="jour">
+          <div class="jour-tete"><h3>{j.titre}</h3><span>{j.sous}</span></div>
+          {j.episodes.map((e) => (
+            <article class="card episode">
+              <span class="num" aria-hidden="true">{e.n}</span>
+              <div>
+                <h3>{e.titre}</h3>
+                <ul>{e.points.map((p) => <li>{p}</li>)}</ul>
+                <p class="clara"><b>{e.chez}</b> {e.texte}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container">
+      <SectionTitle eyebrow="En pratique" title="Méthode et modalités." />
+      <div class="grid grid-3">
+        <div class="card modalite"><h3>Pédagogie</h3><p>Un cas continu, des mises en situation, des autodiagnostics et vos propres situations de terrain. Environ deux tiers du temps en pratique.</p></div>
+        <div class="card modalite"><h3>Vous repartez avec</h3><ul><li>La grille de cartographie des risques</li><li>La fiche conduite à tenir face à une situation signalée</li><li>Votre plan de prévention d'équipe</li></ul></div>
+        <div class="card modalite"><h3>Évaluation</h3><p>Positionnement en début et fin de formation, évaluation des acquis sur les mises en situation, questionnaire de satisfaction.</p></div>
+      </div>
+      <p class="note">Aucun prérequis. Le programme est ajusté au secteur, à la taille de l'organisation et au cadre légal applicable (France, Belgique ou Luxembourg) lors d'un échange préalable. Pour toute question d'accessibilité liée à un handicap, écrivez à <a class="lien-encre" href="mailto:hello@aurelienmizeret.com">hello@aurelienmizeret.com</a>.</p>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="container etroit">
+      <SectionTitle eyebrow="Questions fréquentes" title="Avant de vous lancer." />
+      {faq.map((f) => (<details><summary>{f.q}</summary><p>{f.r}</p></details>))}
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="container etroit">
+      <SectionTitle eyebrow="Références" title="Sur quoi s'appuie le programme." />
+      <ol class="sources">{sources.map((s) => <li>{s}</li>)}</ol>
+    </div>
+  </section>
+
+  <FinalCta />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)}></script>
+</Base>
+
+<style>
+  .eyebrow { font-weight: 700; font-size: .9375rem; color: var(--gold); margin-bottom: .75rem; }
+  .lead { font-size: 1.1875rem; color: var(--on-ink-soft); max-width: 40rem; }
+
+  .hero {
+    padding-top: 4rem; position: relative; overflow: hidden;
+    background:
+      radial-gradient(circle at 88% 10%, rgba(199,171,90,.24), rgba(199,171,90,0) 55%),
+      linear-gradient(160deg, var(--ink-hover), var(--ink-deep));
+  }
+  .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, #E2CC8C, var(--gold) 50%, #A88B3E); }
+  .hero h1 { max-width: 12ch; }
+  .hero-grille { display: grid; gap: 3rem; align-items: end; }
+  @media (min-width: 1024px) { .hero-grille { grid-template-columns: 1fr 360px; gap: 4rem; } }
+  .faits { border: 1px solid var(--line-ink); border-radius: var(--radius); padding: 1.75rem; background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.01)); }
+  .faits dl { margin: 0; display: grid; gap: .9rem; }
+  .faits div { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; }
+  .faits dt { color: var(--gold); font-weight: 700; font-size: .9375rem; }
+  .faits dd { margin: 0; color: var(--on-ink); }
+
+  .promesse p { font-size: 1.125rem; max-width: 42rem; }
+
+  .objectif { position: relative; overflow: hidden; padding-left: 1.75rem; }
+  .objectif::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #E2CC8C, var(--gold) 50%, #A88B3E); }
+  .objectif p { margin: 0; color: var(--ink); font-weight: 600; }
+
+  .fil { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .fil { grid-template-columns: 1fr 1.1fr; } }
+  .cas-clara {
+    margin: 0; padding: 2.25rem; border-radius: var(--radius); position: relative; overflow: hidden;
+    background: radial-gradient(circle at 90% 10%, rgba(199,171,90,.26), rgba(199,171,90,0) 55%), linear-gradient(160deg, var(--ink-hover), var(--ink-deep));
+    color: var(--on-ink); font-style: italic; font-size: 1.1875rem; line-height: 1.55;
+  }
+  .cas-clara::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #E2CC8C, var(--gold), #A88B3E); }
+  .cas-clara p { margin: 0; }
+
+  .jour { margin-top: 3rem; }
+  .jour-tete { position: relative; display: flex; align-items: baseline; gap: 1rem; padding-bottom: .75rem; margin-bottom: 1.5rem; }
+  .jour-tete::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--gold) 0%, var(--gold) 20%, var(--line) 100%); }
+  .jour-tete h3 { margin: 0; font-size: 2rem; }
+  .jour-tete span { color: var(--text-soft); font-weight: 600; }
+  .episode { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1.5rem; margin-bottom: 1.25rem; }
+  @media (max-width: 640px) { .episode { grid-template-columns: 1fr; gap: .5rem; } }
+  .num {
+    font-family: var(--font-title); font-weight: 800; font-size: 3.5rem; line-height: 1; letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #E2CC8C, var(--gold) 50%, #A88B3E); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .episode h3 { margin: 0 0 .75rem; }
+  .episode ul { margin: 0 0 1rem; padding-left: 1.1rem; }
+  .episode li { margin-bottom: .35rem; }
+  .clara { margin: 0; padding: .9rem 1.1rem; border-left: 3px solid var(--gold); border-radius: 0 6px 6px 0; background: linear-gradient(100deg, rgba(199,171,90,.18), rgba(199,171,90,.03)); color: var(--ink); }
+  .clara b { color: var(--ink); }
+
+  .modalite { border-top: 3px solid var(--gold); }
+  .modalite h3 { margin-top: 0; }
+  .modalite ul { padding-left: 1.1rem; margin: 0; }
+  .note { margin-top: 2rem; max-width: 46rem; color: var(--text-soft); }
+  .lien-encre { color: var(--ink); }
+
+  .etroit { max-width: 48rem; }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin-bottom: .75rem; }
+  details[open] { background: linear-gradient(180deg, var(--surface), rgba(199,171,90,.06)); }
+  summary { cursor: pointer; list-style: none; padding: 1.1rem 1.4rem; font-weight: 700; color: var(--ink); display: flex; justify-content: space-between; gap: 1rem; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--gold); font-size: 1.3rem; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { margin: 0; padding: 0 1.4rem 1.2rem; }
+  .sources { padding-left: 1.2rem; font-size: .9375rem; color: var(--text-soft); }
+  .sources li { margin-bottom: .5rem; }
+</style>

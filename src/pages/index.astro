@@ -110,6 +110,30 @@ const repartition = [
     </div>
   </section>
 
+  <!-- 5 bis. Formation en entreprise -->
+  <section class="section section--white">
+    <div class="container formation">
+      <div>
+        <SectionTitle eyebrow="Formation en entreprise" title="Risques psychosociaux : voir avant que ça casse.">
+          <p>Réorganisations, travail hybride, arrivée de l'IA : chaque transformation ajoute une couche de pression sur les équipes. En deux jours, dirigeants, managers et RH apprennent à repérer tôt ce qui use une équipe, à tenir leur place quand quelqu'un va mal et à bâtir un plan de prévention qui dure.</p>
+        </SectionTitle>
+        <div class="actions">
+          <Button href="/formation-risques-psychosociaux/">Découvrir le programme</Button>
+          <a class="link-strong lien-encre" href="/contact/#rdv">Parler de votre équipe</a>
+        </div>
+      </div>
+      <div class="formation-carte">
+        <p class="formation-cas">« Rien n'est grave. Pourtant, quelque chose se défait. »</p>
+        <dl class="formation-infos">
+          <div><dt>Durée</dt><dd>2 jours</dd></div>
+          <div><dt>Format</dt><dd>Intra, présentiel ou à distance</dd></div>
+          <div><dt>Public</dt><dd>Dirigeants, managers, RH</dd></div>
+          <div><dt>Livrable</dt><dd>Un plan de prévention par participant</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- 6. Le diagnostic -->
   <section class="section section--ink">
     <div class="container diag">
@@ -282,4 +306,21 @@ const repartition = [
   .couverture :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; }
   .livre h2 em { font-style: normal; }
   .commander { align-self: center; color: var(--on-ink); }
+  .formation { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .formation { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+  .formation .actions { align-items: center; }
+  .formation-carte {
+    position: relative; overflow: hidden; border-radius: var(--radius); padding: 2.25rem;
+    background:
+      radial-gradient(circle at 88% 8%, rgba(199,171,90,.28), rgba(199,171,90,0) 55%),
+      linear-gradient(160deg, var(--ink-hover), var(--ink-deep));
+    color: var(--on-ink);
+    box-shadow: 14px 14px 0 rgba(199,171,90,.35);
+  }
+  .formation-carte::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #E2CC8C, var(--gold) 50%, #A88B3E); }
+  .formation-cas { font-family: var(--font-title); font-weight: 700; font-size: 1.5rem; line-height: 1.25; margin: 0 0 1.75rem; }
+  .formation-infos { margin: 0; display: grid; gap: .85rem; }
+  .formation-infos div { display: grid; grid-template-columns: 5.5rem 1fr; gap: 1rem; padding-top: .85rem; border-top: 1px solid var(--line-ink); }
+  .formation-infos dt { color: var(--gold); font-weight: 700; font-size: .9375rem; }
+  .formation-infos dd { margin: 0; color: var(--on-ink); }
 </style>
