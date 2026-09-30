@@ -1,9 +1,34 @@
 ---
-title: "Nous n'aurons pas été remplacés, nous nous serons absentés"
+title: "L'IA va-t-elle nous remplacer, ou allons-nous nous absenter ?"
+seoTitle: "Remplacés par l'IA ? Le vrai risque est ailleurs | Aurélien Mizeret"
 description: "Entretien dans La voix qui libère (Les Lettres Libres) : le vrai risque de l'IA n'est pas le remplacement, mais la délégation silencieuse de notre jugement."
+chapo: "Le vrai risque de l'IA n'est pas qu'elle prenne notre place, mais que nous lui cédions, geste après geste, notre jugement sans l'avoir jamais décidé. Nous n'aurons pas été remplacés : nous nous serons absentés."
 date: 2026-09-30
+lecture: 13
 theme: "Décision"
-lecture: 14
+essentiel:
+  - "« Vais-je être remplacé ? » empile trois peurs, économique, identitaire et existentielle : ce que l'on craint de perdre, c'est moins un emploi qu'une place."
+  - "L'IA est un amplificateur : elle démultiplie une pensée comme un vide, si bien que la fracture numérique devient une fracture d'usage, que seule la formation réduit."
+  - "Ce qui ne se délègue pas tient au corps, à la friction et au lien : choisir dans une liste proposée par la machine n'est pas décider."
+faq:
+  - question: "Que signifie « nous n'aurons pas été remplacés, nous nous serons absentés » ?"
+    answer: "La formule déplace le risque. La menace principale de l'IA n'est pas qu'elle prenne notre place contre notre gré, mais que nous lui cédions, geste après geste, notre jugement, notre discernement et notre capacité à décider, sans jamais l'avoir choisi."
+  - question: "Quelle différence entre choisir et décider face à l'IA ?"
+    answer: "Choisir, c'est retenir une option dans une liste proposée. Décider, c'est engager une action et la tenir, y compris en sortant de la liste. L'IA propose les options les plus probables ; décider suppose parfois de refuser toutes celles qu'elle suggère."
+  - question: "Qu'est-ce que la fracture d'usage de l'IA ?"
+    answer: "C'est l'écart qui se creuse entre ceux qui abordent l'IA avec une intention, un projet, une pensée à amplifier, et ceux qui s'en servent comme d'un simple distributeur d'informations. L'accès est le même pour tous, le résultat diverge fortement. Cette fracture se réduit par la formation."
+  - question: "Pourquoi l'affaire HéphAIstos à Bercy pose-t-elle une question de souveraineté ?"
+    answer: "Parce qu'un modèle d'IA n'est pas seulement un outil de traitement : il porte une vision du monde. Même isolé de tout réseau, il peut orienter le raisonnement de ceux qui l'utilisent. La souveraineté numérique concerne donc aussi la maîtrise des cadres de pensée qui éclairent nos décisions."
+sources:
+  - label: "Les Lettres Libres, La voix qui libère, entretien avec Aurélien Mizeret, 2026"
+    url: "https://youtu.be/PVdzWZ2WGgQ"
+  - label: "Aurélien Mizeret, Ce que l'IA fait de nous, édition indépendante, 2026"
+    url: "https://cequeliafaitdenous.com/"
+  - label: "Clubic, « IA chinoise : Bercy stoppe un test après des réponses jugées biaisées », juin 2026"
+    url: "https://www.clubic.com/actualite-618721-ia-chinoise-bercy-stoppe-un-test-apres-des-reponses-jugees-biaisees.html"
+  - label: "Antonio Damasio, L'Erreur de Descartes, Odile Jacob, 1995"
+  - label: "Hannah Arendt, La Crise de la culture, Gallimard, 1972"
+  - label: "Alexis de Tocqueville, De la démocratie en Amérique, tome II, 1840"
 ---
 
 J'étais l'invité d'Anne-Emmanuelle Lejeune et d'Éléonore-Alix dans **La voix qui libère**, le podcast des **Lettres Libres**. Une heure d'entretien autour de mon livre, *Ce que l'IA fait de nous*, et d'une formule qui a, semble-t-il, déclenché l'invitation : nous n'aurons pas été remplacés, nous nous serons absentés.
@@ -43,6 +68,12 @@ Le même jour, deux personnes utilisent le même outil. Un dirigeant modélise s
 L'IA est un amplificateur. Apportez-lui une pensée, elle la démultiplie. Demandez-lui une information, elle vous donne une information, rien de plus. Multipliez mille fois l'absence de projet : vous obtenez mille fois rien.
 
 La fracture numérique change donc de nature. Elle n'est plus d'abord une fracture d'accès, puisque le même outil tient dans toutes les poches. Elle devient une **fracture d'usage**. La mauvaise nouvelle : l'outil vendu comme le grand égalisateur peut devenir la plus puissante machine à creuser les écarts. La bonne : une fracture d'infrastructure exige des milliards et des années, alors qu'une fracture d'usage se réduit par l'information, le partage de pratiques et la formation.
+
+<aside class="definition">
+<p class="bloc-label">Définition</p>
+<p class="bloc-terme">Fracture d'usage</p>
+<p>Écart de résultats entre des personnes qui disposent du même outil d'IA, selon qu'elles l'abordent avec une intention et un projet ou comme un simple distributeur d'informations (Mizeret, 2026).</p>
+</aside>
 
 ### Apprendre l'IA à l'école, sans lui confier l'apprentissage
 
@@ -151,24 +182,6 @@ Mon livre ne donne pas de réponses. Il rend les bonnes questions. S'il ne falla
 Qu'est-ce que je veux faire de cette technologie, et de ma vie ? Les grands explorateurs se sont souvent trompés. Ils avaient un cap, et c'est ce cap qui les a fait avancer. Michel Audiard l'a résumé mieux que personne : « Deux intellectuels assis vont moins loin qu'un con qui marche. »
 
 Plutôt que de rester assis à nous demander si l'IA va transformer nos vies, marchons, explorons, confrontons-nous aux autres. C'est avec, par et pour le collectif que nous avancerons. Nous ne sommes pas une somme d'individus : nous sommes une humanité.
-
-## Questions fréquentes
-
-### Que signifie « nous n'aurons pas été remplacés, nous nous serons absentés » ?
-
-La formule déplace le risque. La menace principale de l'IA n'est pas qu'elle prenne notre place contre notre gré, mais que nous lui cédions, geste après geste, notre jugement, notre discernement et notre capacité à décider, sans jamais l'avoir choisi.
-
-### Quelle différence entre choisir et décider face à l'IA ?
-
-Choisir, c'est retenir une option dans une liste proposée. Décider, c'est engager une action et la tenir, y compris en sortant de la liste. L'IA propose les options les plus probables ; décider suppose parfois de refuser toutes celles qu'elle suggère.
-
-### Qu'est-ce que la fracture d'usage de l'IA ?
-
-C'est l'écart qui se creuse entre ceux qui abordent l'IA avec une intention, un projet, une pensée à amplifier, et ceux qui s'en servent comme d'un simple distributeur d'informations. L'accès est le même pour tous ; le résultat, lui, diverge fortement. Cette fracture se réduit par la formation.
-
-### Pourquoi l'affaire HéphAIstos à Bercy pose-t-elle une question de souveraineté ?
-
-Parce qu'un modèle d'IA n'est pas seulement un outil de traitement : il porte une vision du monde. Même isolé de tout réseau, il peut orienter le raisonnement de ceux qui l'utilisent. La souveraineté numérique ne concerne donc pas uniquement la protection des données, mais aussi la maîtrise des cadres de pensée qui éclairent nos décisions.
 
 ## Pour aller plus loin
 
