@@ -1,0 +1,22 @@
+---
+import PageSimple from '../../layouts/PageSimple.astro';
+import Button from '../../components/Button.astro';
+---
+<PageSimple noindex title="Votre page est envoyée | Aurélien Mizeret" description="Votre contribution à Ce que je sais maintenant est bien arrivée." fil="Page envoyée"
+  h1="Votre pierre est posée." chapo="Je lis votre page et je reviens vers vous personnellement, avec votre texte mis en forme à relire. Rien ne sera publié sans votre accord écrit.">
+  <section class="section section--light">
+    <div class="container prose">
+      <p>Un cairn ne s’élève que si d’autres passent par le même chemin. Si vous connaissez quelqu’un dont la page manquerait à ce livre, transmettez-lui ce lien :</p>
+      <p class="lien"><a href="/ce-que-je-sais-maintenant/">aurelienmizeret.com/ce-que-je-sais-maintenant</a></p>
+      <div class="actions">
+        <Button href="/entretiens/">Lire Ceux qui décident</Button>
+        <Button href="/" variant="secondary">Retour à l’accueil</Button>
+      </div>
+    </div>
+  </section>
+</PageSimple>
+
+<style>
+  .lien { font-family: var(--font-title); font-weight: 700; font-size: 1.125rem; }
+  .lien a { color: var(--ink); word-break: break-word; }
+</style>

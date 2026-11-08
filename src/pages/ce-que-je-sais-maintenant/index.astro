@@ -1,0 +1,480 @@
+---
+// « Ce que je sais maintenant » : livre écrit à cent mains, page d'appel à contributions.
+// Le formulaire est traité par Netlify Forms (nom : ce-que-je-sais-maintenant).
+import Base from '../../layouts/Base.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Faq from '../../components/Faq.astro';
+import { Picture } from 'astro:assets';
+import portrait from '../../assets/portrait/aurelien-mizeret.jpg';
+
+const faq = [
+  { question: 'Qui peut contribuer ?', answer: "Toute personne dont les décisions engagent d’autres personnes : direction générale, RH, DSI, managers, responsables de transformation, élus, indépendants qui accompagnent ces décisions. Le titre compte moins que le vécu." },
+  { question: 'Puis-je rester anonyme ?', answer: "Oui. Vous pouvez publier sous votre prénom, votre fonction et votre secteur, sans nom d’organisation. Le niveau d’anonymat que vous choisissez ne changera jamais sans votre accord écrit." },
+  { question: 'Allez-vous modifier mon texte ?', answer: "Je corrige l’orthographe et la typographie, et je peux vous proposer un titre ou une coupe. Chaque modification vous est soumise avant publication. Votre pensée reste la vôtre." },
+  { question: 'Puis-je retirer ma page après publication ?', answer: "Oui, sur simple demande à hello@aurelienmizeret.com. Votre page est alors retirée du site." },
+  { question: 'Que deviendra le livre ?', answer: "Quand le projet aura réuni cent pages, elles seront rassemblées en livre. Chaque contributeur sera recontacté pour un accord d’édition distinct avant toute impression." },
+  { question: 'Contribuer est-il payant ?', answer: "Non. Contribuer est gratuit et ne vous engage à rien d’autre qu’à écrire une page vraie." },
+];
+
+const etapes = [
+  { titre: 'Vous écrivez', texte: 'Ici, en trois mouvements guidés. Votre brouillon reste enregistré sur votre appareil tant que vous n’avez pas envoyé.' },
+  { titre: 'Je relis', texte: 'Je lis chaque page moi-même. Je corrige l’orthographe, je peux proposer un titre. Je ne réécris pas votre pensée.' },
+  { titre: 'Vous validez', texte: 'Je vous renvoie votre page mise en forme. Rien n’est publié sans votre accord écrit.' },
+  { titre: 'Votre page est publiée', texte: 'Sur ce site, sous votre nom ou sous votre prénom et votre fonction, comme vous l’avez choisi.' },
+  { titre: 'Le cairn devient un livre', texte: 'À cent pages, elles seront rassemblées en livre. Vous serez recontacté pour un accord distinct avant toute édition imprimée.' },
+];
+---
+<Base
+  title="Ce que je sais maintenant, un livre écrit à cent mains | Aurélien Mizeret"
+  description="Cent professionnels qui décident, une page chacun : ce que l’IA leur a appris sur le travail, sur les autres et sur eux-mêmes. Écrivez la vôtre."
+  ogType="book"
+>
+  <!-- Ouverture -->
+  <section class="section section--ink hero">
+    <div class="container">
+      <Breadcrumb items={[{ label: 'Accueil', href: '/' }, { label: 'Ce que je sais maintenant' }]} />
+      <div class="hero-grid">
+        <div>
+          <p class="sur">Un livre écrit à cent mains</p>
+          <h1>Ce que je sais maintenant</h1>
+          <p class="hero-lead">Cent professionnels qui décident. Une page chacun. Ce que l’arrivée de l’IA dans leur métier leur a appris sur le travail, sur les autres et sur eux-mêmes.</p>
+          <p class="hero-invite">Je vous invite à écrire l’une de ces pages.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#ecrire">Écrire ma page</a>
+            <a class="btn btn-secondary" href="#experience">Faire l’expérience en 30 secondes</a>
+          </div>
+        </div>
+        <svg class="cairn" viewBox="0 88 240 240" role="img" aria-labelledby="cairn-titre">
+          <title id="cairn-titre">Un cairn : des pierres empilées, la plus haute encore à poser.</title>
+          <line class="sol" x1="12" y1="316" x2="228" y2="316" />
+          <ellipse class="pierre p1" cx="120" cy="288" rx="96" ry="27" />
+          <ellipse class="pierre p2" cx="112" cy="241" rx="73" ry="23" transform="rotate(-4 112 241)" />
+          <ellipse class="pierre p3" cx="126" cy="200" rx="57" ry="20" transform="rotate(5 126 200)" />
+          <ellipse class="pierre p4" cx="116" cy="164" rx="43" ry="17" transform="rotate(-6 116 164)" />
+          <ellipse class="pierre p5" cx="123" cy="133" rx="31" ry="14" transform="rotate(4 123 133)" />
+          <ellipse class="votre" cx="118" cy="109" rx="21" ry="11" transform="rotate(-3 118 109)" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le constat -->
+  <section class="section section--light">
+    <div class="container">
+      <div class="prose manifeste">
+        <h2>Nous n’avons jamais eu autant de réponses. Jamais aussi peu de repères.</h2>
+        <p>Posez une question à une IA : la réponse tombe en quatre secondes. Claire, structurée, plausible.</p>
+        <p>Demandez-lui maintenant ce qu’on ressent le matin où l’on arrête un projet auquel on a fait croire toute une équipe. Ce qu’on répond à celle qui craint pour son poste. Ce qu’on perd, parfois, en gagnant du temps.</p>
+        <p>Elle n’en sait rien. Elle n’y était pas.</p>
+        <p class="rupture">Vous, si.</p>
+        <p>Le travail change d’échelle, et chacun de nous traverse ce changement avec ce qu’il a sous la main : son expérience, ses doutes, son jugement. Ce savoir-là est le plus précieux, et aussi le plus fragile. Il se dit en aparté, au détour d’un couloir, puis il circule rarement au-delà de la pièce où il a été dit.</p>
+        <p>Dans les entretiens que je mène pour <a href="/entretiens/">Ceux qui décident</a>, la plupart des dirigeants interrogés ont déjà arrêté au moins un projet d’IA. Ce qu’ils en ont tiré vaut plus que bien des études de marché. Il manquait un endroit pour le déposer.</p>
+        <p>Quand j’ai fondé l’AfterWork RH, les professionnels venaient pour une raison simple : entendre un pair raconter ce qu’il avait vraiment vécu, sans filtre et sans posture. Ce besoin n’a pas disparu. Il a grandi. Ce livre lui offre un lieu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le cairn et l'expérience -->
+  <section class="section section--deep">
+    <div class="container cairn-grid">
+      <div class="cairn-texte">
+        <h2>Le principe du cairn</h2>
+        <p>En montagne, quand le sentier s’efface, on suit les cairns. Ces petits empilements de pierres n’ont pas d’auteur unique : chaque marcheur qui passe en pose une. Aucune pierre, seule, n’indique le chemin. Ensemble, elles le rendent visible pour ceux qui viendront après.</p>
+        <p class="rupture rupture--clair">Ce livre est un cairn. Votre page en est une pierre.</p>
+        <p>Je ne crois pas que nous sortirons de cette transformation seulement avec de meilleurs outils. Nous en sortirons avec de meilleures questions, et le courage de les poser ensemble. Une erreur racontée avec honnêteté fait avancer plus de monde qu’un succès raconté avec prudence.</p>
+      </div>
+
+      <div id="experience" class="experience" data-experience>
+        <h3>Faites l’expérience</h3>
+        <div class="exp-depart" data-exp-depart>
+          <p>Trente secondes. Ni stylo, ni clavier. Juste votre attention.</p>
+          <button type="button" class="btn btn-primary" data-exp-lancer>Commencer</button>
+        </div>
+        <div class="exp-scene" data-exp-scene hidden>
+          <p class="exp-phrase" data-exp-phrase aria-live="polite"></p>
+          <div class="exp-jauge" aria-hidden="true"><span data-exp-jauge></span></div>
+        </div>
+        <div class="exp-fin" data-exp-fin hidden>
+          <p class="exp-phrase">Ce que vous venez de retrouver, c’est votre page.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#ecrire">Écrire ma page</a>
+            <button type="button" class="btn btn-secondary" data-exp-lancer>Recommencer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- La question -->
+  <section class="section section--white">
+    <div class="container">
+      <h2>Une seule question</h2>
+      <blockquote class="question">
+        <p>Quelle décision, depuis que l’IA est entrée dans votre métier, vous a appris quelque chose que vous ne saviez pas sur le travail, sur les autres ou sur vous-même&nbsp;?</p>
+      </blockquote>
+      <div class="prose">
+        <p>Une réussite, un renoncement, un conflit, un doute qui a tout déplacé : tout est recevable, à deux conditions. Que ce soit vrai. Que ce soit vous.</p>
+        <p>L’IA est le point de départ, pas le sujet. Si votre page parle surtout de confiance, de courage ou de la façon dont une équipe a tenu, vous êtes exactement au bon endroit.</p>
+      </div>
+
+      <div class="criteres">
+        <div class="critere critere--force">
+          <h3>Ce qui donne sa force à une page</h3>
+          <ul>
+            <li>Un moment précis : une date, une salle, une réunion, un visage.</li>
+            <li>Un détail qui ne s’invente pas : un chiffre, une phrase entendue, un silence.</li>
+            <li>Ce que cette décision vous a coûté, ou rapporté.</li>
+            <li>Ce que vous feriez autrement aujourd’hui.</li>
+            <li>Le repère que vous laisseriez à quelqu’un qui commence.</li>
+          </ul>
+        </div>
+        <div class="critere">
+          <h3>Ce qui la vide</h3>
+          <ul>
+            <li>Les généralités : «&nbsp;l’IA est une formidable opportunité&nbsp;».</li>
+            <li>Le discours officiel de votre organisation.</li>
+            <li>Ce que vous pensez qu’on attend de vous.</li>
+            <li>Trois lignes écrites entre deux réunions.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prose">
+        <p class="rupture">Trois lignes ne transmettent pas un repère. Une page, si.</p>
+        <p>Comptez entre 300 et 600 mots, et trois quarts d’heure de votre temps. C’est ce temps-là qui donnera sa valeur à votre page, pour vous comme pour ceux qui la liront.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Le déroulé -->
+  <section class="section section--light">
+    <div class="container">
+      <h2>Comment ça se passe</h2>
+      <ol class="etapes">
+        {etapes.map((e) => (
+          <li>
+            <h3>{e.titre}</h3>
+            <p>{e.texte}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Le formulaire -->
+  <section id="ecrire" class="section section--white">
+    <div class="container ecrire">
+      <h2>Écrire ma page</h2>
+      <p class="ecrire-lead">Trois mouvements, dans l’ordre où vous les avez vécus. Écrivez comme vous parleriez à quelqu’un qui affronte demain la même décision.</p>
+
+      <form name="ce-que-je-sais-maintenant" method="POST" action="/ce-que-je-sais-maintenant/merci/" data-netlify="true" netlify-honeypot="bot-field" data-page>
+        <input type="hidden" name="form-name" value="ce-que-je-sais-maintenant" />
+        <p class="piege"><label>Ne pas remplir <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+        <fieldset>
+          <legend>Votre page</legend>
+
+          <div class="mouvement">
+            <label for="moment"><span class="num">1</span> Le moment</label>
+            <p class="aide" id="aide-moment">Où étiez-vous, quel était l’enjeu, qui était là ? Posez le décor comme si votre lecteur entrait dans la pièce.</p>
+            <textarea id="moment" name="moment" rows="7" required data-min="300" maxlength="5000" aria-describedby="aide-moment"></textarea>
+          </div>
+
+          <div class="mouvement">
+            <label for="choix"><span class="num">2</span> Le choix</label>
+            <p class="aide" id="aide-choix">Qu’avez-vous décidé, ou renoncé à faire ? Qu’est-ce qui a pesé dans la balance, et qu’est-ce que cela vous a coûté ?</p>
+            <textarea id="choix" name="choix" rows="7" required data-min="300" maxlength="5000" aria-describedby="aide-choix"></textarea>
+          </div>
+
+          <div class="mouvement">
+            <label for="maintenant"><span class="num">3</span> Ce que je sais maintenant</label>
+            <p class="aide" id="aide-maintenant">Ce que vous avez compris, et que vous transmettriez à quelqu’un qui se tient demain devant la même décision.</p>
+            <textarea id="maintenant" name="maintenant" rows="8" required data-min="400" maxlength="6000" aria-describedby="aide-maintenant"></textarea>
+          </div>
+
+          <div class="compteur" data-compteur aria-live="polite">
+            <div class="compteur-jauge" aria-hidden="true"><span data-compteur-jauge></span></div>
+            <p><strong data-compteur-mots>0 mot</strong> <span data-compteur-message>Une page qui compte fait entre 300 et 600 mots.</span></p>
+            <p class="brouillon" data-brouillon hidden>Brouillon enregistré sur cet appareil.</p>
+          </div>
+
+          <div class="deux">
+            <label>La phrase que vous laisseriez <span class="facultatif">(facultatif)</span>
+              <input name="phrase" type="text" maxlength="220" />
+              <span class="aide">Si votre page ne devait laisser qu’une phrase.</span>
+            </label>
+            <label>Un titre pour votre page <span class="facultatif">(facultatif)</span>
+              <input name="titre" type="text" maxlength="120" />
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Qui êtes-vous</legend>
+          <div class="deux">
+            <label>Prénom<input name="prenom" type="text" autocomplete="given-name" required /></label>
+            <label>Nom<input name="nom" type="text" autocomplete="family-name" required /></label>
+            <label>Fonction<input name="fonction" type="text" autocomplete="organization-title" required /></label>
+            <label>Organisation<input name="organisation" type="text" autocomplete="organization" required /></label>
+            <label>Secteur d’activité<input name="secteur" type="text" required /></label>
+            <label>Pays<input name="pays" type="text" autocomplete="country-name" required /></label>
+            <label>E-mail<input name="email" type="email" autocomplete="email" required /></label>
+            <label>Profil LinkedIn <span class="facultatif">(facultatif)</span><input name="linkedin" type="url" placeholder="https://www.linkedin.com/in/…" /></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Publication</legend>
+          <label class="choix-radio"><input type="radio" name="publication" value="Nominative : nom, fonction et organisation" required /> <span>Sous mon nom, avec ma fonction et mon organisation.</span></label>
+          <label class="choix-radio"><input type="radio" name="publication" value="Anonymisée : prénom, fonction et secteur" /> <span>Sous mon prénom, ma fonction et mon secteur, sans nom d’organisation.</span></label>
+          <label class="consentement"><input type="checkbox" name="accord-publication" required /> <span>J’autorise la publication de ma page sur aurelienmizeret.com, après relecture et validation écrite de ma part. Pour une édition imprimée, je serai recontacté pour un accord distinct.</span></label>
+          <label class="consentement"><input type="checkbox" name="confidentialite-texte" required /> <span>Ma page ne contient aucune information confidentielle sur mon organisation ou sur des personnes identifiables.</span></label>
+          <label class="consentement"><input type="checkbox" name="donnees" required /> <span>J’accepte que ces informations servent à traiter ma contribution. <a href="/confidentialite/">Politique de confidentialité</a></span></label>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary envoyer">Envoyer ma page</button>
+        <p class="note">Je lis chaque page moi-même et je vous réponds personnellement, avec votre page mise en forme à relire.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Signature et questions -->
+  <section class="section section--light">
+    <div class="container final">
+      <div class="signature">
+        <Picture class="portrait" src={portrait} formats={['avif', 'webp']} alt="Aurélien Mizeret" widths={[112, 224]} sizes="112px" />
+        <div>
+          <p class="signature-nom">Aurélien Mizeret</p>
+          <p>Depuis dix-huit ans, j’accompagne des dirigeants, des DRH et des équipes dans leur façon de décider, de s’engager et de coopérer. Fondateur de l’AfterWork RH, auteur de <a href="/livre/"><em>Ce que l’IA fait de nous</em></a>.</p>
+          <p><a href="/a-propos/">En savoir plus sur mon parcours</a></p>
+        </div>
+      </div>
+      <div>
+        <h2>Vos questions</h2>
+        <Faq items={faq} />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Expérience de trente secondes : trois temps de dix secondes, déclenchés par la personne.
+  const phrases = [
+    'Revenez à une décision. Une seule. Prise, ou subie, depuis que l’IA est entrée dans votre métier.',
+    'Revoyez la pièce. Les visages. Ce que vous avez ressenti juste avant de trancher.',
+    'Qu’est-ce que vous savez maintenant, que vous ignoriez ce jour-là ?',
+  ];
+  const DUREE = 10000;
+  const bloc = document.querySelector<HTMLElement>('[data-experience]');
+  if (bloc) {
+    const depart = bloc.querySelector<HTMLElement>('[data-exp-depart]')!;
+    const scene = bloc.querySelector<HTMLElement>('[data-exp-scene]')!;
+    const fin = bloc.querySelector<HTMLElement>('[data-exp-fin]')!;
+    const phrase = bloc.querySelector<HTMLElement>('[data-exp-phrase]')!;
+    const jauge = bloc.querySelector<HTMLElement>('[data-exp-jauge]')!;
+    let minuteur: number | undefined;
+
+    const afficher = (i: number) => {
+      if (i >= phrases.length) {
+        scene.hidden = true;
+        fin.hidden = false;
+        fin.querySelector<HTMLElement>('a')?.focus();
+        return;
+      }
+      phrase.textContent = phrases[i];
+      jauge.style.animation = 'none';
+      void jauge.offsetWidth;
+      jauge.style.animation = '';
+      minuteur = window.setTimeout(() => afficher(i + 1), DUREE);
+    };
+
+    bloc.querySelectorAll('[data-exp-lancer]').forEach((b) =>
+      b.addEventListener('click', () => {
+        window.clearTimeout(minuteur);
+        depart.hidden = true;
+        fin.hidden = true;
+        scene.hidden = false;
+        afficher(0);
+      }),
+    );
+  }
+
+  // Formulaire : compteur de mots, longueur minimale par mouvement, brouillon conservé sur l'appareil.
+  const form = document.querySelector<HTMLFormElement>('[data-page]');
+  if (form) {
+    const CLE = 'cjsm-brouillon';
+    const zones = Array.from(form.querySelectorAll<HTMLTextAreaElement>('textarea[data-min]'));
+    const motsEl = form.querySelector<HTMLElement>('[data-compteur-mots]')!;
+    const messageEl = form.querySelector<HTMLElement>('[data-compteur-message]')!;
+    const jaugeEl = form.querySelector<HTMLElement>('[data-compteur-jauge]')!;
+    const brouillonEl = form.querySelector<HTMLElement>('[data-brouillon]')!;
+
+    const compter = (t: string) => (t.trim().match(/[\p{L}\p{N}’'-]+/gu) || []).length;
+
+    const verifier = (z: HTMLTextAreaElement) => {
+      const min = Number(z.dataset.min);
+      const n = z.value.trim().length;
+      z.setCustomValidity(n > 0 && n < min
+        ? `Encore quelques lignes : ce mouvement demande au moins ${min} caractères (vous en êtes à ${n}).`
+        : '');
+    };
+
+    const majCompteur = () => {
+      const total = zones.reduce((s, z) => s + compter(z.value), 0);
+      motsEl.textContent = `${total} mot${total > 1 ? 's' : ''}.`;
+      let msg = 'Une page qui compte fait entre 300 et 600 mots.';
+      if (total >= 1 && total < 150) msg = 'Continuez : vous êtes au début de quelque chose.';
+      else if (total >= 150 && total < 300) msg = 'Vous approchez. Un détail de plus, un moment de plus.';
+      else if (total >= 300 && total <= 600) msg = 'C’est une vraie page.';
+      else if (total > 600) msg = 'Belle matière. Nous pourrons resserrer ensemble à la relecture.';
+      messageEl.textContent = msg;
+      jaugeEl.style.width = `${Math.min(100, (total / 450) * 100)}%`;
+      jaugeEl.classList.toggle('atteinte', total >= 300);
+    };
+
+    // Reprise d'un brouillon éventuel
+    try {
+      const sauve = JSON.parse(localStorage.getItem(CLE) || '{}');
+      Object.entries(sauve).forEach(([nom, valeur]) => {
+        const champ = form.elements.namedItem(nom);
+        if ((champ instanceof HTMLInputElement && champ.type !== 'radio' && champ.type !== 'checkbox') || champ instanceof HTMLTextAreaElement) {
+          champ.value = String(valeur);
+        }
+      });
+      if (Object.keys(sauve).length) brouillonEl.hidden = false;
+    } catch { /* stockage indisponible : on continue sans brouillon */ }
+
+    let attente: number | undefined;
+    const sauvegarder = () => {
+      window.clearTimeout(attente);
+      attente = window.setTimeout(() => {
+        try {
+          const donnees: Record<string, string> = {};
+          form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('textarea, input[type="text"], input[type="email"], input[type="url"]').forEach((c) => {
+            if (c.name && c.name !== 'bot-field' && c.value) donnees[c.name] = c.value;
+          });
+          localStorage.setItem(CLE, JSON.stringify(donnees));
+          brouillonEl.hidden = false;
+        } catch { /* stockage indisponible */ }
+      }, 600);
+    };
+
+    zones.forEach((z) => { verifier(z); z.addEventListener('input', () => { verifier(z); majCompteur(); }); });
+    form.addEventListener('input', sauvegarder);
+    form.addEventListener('submit', () => { try { localStorage.removeItem(CLE); } catch { /* rien */ } });
+    majCompteur();
+  }
+</script>
+
+<style>
+  /* Ouverture */
+  .hero-grid { display: grid; gap: 2.5rem; align-items: center; }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.4fr 1fr; gap: 4rem; } }
+  .sur { font-weight: 700; color: var(--gold); margin-bottom: .75rem; }
+  .hero h1 { max-width: 14ch; }
+  .hero-lead { font-size: 1.25rem; color: var(--on-ink); max-width: 38rem; }
+  .hero-invite { color: var(--on-ink-soft); max-width: 38rem; }
+
+  .cairn { width: 100%; max-width: 170px; justify-self: center; overflow: visible; }
+  @media (min-width: 900px) { .cairn { max-width: 320px; } }
+  .sol { stroke: var(--line-ink); stroke-width: 2; stroke-linecap: round; }
+  .pierre { fill: #4A4350; stroke: #6E6575; stroke-width: 1.5; }
+  .votre { fill: none; stroke: var(--gold); stroke-width: 2; stroke-dasharray: 5 5; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pierre, .votre { opacity: 0; animation: poser .5s ease-out forwards; }
+    .p1 { animation-delay: .1s; } .p2 { animation-delay: .35s; } .p3 { animation-delay: .6s; }
+    .p4 { animation-delay: .85s; } .p5 { animation-delay: 1.1s; }
+    .votre { animation: poser .6s ease-out 1.6s forwards, respirer 4s ease-in-out 2.4s infinite; }
+  }
+  @keyframes poser { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+  @keyframes respirer { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+  .pierre, .votre { transform-box: fill-box; transform-origin: center; }
+
+  /* Constat */
+  .manifeste h2 { margin-top: 0; }
+  .rupture { font-family: var(--font-title); font-weight: 800; font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin: 1.5rem 0; }
+  .rupture--clair { color: var(--gold); }
+  @media (min-width: 768px) { .rupture { font-size: 2.125rem; } }
+
+  /* Cairn et expérience */
+  .cairn-grid { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1000px) { .cairn-grid { grid-template-columns: 1.2fr 1fr; gap: 4rem; } }
+  .cairn-texte { max-width: var(--measure); }
+  .cairn-texte p { color: var(--on-ink-soft); }
+  .cairn-texte .rupture--clair { color: var(--gold); }
+
+  .experience { background: var(--ink); border: 1px solid var(--line-ink); border-radius: var(--radius); padding: 2rem; min-height: 18rem; display: grid; align-content: start; gap: 1rem; }
+  .experience h3 { color: var(--on-ink); margin: 0; }
+  .experience p { color: var(--on-ink-soft); margin: 0; }
+  .exp-depart, .exp-scene, .exp-fin { display: grid; gap: 1.25rem; justify-items: start; }
+  [hidden] { display: none !important; }
+  .exp-phrase { font-size: 1.375rem; line-height: 1.45; color: var(--on-ink) !important; min-height: 6em; }
+  .exp-jauge { width: 100%; height: 3px; background: var(--line-ink); border-radius: 2px; overflow: hidden; }
+  .exp-jauge span { display: block; height: 100%; width: 100%; background: var(--gold); transform-origin: left; animation: remplir 10s linear forwards; }
+  @keyframes remplir { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .experience .actions { margin-top: .5rem; }
+
+  /* Question */
+  .question { margin: 0 0 2rem; padding: 2rem; background: var(--surface-gold); border-left: 4px solid var(--gold); border-radius: var(--radius); max-width: 50rem; }
+  .question p { margin: 0; font-family: var(--font-title); font-weight: 700; font-size: 1.375rem; line-height: 1.35; color: var(--ink); letter-spacing: -0.01em; }
+  @media (min-width: 768px) { .question p { font-size: 1.75rem; } }
+
+  .criteres { display: grid; gap: 1.5rem; margin: 2.5rem 0; max-width: 60rem; }
+  @media (min-width: 800px) { .criteres { grid-template-columns: 1fr 1fr; } }
+  .critere { padding: 1.75rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+  .critere--force { background: var(--surface); border-color: var(--gold); }
+  .critere h3 { font-size: 1.25rem; }
+  .critere ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .5rem; }
+  .critere--force li::marker { color: var(--gold-text); }
+  .critere:not(.critere--force) li { color: var(--text-soft); }
+
+  /* Étapes */
+  .etapes { list-style: none; counter-reset: etape; margin: 0; padding: 0; display: grid; gap: 1rem; max-width: 50rem; }
+  .etapes li { counter-increment: etape; position: relative; background: var(--surface); border-radius: var(--radius); padding: 1.25rem 1.5rem 1.25rem 4.25rem; }
+  .etapes li::before { content: counter(etape); position: absolute; left: 1.5rem; top: 1.2rem; font-family: var(--font-title); font-weight: 800; font-size: 1.5rem; color: var(--gold-text); }
+  .etapes h3 { font-size: 1.125rem; margin-bottom: .25rem; }
+  .etapes p { margin: 0; }
+
+  /* Formulaire */
+  .ecrire > * { max-width: 52rem; }
+  .ecrire-lead { font-size: 1.1875rem; margin-bottom: 2.5rem; }
+  form { display: grid; gap: 2.5rem; }
+  fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  legend { font-family: var(--font-title); font-weight: 800; font-size: 1.375rem; color: var(--ink); margin-bottom: 1.25rem; padding: 0; }
+  label { display: grid; gap: .4rem; font-weight: 700; font-size: .9375rem; color: var(--ink); }
+  .mouvement { display: grid; gap: .4rem; }
+  .mouvement label { display: flex; align-items: center; gap: .75rem; font-family: var(--font-title); font-size: 1.125rem; }
+  .num { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--ink); color: var(--gold); font-size: .9375rem; }
+  .aide { margin: 0; font-weight: 500; font-size: .9375rem; color: var(--text-soft); }
+  .facultatif { font-weight: 500; color: var(--text-soft); }
+  input[type='text'], input[type='email'], input[type='url'], textarea {
+    font: inherit; font-weight: 500; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--control-border); border-radius: 4px; min-height: 48px; padding: .7rem .9rem; width: 100%;
+  }
+  textarea { line-height: 1.6; resize: vertical; }
+  textarea:user-invalid, input:user-invalid { border-color: #A23B3B; }
+  .deux { display: grid; gap: 1.25rem; }
+  @media (min-width: 640px) { .deux { grid-template-columns: 1fr 1fr; } }
+
+  .compteur { background: var(--bg); border-radius: var(--radius); padding: 1rem 1.25rem; display: grid; gap: .6rem; }
+  .compteur p { margin: 0; font-size: .9375rem; }
+  .compteur strong { color: var(--ink); }
+  .compteur-jauge { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .compteur-jauge span { display: block; height: 100%; width: 0; background: var(--control-border); transition: width .3s ease, background-color .3s ease; }
+  .compteur-jauge span.atteinte { background: var(--gold); }
+  .brouillon { color: var(--text-soft); font-size: .875rem !important; }
+
+  .choix-radio, .consentement { display: flex; gap: .75rem; align-items: flex-start; font-weight: 500; color: var(--text); }
+  .choix-radio input, .consentement input { accent-color: var(--ink); width: 1.15rem; height: 1.15rem; margin-top: .25rem; flex-shrink: 0; }
+  .choix-radio { font-weight: 600; color: var(--ink); }
+  .envoyer { justify-self: start; font-size: 1.0625rem; padding: 1rem 2rem; }
+  .note { margin: -1.5rem 0 0; font-size: .9375rem; color: var(--text-soft); }
+  .piege { position: absolute; left: -9999px; }
+
+  /* Signature et FAQ */
+  .final { display: grid; gap: 3rem; }
+  @media (min-width: 1000px) { .final { grid-template-columns: 1fr 1.6fr; gap: 4rem; align-items: start; } }
+  .signature { display: grid; gap: 1.25rem; align-content: start; }
+  .signature :global(.portrait) { width: 112px; height: 112px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; }
+  .signature-nom { font-family: var(--font-title); font-weight: 800; font-size: 1.375rem; color: var(--ink); margin-bottom: .5rem; }
+  .signature a { color: var(--ink); }
+</style>
